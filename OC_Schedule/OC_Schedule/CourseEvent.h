@@ -10,11 +10,14 @@
 #import "Course.h"
 
 
+
+
 @interface CourseEvent : NSObject
+
 
 @property(nonatomic, copy) NSString *classRoom;
 @property(nonatomic, copy) NSString *alternativeTeacher;
-//@property(nonatomic) Course *course;
+@property(nonatomic) Course *course;
 @property(nonatomic, copy) NSDate *eventDate;
 @property(nonatomic, copy) NSNumber *eventStartTime;
 @property(nonatomic, copy) NSNumber *eventStopTime;
