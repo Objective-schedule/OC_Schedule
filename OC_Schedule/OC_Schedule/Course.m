@@ -12,6 +12,8 @@
 
 @implementation Course
 //Created by Kenth again....
+//Pedro
+
 
 @synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseStudents = _courseStudents, courseLitterature = _courseLitterature;
 
