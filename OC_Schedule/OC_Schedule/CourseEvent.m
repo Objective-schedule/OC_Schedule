@@ -9,6 +9,7 @@
 #import "CourseEvent.h"
 
 @implementation CourseEvent
+//Test
 
 @synthesize classRoom = _classRoom, alternativeTeacher = _alternativeTeacher, eventDate = _eventDate, eventStartTime = _eventStartTime, eventStopTime = _eventStopTime, eventReadingInstructions = _eventReadingInstructions;
 
