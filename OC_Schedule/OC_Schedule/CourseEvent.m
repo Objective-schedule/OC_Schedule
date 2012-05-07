@@ -57,6 +57,7 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 
 -(NSString*) description {
     return [NSString stringWithFormat:@"Kurstillfälle: %@ Kurslokal: %@\n", self.eventDate,self.classRoom];
+    return [NSString stringWithFormat:@"Lektion Datum: %@ Starttid %d Sluttid %d Kurslokal: %@\n", self.eventDate, self.eventStartTime, self.eventStopTime, self.classRoom];
 }
 
 @end
