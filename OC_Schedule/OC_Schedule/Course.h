@@ -42,8 +42,10 @@
 // add course event(in progress)
 +(void) addCourseEvent:(CourseEvent*) newEvent;
 =======
+
 -(void) addCourseEvent:(CourseEvent*) newEvent;
 >>>>>>> Course and Course event updatet
+
 
 // create dictionary with course
 
