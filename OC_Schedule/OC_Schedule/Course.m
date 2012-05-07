@@ -15,12 +15,14 @@
 //Pedro
 //Hector
 
+NSArray *courseSchedule;
+
 @synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseStudents = _courseStudents, courseLitterature = _courseLitterature;
 
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
       coursedescription:(NSString*)courseDescription 
-           coursepoints:(NSNumber*)coursePoints 
+           coursepoints:(NSUInteger)coursePoints 
           courseteacher:(NSString*) courseTeacher 
       courseLitterature:(NSArray*) courseLitterature
 {
@@ -37,7 +39,7 @@
 -(id)initWithCourseId:(NSString*)courseId 
            coursename:(NSString*)courseName 
     coursedescription:(NSString*)courseDescription 
-         coursepoints:(NSNumber*)coursePoints 
+         coursepoints:(NSUInteger)coursePoints 
         courseteacher:(NSString*) courseTeacher 
     courseLitterature:(NSArray*) courseLitterature
 {
@@ -46,9 +48,11 @@
         _courseId = [courseId copy];
         _courseName = [courseName copy];
         _courseDescription =[courseDescription copy];
-        _coursePoints = [coursePoints copy];
+        _coursePoints = coursePoints;
         _courseTeacher = [courseTeacher copy]; //Should be User object
         _courseLitterature = [courseLitterature copy];
+        courseSchedule = [NSArray array];
+        
             
     }
     return self;
@@ -56,27 +60,20 @@
 }
 
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %@\n Kursbeskrivning: %@\n Kurslitteratur: %@", self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature];
+    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %d\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kurstillfällen: %@" , self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, courseSchedule];//self.courseSchedule];
 }
 
-+(void) addCourseEvent:(CourseEvent*) newEvent
+-(void) addCourseEvent:(CourseEvent*) newEvent
 {
+    
 
-    if(!courseSchedule)
-    {
-        NSArray* courseSchedule = [NSArray arrayWithObject:newEvent]; 
-    }
-    else 
-    {
         NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
         
         [newArray addObject:newEvent];
         
         //Sort array?        
-             courseSchedule = newArray;
+        courseSchedule = newArray;
             
-    }
-
 }
 
 

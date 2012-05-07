@@ -7,6 +7,7 @@
 //
 
 #import "CourseEvent.h"
+#import "Course.h"
 
 @implementation CourseEvent
 //Test
@@ -15,8 +16,8 @@
 
 
 +(id)courseEventWithDate:(NSDate*)eventDate 
-          eventStartTime:(NSNumber*) eventStartTime
-           eventStopTime:(NSNumber*) eventStopTime 
+          eventStartTime:(NSUInteger) eventStartTime
+           eventStopTime:(NSUInteger) eventStopTime 
                classRoom:(NSString*) classRoom 
       alternetiveTeacher:(NSString*) alternativeTeacher 
 eventReadingInstructions:(NSString*) eventReadingInstructions 
@@ -29,12 +30,12 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 
 -(id)init
 {
-    return [self initWithDate:[NSDate dateWithString:@"no-date"]  eventStartTime:[NSNumber numberWithInt:0] eventStopTime:[NSNumber numberWithInt:0] classRoom:@"no-room" alternetiveTeacher:@"no-alternetive teacher" eventReadingInstructions:@"no-reainginstructions" course:nil];
+    return [self initWithDate:[NSDate dateWithString:@"no-date"]  eventStartTime:0 eventStopTime:0 classRoom:@"no-room" alternetiveTeacher:@"no-alternetive teacher" eventReadingInstructions:@"no-reainginstructions" course:nil];
 }
 
 -(id)initWithDate:(NSDate*)eventDate 
-                    eventStartTime:(NSNumber*) eventStartTime
-                     eventStopTime:(NSNumber*) eventStopTime 
+                    eventStartTime:(NSUInteger) eventStartTime
+                     eventStopTime:(NSUInteger) eventStopTime 
                          classRoom:(NSString*) classRoom 
                 alternetiveTeacher:(NSString*) alternativeTeacher 
           eventReadingInstructions:(NSString*) eventReadingInstructions
@@ -43,8 +44,8 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
     if(self = [super init]) 
     {
         _eventDate = [eventDate copy];
-        _eventStartTime = [eventStartTime copy];
-        _eventStopTime =[eventStopTime copy];
+        _eventStartTime = eventStartTime;
+        _eventStopTime = eventStopTime;
         _classRoom = [classRoom copy];
         _alternativeTeacher = [alternativeTeacher copy]; //Should be User object
         _eventReadingInstructions = [eventReadingInstructions copy];
@@ -55,7 +56,7 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 }
 
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Kurstillfälle --- \n Kurslokal: %@\n", self.classRoom];
+    return [NSString stringWithFormat:@"Kurstillfälle: %@ Kurslokal: %@\n", self.eventDate,self.classRoom];
 }
 
 @end
