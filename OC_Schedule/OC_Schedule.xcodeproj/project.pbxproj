@@ -1,0 +1,277 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE1704101557CC7F002137ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE17040F1557CC7F002137ED /* Foundation.framework */; };
+		CE1704131557CC7F002137ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704121557CC7F002137ED /* main.m */; };
+		CE1704171557CC7F002137ED /* OC_Schedule.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE1704161557CC7F002137ED /* OC_Schedule.1 */; };
+		CE1704251557CCE7002137ED /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704201557CCE7002137ED /* Course.m */; };
+		CE1704261557CCE7002137ED /* CourseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704221557CCE7002137ED /* CourseEvent.m */; };
+		CE1704271557CCE7002137ED /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704241557CCE7002137ED /* User.m */; };
+		CE17042A1557CCF1002137ED /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704291557CCF1002137ED /* UserService.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE1704091557CC7F002137ED /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				CE1704171557CC7F002137ED /* OC_Schedule.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CE17040B1557CC7F002137ED /* OC_Schedule */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OC_Schedule; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE17040F1557CC7F002137ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CE1704121557CC7F002137ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CE1704151557CC7F002137ED /* OC_Schedule-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OC_Schedule-Prefix.pch"; sourceTree = "<group>"; };
+		CE1704161557CC7F002137ED /* OC_Schedule.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = OC_Schedule.1; sourceTree = "<group>"; };
+		CE17041F1557CCE7002137ED /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
+		CE1704201557CCE7002137ED /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
+		CE1704211557CCE7002137ED /* CourseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseEvent.h; sourceTree = "<group>"; };
+		CE1704221557CCE7002137ED /* CourseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseEvent.m; sourceTree = "<group>"; };
+		CE1704231557CCE7002137ED /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		CE1704241557CCE7002137ED /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		CE1704281557CCF1002137ED /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
+		CE1704291557CCF1002137ED /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CE1704081557CC7F002137ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE1704101557CC7F002137ED /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CE1704001557CC7F002137ED = {
+			isa = PBXGroup;
+			children = (
+				CE1704111557CC7F002137ED /* OC_Schedule */,
+				CE17040E1557CC7F002137ED /* Frameworks */,
+				CE17040C1557CC7F002137ED /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CE17040C1557CC7F002137ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE17040B1557CC7F002137ED /* OC_Schedule */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CE17040E1557CC7F002137ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE1704141557CC7F002137ED /* Supporting Files */,
+				CE17040F1557CC7F002137ED /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE1704111557CC7F002137ED /* OC_Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				CE17041E1557CC94002137ED /* service */,
+				CE17041D1557CC8D002137ED /* model */,
+				CE1704121557CC7F002137ED /* main.m */,
+			);
+			path = OC_Schedule;
+			sourceTree = "<group>";
+		};
+		CE1704141557CC7F002137ED /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CE1704161557CC7F002137ED /* OC_Schedule.1 */,
+				CE1704151557CC7F002137ED /* OC_Schedule-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = OC_Schedule;
+			sourceTree = "<group>";
+		};
+		CE17041D1557CC8D002137ED /* model */ = {
+			isa = PBXGroup;
+			children = (
+				CE17041F1557CCE7002137ED /* Course.h */,
+				CE1704201557CCE7002137ED /* Course.m */,
+				CE1704211557CCE7002137ED /* CourseEvent.h */,
+				CE1704221557CCE7002137ED /* CourseEvent.m */,
+				CE1704231557CCE7002137ED /* User.h */,
+				CE1704241557CCE7002137ED /* User.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		CE17041E1557CC94002137ED /* service */ = {
+			isa = PBXGroup;
+			children = (
+				CE1704281557CCF1002137ED /* UserService.h */,
+				CE1704291557CCF1002137ED /* UserService.m */,
+			);
+			name = service;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CE17040A1557CC7F002137ED /* OC_Schedule */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE17041A1557CC7F002137ED /* Build configuration list for PBXNativeTarget "OC_Schedule" */;
+			buildPhases = (
+				CE1704071557CC7F002137ED /* Sources */,
+				CE1704081557CC7F002137ED /* Frameworks */,
+				CE1704091557CC7F002137ED /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OC_Schedule;
+			productName = OC_Schedule;
+			productReference = CE17040B1557CC7F002137ED /* OC_Schedule */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CE1704021557CC7F002137ED /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = CE1704051557CC7F002137ED /* Build configuration list for PBXProject "OC_Schedule" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CE1704001557CC7F002137ED;
+			productRefGroup = CE17040C1557CC7F002137ED /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CE17040A1557CC7F002137ED /* OC_Schedule */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CE1704071557CC7F002137ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE1704131557CC7F002137ED /* main.m in Sources */,
+				CE1704251557CCE7002137ED /* Course.m in Sources */,
+				CE1704261557CCE7002137ED /* CourseEvent.m in Sources */,
+				CE1704271557CCE7002137ED /* User.m in Sources */,
+				CE17042A1557CCF1002137ED /* UserService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CE1704181557CC7F002137ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CE1704191557CC7F002137ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CE17041B1557CC7F002137ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OC_Schedule/OC_Schedule-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CE17041C1557CC7F002137ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OC_Schedule/OC_Schedule-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CE1704051557CC7F002137ED /* Build configuration list for PBXProject "OC_Schedule" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE1704181557CC7F002137ED /* Debug */,
+				CE1704191557CC7F002137ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE17041A1557CC7F002137ED /* Build configuration list for PBXNativeTarget "OC_Schedule" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE17041B1557CC7F002137ED /* Debug */,
+				CE17041C1557CC7F002137ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CE1704021557CC7F002137ED /* Project object */;
+}
