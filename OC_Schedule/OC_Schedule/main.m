@@ -25,6 +25,9 @@ int main(int argc, const char * argv[])
         CourseEvent *lecture1 = [CourseEvent courseEventWithDate:[NSDate date] eventStartTime:9 eventStopTime:12 classRoom:@"401" alternetiveTeacher:@"" eventReadingInstructions:@"Läs kap 1" course:courseApputv];
         CourseEvent *lecture2 = [CourseEvent courseEventWithDate:[NSDate date] eventStartTime:13 eventStopTime:15 classRoom:@"402" alternetiveTeacher:@"" eventReadingInstructions:@"Läs kap 2" course:courseApputv];
         
+        
+        
+        //Adding coursEvents to Cours
         [courseApputv addCourseEvent:lecture1];
         [courseApputv addCourseEvent:lecture2];
                
