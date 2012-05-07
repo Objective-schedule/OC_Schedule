@@ -23,7 +23,8 @@
 @property(nonatomic, copy) NSNumber *eventStopTime;
 @property(nonatomic, copy) NSString *eventReadingInstructions;
 
-
+// create course event
+// override init
 +(id)courseEventWithDate:(NSDate*)eventDate 
                 eventStartTime:(NSNumber*) eventStartTime
                  eventStopTime:(NSNumber*) eventStopTime 
@@ -40,6 +41,9 @@
      eventReadingInstructions:(NSString*) eventReadingInstructions
                          course:(Course*) course;
 
+// create dictionary
+// create JSON
+// save to db
 
 
 @end

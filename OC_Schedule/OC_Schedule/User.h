@@ -25,10 +25,16 @@ extern NSString *const ATUserStatusInactive;
 @property(nonatomic, copy) NSArray *userCourses;
 @property(nonatomic, copy) NSArray *userMessages;
 
+// create user with role (done)
+// override init (done)
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role;
 
 -(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role;
+// override description
 
+// create dictionary with user
+
+// create JSON from dictionary
 
 
 @end

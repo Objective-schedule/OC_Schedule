@@ -22,7 +22,8 @@ NSArray *courseSchedule;
 @property(nonatomic, copy) NSDictionary *courseStudents;
 
 
-
+// create course (in progress)
+// override init (done)
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
         coursedescription:(NSString*)courseDescription 
@@ -37,8 +38,13 @@ NSArray *courseSchedule;
           courseteacher:(NSString*) courseTeacher 
       courseLitterature:(NSArray*) courseLitterature;
 
+// add course event(in progress)
 +(void) addCourseEvent:(CourseEvent*) newEvent;
 
+// create dictionary with course
 
+// create JSON
+
+// save to db
 
 @end
