@@ -22,8 +22,9 @@ int main(int argc, const char * argv[])
         
         Course *courseApputv = [Course courseWithCourseId:@"AppUtv2011" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:400 courseteacher:@"Anders Carlsson" courseLitterature:litterature];
         
-        CourseEvent *lecture1 = [CourseEvent courseEventWithDate:[NSDate date] eventStartTime:9 eventStopTime:12 classRoom:@"401" alternetiveTeacher:@"" eventReadingInstructions:@"Läs kap 1" course:courseApputv];
-        CourseEvent *lecture2 = [CourseEvent courseEventWithDate:[NSDate date] eventStartTime:13 eventStopTime:15 classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Läs kap 2" course:courseApputv];
+        CourseEvent *lecture1 = [CourseEvent courseEventWithDate:[NSDate date] eventStartTime:9 eventStopTime:12 classRoom:@"401" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 1"];
+        
+        CourseEvent *lecture2 = [CourseEvent courseEventWithDate:[NSDate date] eventStartTime:13 eventStopTime:15 classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 2"]; 
         
         
         
@@ -32,9 +33,12 @@ int main(int argc, const char * argv[])
         [courseApputv addCourseEvent:lecture2];
                
         NSLog(@"%@", courseApputv);
-        //NSLog(@"%@", lecture1);
+        NSLog(@"%@", lecture1);
         
         NSLog(@"%@", susan);
+        
+           // NSLog(@"%@",[courseApputv asDictionary]);
+        
     }
     return 0;
 }

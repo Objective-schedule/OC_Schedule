@@ -11,6 +11,7 @@
 
 @implementation CourseEvent
 //Test
+//Course* myCourse;
 
 @synthesize classRoom = _classRoom, alternativeTeacher = _alternativeTeacher, eventDate = _eventDate, eventStartTime = _eventStartTime, eventStopTime = _eventStopTime, eventReadingInstructions = _eventReadingInstructions;
 
@@ -21,16 +22,17 @@
                classRoom:(NSString*) classRoom 
       alternetiveTeacher:(NSString*) alternativeTeacher 
 eventReadingInstructions:(NSString*) eventReadingInstructions 
-                  course:(Course*) course
+                  
 {
     
-    return [[self alloc] initWithDate:eventDate eventStartTime:eventStartTime eventStopTime:eventStopTime classRoom:classRoom alternetiveTeacher:alternativeTeacher eventReadingInstructions:eventReadingInstructions course:course];
+    return [[self alloc] initWithDate:eventDate eventStartTime:eventStartTime eventStopTime:eventStopTime classRoom:classRoom alternetiveTeacher:alternativeTeacher eventReadingInstructions:eventReadingInstructions];
     
 }
 
 -(id)init
 {
-    return [self initWithDate:[NSDate dateWithString:@"no-date"]  eventStartTime:0 eventStopTime:0 classRoom:@"no-room" alternetiveTeacher:@"no-alternetive teacher" eventReadingInstructions:@"no-reainginstructions" course:nil];
+    return [self initWithDate:[NSDate dateWithString:@"no-date"]  eventStartTime:0 eventStopTime:0 classRoom:@"no-room" alternetiveTeacher:@"no-alternetive-teacher" eventReadingInstructions:@"no-reainginstructions"];
+              
 }
 
 -(id)initWithDate:(NSDate*)eventDate 
@@ -39,7 +41,7 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
                          classRoom:(NSString*) classRoom 
                 alternetiveTeacher:(NSString*) alternativeTeacher 
           eventReadingInstructions:(NSString*) eventReadingInstructions
-                            course:(Course*) course
+                            
 {
     if(self = [super init]) 
     {
@@ -49,14 +51,27 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
         _classRoom = [classRoom copy];
         _alternativeTeacher = [alternativeTeacher copy]; //Should be User object
         _eventReadingInstructions = [eventReadingInstructions copy];
-        course = course;
+        
         
     }
     return self;
 }
 
+-(NSDictionary*) asDictionary
+{
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:self.eventDate, @"eventDate",
+                                                                    self.classRoom, @"classRoom",
+                                       [NSNumber numberWithInt:self.eventStartTime],@"eventStartTime",
+                                        [NSNumber numberWithInt:self.eventStopTime],@"eventStopTime",
+                                                            self.alternativeTeacher,@"alternativeTeacher",
+                          self.eventReadingInstructions,@"eventReadingInstructions", nil]; 
+                                                        
+    return data;
+    
+}
+
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Lektion Datum: %@ Starttid %d Sluttid %d Kurslokal: %@\n", self.eventDate, self.eventStartTime, self.eventStopTime, self.classRoom];
+    return [NSString stringWithFormat:@"Lektion --> Datum: %@ Starttid %d Sluttid %d Kurslokal: %@\n", self.eventDate, self.eventStartTime, self.eventStopTime, self.classRoom];
 }
 
 @end

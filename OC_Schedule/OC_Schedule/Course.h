@@ -41,6 +41,9 @@
 
 -(void) addCourseEvent:(CourseEvent*) newEvent;
 
+-(NSArray*)getEventsAsDictionarys;
+
+-(NSDictionary*) asDictionary;
 
 // create dictionary with course
 

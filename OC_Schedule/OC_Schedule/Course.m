@@ -59,10 +59,6 @@ NSArray *courseSchedule;
     
 }
 
--(NSString*) description {
-    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %d\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kurstillfällen: %@" , self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, courseSchedule];//self.courseSchedule];
-}
-
 -(void) addCourseEvent:(CourseEvent*) newEvent
 {
     
@@ -76,5 +72,37 @@ NSArray *courseSchedule;
             
 }
 
+-(NSDictionary*) asDictionary
+{   
+    
+    NSArray* courseEvents = [NSArray  arrayWithArray:[self getEventsAsDictionarys]];
+    
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                self.courseId, @"courseId",
+                                               self.courseName, @"courseName",
+                    [NSNumber numberWithInt:self.coursePoints], @"coursePoints",
+                                       self.courseLitterature, @"courseLitterature",
+                                           self.courseTeacher, @"courseTeacher",
+                                       self.courseDescription, @"courseDescription", 
+                                        courseEvents, @"courseSchema", nil];
+                                    //Studentlist should be added
+    return data;
+    
+}
+
+-(NSArray*)getEventsAsDictionarys;
+{
+     NSMutableArray* eventArray = [NSMutableArray array];
+    
+    for(CourseEvent *event in courseSchedule)
+    {
+        [eventArray addObject:[event asDictionary]]; 
+    }
+    return eventArray;
+}
+
+-(NSString*) description {
+    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %d\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kurstillfällen: %@" , self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, courseSchedule];//self.courseSchedule];
+}
 
 @end
