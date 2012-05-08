@@ -59,7 +59,10 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 
 -(NSDictionary*) asDictionary
 {
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:self.eventDate, @"eventDate",
+    NSString* eventDateAsString = [self.eventDate descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:
+                                            [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
+
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:eventDateAsString, @"eventDate",
                                                                     self.classRoom, @"classRoom",
                                        [NSNumber numberWithInt:self.eventStartTime],@"eventStartTime",
                                         [NSNumber numberWithInt:self.eventStopTime],@"eventStopTime",
@@ -71,7 +74,7 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 }
 
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Lektion --> Datum: %@ Starttid %d Sluttid %d Kurslokal: %@\n", self.eventDate, self.eventStartTime, self.eventStopTime, self.classRoom];
+    return [NSString stringWithFormat:@"Lektion --> Datum: %@ Starttid %d Sluttid %d Kurslokal: %@ Readinstruct: %@\n", self.eventDate, self.eventStartTime, self.eventStopTime, self.classRoom, self.eventReadingInstructions];
 }
 
 @end

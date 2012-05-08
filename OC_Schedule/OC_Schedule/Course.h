@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class CourseEvent;
-
+@class User;
 
 @interface Course : NSObject
 
@@ -19,7 +19,7 @@
 @property(nonatomic) NSUInteger coursePoints;
 @property(nonatomic, copy) NSString *courseTeacher; //Should be a User instead
 @property(nonatomic, copy) NSArray *courseLitterature;
-@property(nonatomic, copy) NSDictionary *courseStudents;
+//@property(nonatomic, copy) NSDictionary *courseStudents;
 //@property(nonatomic, copy) NSArray *courseSchedule;
 // test
 // create course (in progress)
@@ -47,8 +47,9 @@
 
 // create dictionary with course
 
-// create JSON
+-(void) addStudentToCourse:(User*) user;
 
-// save to db
+-(NSArray*) allEvents;
+-(NSArray*) allStudents;
 
 @end

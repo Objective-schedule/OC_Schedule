@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Course;
 
 extern NSString *const ATRoleStudent;
 extern NSString *const ATRoleTeacher;
@@ -22,7 +23,7 @@ extern NSString *const ATUserStatusInactive;
 @property(nonatomic, copy) NSString *lastName;
 @property(nonatomic, copy) NSString *userEmail;
 
-@property(nonatomic, copy) NSArray *userCourses;
+//@property(nonatomic, copy) NSArray *userCourses;
 @property(nonatomic, copy) NSArray *userMessages;
 
 // create user with role (done)
@@ -33,9 +34,13 @@ extern NSString *const ATUserStatusInactive;
 // override description
 
 // create dictionary with user
--(NSDictionary*)saveUserAsDictionary:(User*)user;
+-(NSDictionary*)saveUserAsDictionary;
 
-// create JSON from dictionary
+-(void) addCourseToUser:(Course*) course;
+
+-(void) listAllCourseEvents;
+
+    
 
 
 @end

@@ -14,10 +14,11 @@
 //Created by Kenth again....
 //Pedro
 //Hector
+{
+    NSArray *courseSchedule, *courseStudents;
+}
 
-NSArray *courseSchedule;
-
-@synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseStudents = _courseStudents, courseLitterature = _courseLitterature;
+@synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseLitterature = _courseLitterature;
 
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
@@ -62,7 +63,7 @@ NSArray *courseSchedule;
 -(void) addCourseEvent:(CourseEvent*) newEvent
 {
     
-
+        //Init courseSchedule array when needed, instead of in init function?
         NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
         
         [newArray addObject:newEvent];
@@ -99,6 +100,28 @@ NSArray *courseSchedule;
         [eventArray addObject:[event asDictionary]]; 
     }
     return eventArray;
+}
+
+-(void) addStudentToCourse:(User*) user
+{
+    //Init userCourses array when needed, instead of in init function?
+    NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseStudents];
+    
+    [newArray addObject:user];
+    
+    courseStudents = newArray;
+}
+
+-(NSArray*) allEvents
+{
+    NSArray *events = [NSArray arrayWithArray:courseSchedule];
+    return events;
+}
+
+-(NSArray*) allStudents
+{
+    NSArray *students = [NSArray arrayWithArray:courseStudents];
+    return students;
 }
 
 -(NSString*) description {
