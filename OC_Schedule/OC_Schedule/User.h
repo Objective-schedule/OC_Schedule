@@ -38,8 +38,7 @@ extern NSString *const ATUserStatusInactive;
 
 -(void) addCourseToUser:(Course*) course;
 
--(void) listAllCourseEvents;
-
+-(NSArray*) allCourseEvents;
     
 
 

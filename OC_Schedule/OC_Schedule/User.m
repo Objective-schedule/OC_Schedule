@@ -68,7 +68,7 @@ userMessages = _userMessages, userRole = _userRole;
 }
 
 
--(void) listAllCourseEvents
+-(NSArray*) allCourseEvents
 {
     NSMutableArray *allEvents = [NSMutableArray array];
     for(Course* course in userCourses)
@@ -78,7 +78,9 @@ userMessages = _userMessages, userRole = _userRole;
             [allEvents addObject:event];
         }
     }
-    NSLog(@"%@", allEvents);
+    
+    //NSLog(@"%@", allEvents);
+    return allEvents;
 }
 
 @end

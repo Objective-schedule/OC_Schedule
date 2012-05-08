@@ -68,7 +68,7 @@ int main(int argc, const char * argv[])
         //NSLog(@"%@", [courseApputv allStudents]);
         
         //****List all courseEvents for student pedro 
-        //[pedro listAllCourseEvents]; 
+        //NSLog(@"%@",[pedro allCourseEvents]); 
         
         //*** initiate deService
        // Services *dbService = [[Services alloc]init];
