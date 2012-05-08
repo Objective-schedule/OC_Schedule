@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4175CDD15592D4B00602A7C /* Services.m in Sources */ = {isa = PBXBuildFile; fileRef = A4175CDC15592D4B00602A7C /* Services.m */; };
+		A4175CE115592D9500602A7C /* UserServices.m in Sources */ = {isa = PBXBuildFile; fileRef = A4175CE015592D9500602A7C /* UserServices.m */; };
 		CE1704101557CC7F002137ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE17040F1557CC7F002137ED /* Foundation.framework */; };
 		CE1704131557CC7F002137ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704121557CC7F002137ED /* main.m */; };
 		CE1704171557CC7F002137ED /* OC_Schedule.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE1704161557CC7F002137ED /* OC_Schedule.1 */; };
 		CE1704251557CCE7002137ED /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704201557CCE7002137ED /* Course.m */; };
 		CE1704261557CCE7002137ED /* CourseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704221557CCE7002137ED /* CourseEvent.m */; };
 		CE1704271557CCE7002137ED /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704241557CCE7002137ED /* User.m */; };
-		CE17042A1557CCF1002137ED /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704291557CCF1002137ED /* UserService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A4175CDB15592D4B00602A7C /* Services.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
+		A4175CDC15592D4B00602A7C /* Services.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Services.m; sourceTree = "<group>"; };
+		A4175CDF15592D9500602A7C /* UserServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserServices.h; sourceTree = "<group>"; };
+		A4175CE015592D9500602A7C /* UserServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserServices.m; sourceTree = "<group>"; };
 		CE17040B1557CC7F002137ED /* OC_Schedule */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OC_Schedule; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE17040F1557CC7F002137ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CE1704121557CC7F002137ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -41,8 +46,6 @@
 		CE1704221557CCE7002137ED /* CourseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseEvent.m; sourceTree = "<group>"; };
 		CE1704231557CCE7002137ED /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		CE1704241557CCE7002137ED /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		CE1704281557CCF1002137ED /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
-		CE1704291557CCF1002137ED /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +123,10 @@
 		CE17041E1557CC94002137ED /* service */ = {
 			isa = PBXGroup;
 			children = (
-				CE1704281557CCF1002137ED /* UserService.h */,
-				CE1704291557CCF1002137ED /* UserService.m */,
+				A4175CDB15592D4B00602A7C /* Services.h */,
+				A4175CDC15592D4B00602A7C /* Services.m */,
+				A4175CDF15592D9500602A7C /* UserServices.h */,
+				A4175CE015592D9500602A7C /* UserServices.m */,
 			);
 			name = service;
 			sourceTree = "<group>";
@@ -187,7 +192,8 @@
 				CE1704251557CCE7002137ED /* Course.m in Sources */,
 				CE1704261557CCE7002137ED /* CourseEvent.m in Sources */,
 				CE1704271557CCE7002137ED /* User.m in Sources */,
-				CE17042A1557CCF1002137ED /* UserService.m in Sources */,
+				A4175CDD15592D4B00602A7C /* Services.m in Sources */,
+				A4175CE115592D9500602A7C /* UserServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +284,7 @@
 				CE17041C1557CC7F002137ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
