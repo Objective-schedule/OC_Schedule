@@ -33,6 +33,7 @@ extern NSString *const ATUserStatusInactive;
 // override description
 
 // create dictionary with user
+-(NSDictionary*)saveUserAsDictionary:(User*)user;
 
 // create JSON from dictionary
 

@@ -39,6 +39,11 @@ userCourses = _userCourses, userMessages = _userMessages, userRole = _userRole;
 -(NSString*) description {
     return [NSString stringWithFormat:@"%@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole];
 }
+// create dictionary with user
+-(NSDictionary*)saveUserAsDictionary:(User*)user {
+    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", nil];
+    return dictionaryWithUser;
+}
 
 
 @end

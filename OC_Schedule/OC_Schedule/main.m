@@ -7,7 +7,7 @@
 #import "User.h"
 #import "Course.h"
 #import "CourseEvent.h"
-
+#import "Services.h"
 //
 int main(int argc, const char * argv[])
 {
@@ -36,6 +36,9 @@ int main(int argc, const char * argv[])
         NSLog(@"%@", lecture1);
         
         NSLog(@"%@", susan);
+        User *pedro = [User userWithUserEmail:@"pedronygren@gmail.com" username:@"pedro3" lastName:@"nygren" role:ATRoleStudent];
+        Services *post = [[Services alloc]init];
+        [post saveToDb:[pedro saveUserAsDictionary:pedro]];
         
            // NSLog(@"%@",[courseApputv asDictionary]);
         
