@@ -21,7 +21,7 @@
 @property(nonatomic, copy) NSArray *courseLitterature;
 @property(nonatomic, copy) NSDictionary *courseStudents;
 //@property(nonatomic, copy) NSArray *courseSchedule;
-
+// test
 // create course (in progress)
 // override init (done)
 +(id)courseWithCourseId:(NSString*)courseId 
