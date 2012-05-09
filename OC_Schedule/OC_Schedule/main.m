@@ -18,7 +18,7 @@ int main(int argc, const char * argv[])
         
     
         
-        User *susan = [User userWithUserEmail:@"flaca007@gmail.com" username:@"Susan" lastName:@"Sarabia" role:ATRoleStudent];
+        User *susan = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
         
         Course *courseApputv = [Course courseWithCourseId:@"AppUtv2011" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:400 courseteacher:@"Anders Carlsson" courseLitterature:litterature];
         
@@ -71,17 +71,24 @@ int main(int argc, const char * argv[])
         //NSLog(@"%@",[pedro allCourseEvents]); 
         
         //*** initiate deService
-       // Services *dbService = [[Services alloc]init];
-       
+        //Services *dbService = [[Services alloc]init];
+        
+          //***get unice doc from DB
+        //[dbService getUniqeDoc:@"2075c9bef00b28311ad7244b0d002480"];
+        
+        //***get all students from DB
+        //[dbService getAllStudents];
+        
         //**** Save student pedro to DB
-        // [dbService saveToDb:[pedro saveUserAsDictionary]];
+        //[dbService saveToDb:[pedro saveUserAsDictionary]];
        
         //*** Save course to DB
-        // [dbService saveToDb:[courseApputv asDictionary]];
+        //[dbService saveToDb:[courseApputv2 asDictionary]];
        
         //*** List course and courseEvents as dictionary
          //NSLog(@"%@",[courseApputv asDictionary]);
         
+                
     }
     return 0;
 }

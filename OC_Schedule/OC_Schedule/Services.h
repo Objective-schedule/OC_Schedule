@@ -20,4 +20,7 @@
 //post a user to db
 -(void)postUserToDb:(NSData*)jsonWithUser;
 
+-(void)getAllStudents;
+-(void)getUniqeDoc:(NSString*) dbId;
+
 @end
