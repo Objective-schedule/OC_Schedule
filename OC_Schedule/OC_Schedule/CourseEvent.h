@@ -16,26 +16,24 @@
 @property(nonatomic, copy) NSString *classRoom;
 @property(nonatomic, copy) NSString *alternativeTeacher;
 //@property(nonatomic) Course *myCourse;
-@property(nonatomic, copy) NSDate *eventDate;
-@property(nonatomic) NSUInteger eventStartTime;
-@property(nonatomic) NSUInteger eventStopTime;
+//@property(nonatomic, copy) NSDate *eventDate;
+@property(nonatomic) NSDate *eventStartDate;
+@property(nonatomic) NSDate *eventEndDate;
 @property(nonatomic, copy) NSString *eventReadingInstructions;
 
 // create course event
 // override init
-+(id)courseEventWithDate:(NSDate*)eventDate 
-                eventStartTime:(NSUInteger) eventStartTime
-                 eventStopTime:(NSUInteger) eventStopTime 
++(id)courseEventWithStartDate:(NSDate*) eventStartDate
+                 eventEndDate:(NSDate*) eventEndDate 
                      classRoom:(NSString*) classRoom 
             alternetiveTeacher:(NSString*) alternativeTeacher 
 eventReadingInstructions:(NSString*) eventReadingInstructions;
                          
 
--(id)initWithDate:(NSDate*)eventDate 
-               eventStartTime:(NSUInteger) eventStartTime
-                eventStopTime:(NSUInteger) eventStopTime 
-                    classRoom:(NSString*) classRoom 
-           alternetiveTeacher:(NSString*) alternativeTeacher 
+-(id)initWithStartDate:(NSDate*) eventStartDate
+            eventEndDate:(NSDate*) eventEndDate 
+               classRoom:(NSString*) classRoom 
+        ternetiveTeacher:(NSString*) alternativeTeacher 
 eventReadingInstructions:(NSString*) eventReadingInstructions;
                          
 

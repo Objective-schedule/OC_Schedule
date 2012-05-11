@@ -16,6 +16,7 @@
 @property(nonatomic, copy) NSString *courseDescription;
 @property(nonatomic, copy) NSString *courseName;
 @property(nonatomic, copy) NSString *courseId;
+
 @property(nonatomic) NSUInteger coursePoints;
 @property(nonatomic, copy) NSString *courseTeacher; //Should be a User instead
 @property(nonatomic, copy) NSArray *courseLitterature;
@@ -40,6 +41,9 @@
 
 
 -(void) addCourseEvent:(CourseEvent*) newEvent;
+
+-(NSInteger) startWeek;
+-(NSInteger) endWeek;
 
 -(NSArray*)getEventsAsDictionarys;
 

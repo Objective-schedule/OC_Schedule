@@ -24,12 +24,14 @@
     
 }
 //send user to db
--(void)postUserToDb:(NSData*)jsonWithUser {
+
+
+
+-(void)postUserToDb:(NSData*)jsonWithUser  {
     // db adress can be put in a constant variable
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://couchdb.webappse.webfactional.com/couchDb/schedule/"];
     
-    [urlAsString setString:@"http://127.0.0.1:5984/schema/"];
-    
+    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
     
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -60,10 +62,10 @@
                                                      encoding:NSUTF8StringEncoding];
              incomingData = nil;
              //NSLog(@"string has %lu characters", [string length]);
-             NSLog(@"save successfully!!! %@", string);
-             // NSLog(@"the data: %@", string);
+             //NSLog(@"save successfully!!! %@", string);
+              NSLog(@"the data: %@", string);
              
-         }
+                      }
          else if ([data length] == 0 && error == nil){
              NSLog(@"Nothing was downloaded.");
          }
@@ -72,7 +74,8 @@
          }
          
      }];
-    
+     
+
     [[NSRunLoop currentRunLoop]run];
 }
 -(void)getAllStudents
@@ -134,7 +137,7 @@
     // db adress can be put in a constant variable
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://couchdb.webappse.webfactional.com/couchDb/schedule/"];
     
-    [urlAsString setString:@"http://127.0.0.1:5984/schema/"];
+    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
     [urlAsString appendString:dbId];
     
     

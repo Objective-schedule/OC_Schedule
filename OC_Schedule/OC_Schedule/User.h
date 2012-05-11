@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Course;
+@class Course, CourseEvent;
 
 extern NSString *const ATRoleStudent;
 extern NSString *const ATRoleTeacher;
@@ -39,7 +39,12 @@ extern NSString *const ATUserStatusInactive;
 -(void) addCourseToUser:(Course*) course;
 
 -(NSArray*) allCourseEvents;
-    
 
+-(NSArray*) dailySchema:(NSDate*) dateToShow;
+
+-(NSArray*) weeklySchema:(NSInteger) weekNum;
+
+-(void) dailyInstructions:(NSDate*) dateToShow;
+-(void) weeklyInstructions:(NSInteger) weekNum;
 
 @end

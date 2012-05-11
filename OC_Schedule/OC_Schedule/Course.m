@@ -60,16 +60,36 @@
     
 }
 
+-(NSInteger) startWeek
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+   return [[calendar components: NSWeekCalendarUnit fromDate:[[courseSchedule objectAtIndex:0] eventStartDate]] week]; 
+   
+}
+
+
+-(NSInteger) endWeek
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    return [[calendar components: NSWeekCalendarUnit fromDate:[[courseSchedule lastObject] eventEndDate]] week];
+}
+
 -(void) addCourseEvent:(CourseEvent*) newEvent
 {
     
         //Init courseSchedule array when needed, instead of in init function?
-        NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
-        
-        [newArray addObject:newEvent];
-        
-        //Sort array?        
-        courseSchedule = newArray;
+   NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
+       
+   [newArray addObject:newEvent];
+    
+   NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+  
+   
+    //Sort array  
+    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
+    NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
+       
+   courseSchedule = [newArray sortedArrayUsingDescriptors:sortDecArray];
             
 }
 
@@ -125,7 +145,7 @@
 }
 
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %d\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kurstillfällen: %@" , self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, courseSchedule];//self.courseSchedule];
+    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %d\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kursstart vecka: %d\n Kursslut vecka: %d\n Kurstillfällen: %@" , self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, [self startWeek], [self endWeek], courseSchedule];
 }
 
 @end
