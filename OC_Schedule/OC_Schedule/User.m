@@ -89,7 +89,7 @@ userMessages = _userMessages, userRole = _userRole;
     NSString *dateToShowString = [dateToShow descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:
     [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
    
-    NSLog(@"TODAY -> %@", dateToShowString);
+    //NSLog(@"TODAY -> %@", dateToShowString);
     for(Course* course in userCourses)
     {
         for(CourseEvent *event in [course allEvents])
@@ -114,11 +114,11 @@ userMessages = _userMessages, userRole = _userRole;
     //NSDateComponents *components = [[NSDateComponents alloc] init];
     
     // create a calendar
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     if(weekNum == 0 || weekNum > 52)
     {   
         NSDate *today = [NSDate date];
-        weekNum = [[gregorian components: NSWeekCalendarUnit fromDate:today] week];
+        weekNum = [[calendar components: NSWeekCalendarUnit fromDate:today] week];
     }
     
     //NSLog(@"weekNumber: %ld", weekNum); 
@@ -127,10 +127,10 @@ userMessages = _userMessages, userRole = _userRole;
     {
         if(weekNum >= [course startWeek] && weekNum <= [course endWeek])
         {   
-            NSLog(@"%@", course);
+            //NSLog(@"%@", course);
             for(CourseEvent *event in [course allEvents])
             {   
-                if(weekNum == [[gregorian components: NSWeekCalendarUnit fromDate:[event eventStartDate]] week])
+                if(weekNum == [[calendar components: NSWeekCalendarUnit fromDate:[event eventStartDate]] week])
                 {
                     // NSLog(@"%@", [event eventDate]);
                     
@@ -146,26 +146,42 @@ userMessages = _userMessages, userRole = _userRole;
 
 -(void) dailyInstructions:(NSDate*) dateToShow
 {
+   
     NSArray *events = [NSArray arrayWithArray:[self dailySchema:dateToShow]];
     
-    for(CourseEvent *event in events)
+    
+    if ([events count] > 1)
     {
-        NSLog(@"%@\n", [event eventReadingInstructions]);
+        for(CourseEvent *event in events)
+        {
+            NSLog(@"%@ %@\n",[event eventStartDate], [event eventReadingInstructions]);
+        }
     }
+    else
+    {
+        NSLog(@"%@\n", [[events objectAtIndex:0] eventReadingInstructions]);
+    }
+    
+    
   
     
 }
 -(void) weeklyInstructions:(NSInteger) weekNum
 {
     NSArray *events = [NSArray arrayWithArray:[self weeklySchema:weekNum]];
-    NSMutableDictionary *eventDict = [NSMutableDictionary dictionary];
+
+    NSString *prevDay, *currentDay;
     
-    NSMutableString *currentDate;// = [NSMutableString ] [dateToShow descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:
-      //                            [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
-    
+    // *** Code for demo for displaying weekly intructions in the console
     for(CourseEvent *event in events)
     {
-                      
+        currentDay =  [[event eventStartDate] descriptionWithCalendarFormat:@"%A" timeZone:nil locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
+        
+        if(![prevDay isEqualToString:currentDay])
+         {  
+            NSLog(@"%@", currentDay);
+             prevDay = currentDay;
+         }
         NSLog(@"%@\n", [event eventReadingInstructions]);
     }
 }

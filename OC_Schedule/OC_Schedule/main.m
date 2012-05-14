@@ -33,22 +33,24 @@ int main(int argc, const char * argv[])
                                                    alternetiveTeacher:@"" 
                                              eventReadingInstructions:@"Read chap 1"];
         
-        CourseEvent *lecture2 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 12:15:00 +0000 ", @"2012-05-11"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-11"]] classRoom:@"402" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 4"]; 
+        CourseEvent *lecture2 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 12:15:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-14"]] classRoom:@"402" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 4"]; 
         
         CourseEvent *lecture3 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-03"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:15:00 +0000 ", @"2012-05-03"]] classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
         
-        CourseEvent *lecture4 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-11"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-11"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 2"]; 
+        CourseEvent *lecture4 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-14"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 2"]; 
         
         CourseEvent *lecture5 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 09:15:00 +0000 ", @"2012-05-10"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:15:00 +0000 ", @"2012-05-10"]] classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
         
-        CourseEvent *lecture6 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-15"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-15"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 4"]; 
+        CourseEvent *lecture6 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-15"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-15"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 5"]; 
         
-        CourseEvent *lecture7 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-11"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-11"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
+        CourseEvent *lecture7 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-14"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
+        
+         CourseEvent *lecture8 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-17"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-17"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 6"]; 
         
         
-        CourseEvent *lecture2_1 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-02-10"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-02-10"]] classRoom:@"503" alternetiveTeacher:@"" eventReadingInstructions:@"Obj chap 1"]; 
+        CourseEvent *lecture2_1 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-02-18"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-02-18"]] classRoom:@"503" alternetiveTeacher:@"" eventReadingInstructions:@"Obj chap 1"]; 
         
-        CourseEvent *lecture2_2 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 15:00:00 +0000 ", @"2012-02-10"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 16:00:00 +0000 ", @"2012-02-10"]] classRoom:@"504" alternetiveTeacher:@"" eventReadingInstructions:@"Obj chap 2"]; 
+        CourseEvent *lecture2_2 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 15:00:00 +0000 ", @"2012-02-18"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 16:00:00 +0000 ", @"2012-02-18"]] classRoom:@"504" alternetiveTeacher:@"" eventReadingInstructions:@"Obj chap 2"]; 
         
         //Adding coursEvents to Course
         [courseApputv addCourseEvent:lecture1];
@@ -58,6 +60,7 @@ int main(int argc, const char * argv[])
         [courseApputv addCourseEvent:lecture5];
         [courseApputv addCourseEvent:lecture6];
         [courseApputv addCourseEvent:lecture7];
+        [courseApputv addCourseEvent:lecture8];
         
         //Adding coursEvents to Course2
         [courseApputv2 addCourseEvent:lecture2_1];
@@ -106,13 +109,13 @@ int main(int argc, const char * argv[])
         //NSLog(@"Start week: %ld End week: %ld",[courseApputv startWeek], [courseApputv endWeek]);
         
         //***Show weekly schema
-        //NSLog(@"Veckoschema:\n%@", [pedro weeklySchema:0]);
+       // NSLog(@"Veckoschema:\n%@", [pedro weeklySchema:0]);
         
         //***Show daily schema
         //NSLog(@"Dagschema:\n%@", [pedro dailySchema:[NSDate date]]);
        
          //***Show daily readinginstructions
-        //[pedro dailyInstructions:[NSDate date]];
+        [pedro dailyInstructions:[NSDate date]];
         
         //***Show weekly readinginstructions
         //[pedro weeklyInstructions:0];
