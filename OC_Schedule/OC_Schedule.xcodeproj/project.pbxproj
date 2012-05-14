@@ -15,6 +15,7 @@
 		CE1704251557CCE7002137ED /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704201557CCE7002137ED /* Course.m */; };
 		CE1704261557CCE7002137ED /* CourseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704221557CCE7002137ED /* CourseEvent.m */; };
 		CE1704271557CCE7002137ED /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704241557CCE7002137ED /* User.m */; };
+		CEC3259915611F0C002CB0FE /* MainApp.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3259815611F0C002CB0FE /* MainApp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,8 @@
 		CE1704221557CCE7002137ED /* CourseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseEvent.m; sourceTree = "<group>"; };
 		CE1704231557CCE7002137ED /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		CE1704241557CCE7002137ED /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		CEC3259715611F0C002CB0FE /* MainApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainApp.h; sourceTree = "<group>"; };
+		CEC3259815611F0C002CB0FE /* MainApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainApp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,8 @@
 				CE1704221557CCE7002137ED /* CourseEvent.m */,
 				CE1704231557CCE7002137ED /* User.h */,
 				CE1704241557CCE7002137ED /* User.m */,
+				CEC3259715611F0C002CB0FE /* MainApp.h */,
+				CEC3259815611F0C002CB0FE /* MainApp.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				CE1704271557CCE7002137ED /* User.m in Sources */,
 				A4175CDD15592D4B00602A7C /* Services.m in Sources */,
 				A4175CE115592D9500602A7C /* UserServices.m in Sources */,
+				CEC3259915611F0C002CB0FE /* MainApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -147,6 +147,7 @@ userMessages = _userMessages, userRole = _userRole;
 -(void) dailyInstructions:(NSDate*) dateToShow
 {
    
+    NSLog(@"Daily instruct");
     NSArray *events = [NSArray arrayWithArray:[self dailySchema:dateToShow]];
     
     
@@ -163,11 +164,12 @@ userMessages = _userMessages, userRole = _userRole;
     }
     
     
-  
+    NSLog(@"\n");
     
 }
 -(void) weeklyInstructions:(NSInteger) weekNum
 {
+    NSLog(@"Weeky instruct");
     NSArray *events = [NSArray arrayWithArray:[self weeklySchema:weekNum]];
 
     NSString *prevDay, *currentDay;
@@ -184,5 +186,6 @@ userMessages = _userMessages, userRole = _userRole;
          }
         NSLog(@"%@\n", [event eventReadingInstructions]);
     }
+     NSLog(@"\n");
 }
 @end
