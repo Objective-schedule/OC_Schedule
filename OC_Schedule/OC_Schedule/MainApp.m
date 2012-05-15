@@ -26,7 +26,7 @@ User *activeUser;
     char inputUserId[40];
     NSLog(@"Hej vem är du?");
     scanf("%s", &inputUserId);
-    NSLog(@"\nDu är %s",inputUserId);
+    
     
 
     
@@ -36,6 +36,7 @@ User *activeUser;
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
+    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
     
     int inputUserMenue = 10;
     
@@ -61,10 +62,11 @@ User *activeUser;
             }
         }
         
-        NSLog(@"Visa dagschema: 1\n");
-        NSLog(@"Visa veckoshema: 2\n");
-        NSLog(@"Visa dagens läsinstruktioner: 3\n");
-        NSLog(@"Visa veckans läsinstruktioner: 4\n");
+        NSLog(@"Visa:\n");
+        NSLog(@"dagschema: 1\n");
+        NSLog(@"veckoshema: 2\n");
+        NSLog(@"dagens läsinstruktioner: 3\n");
+        NSLog(@"veckans läsinstruktioner: 4\n");
         NSLog(@"Avlsuta: 0\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue > 0);
