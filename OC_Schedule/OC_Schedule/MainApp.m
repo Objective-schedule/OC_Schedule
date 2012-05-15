@@ -85,7 +85,7 @@ User *activeUser;
    /// activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
     
     activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];//@"pedronygren@gmail.com"]];
-    NSLog(@"dict2: %@", [userService dictionaryFromDbJson:@"pedronygren@gmail.com"]);
+    NSLog(@"dict2: %@", [userService dictionaryFromDbJson:@"flaca007@gmail.com"]);
   
     NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
