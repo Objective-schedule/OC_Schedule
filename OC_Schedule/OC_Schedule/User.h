@@ -47,4 +47,6 @@ extern NSString *const ATUserStatusInactive;
 -(void) dailyInstructions:(NSDate*) dateToShow;
 -(void) weeklyInstructions:(NSInteger) weekNum;
 
++(id) userFromDictionary:(NSDictionary*) dictionary;
+
 @end

@@ -30,6 +30,15 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 @synthesize userName = _userName, lastName = _lastName, userEmail = _userEmail,
 userMessages = _userMessages, userRole = _userRole;
 
++(id) userFromDictionary:(NSDictionary*) dictionary {
+    //NSLog(@"dict3 from user: %@", dictionary);
+    //NSLog(@"email from user: %@", [dictionary valueForKey:@"email"]);
+    
+    return [self userWithUserEmail:[dictionary valueForKey:@"email"]
+                          username:[dictionary valueForKey:@"name"]
+                          lastName:[dictionary valueForKey:@"lastName"]
+                              role:[dictionary valueForKey:@"role"]];
+}
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role {
     return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent];
 }
@@ -45,6 +54,7 @@ userMessages = _userMessages, userRole = _userRole;
         _userRole = [role copy];
          userCourses = [NSArray array];
     }
+    NSLog(@"self:%@", self);
     return self;
 }
 -(NSString*) description {

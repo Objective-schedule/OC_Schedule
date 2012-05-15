@@ -8,6 +8,7 @@
 #import "Course.h"
 #import "CourseEvent.h"
 #import "Services.h"
+#import "UserServices.h"
 #import "MainApp.h"
 //
 int main(int argc, const char * argv[])
@@ -17,10 +18,12 @@ int main(int argc, const char * argv[])
         
         
         MainApp *mainApp = [[MainApp alloc] init];
+        
         User *myActiveUser;
         
         [mainApp initApp];
-        [mainApp loadUserData:@"Test"];
+        
+        //[mainApp loadUserData:@"Test"];
         
         myActiveUser = [mainApp thisActiveUser];
         

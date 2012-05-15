@@ -10,6 +10,7 @@
 #import "User.h"
 #import "Course.h"
 #import "CourseEvent.h"
+#import "UserServices.h"
 
 NSArray *allUsers, *allCourses;
 
@@ -26,7 +27,7 @@ User *activeUser;
     char inputUserId[40];
     NSLog(@"Hej vem är du?");
     scanf("%s", &inputUserId);
-    
+    [self loadUserData:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
     
 
     
@@ -77,10 +78,15 @@ User *activeUser;
 
 -(void)loadUserData:(NSString*) userid
 {   
+    // UserService
+    UserServices *userService = [[UserServices alloc]init];
     //NSLog(@"LoadUserData");
     //*** Test data
-    activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
+   /// activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
     
+    activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];//@"pedronygren@gmail.com"]];
+    NSLog(@"dict2: %@", [userService dictionaryFromDbJson:@"pedronygren@gmail.com"]);
+  
     NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
@@ -118,8 +124,7 @@ User *activeUser;
         
           [courseApputv addStudentToCourse:activeUser];
           [activeUser addCourseToUser:courseApputv];
-    
-
+    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
 }
 
 -(void)loadAllData
