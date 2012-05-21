@@ -15,6 +15,7 @@
 		CE1704251557CCE7002137ED /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704201557CCE7002137ED /* Course.m */; };
 		CE1704261557CCE7002137ED /* CourseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704221557CCE7002137ED /* CourseEvent.m */; };
 		CE1704271557CCE7002137ED /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1704241557CCE7002137ED /* User.m */; };
+		CE5FE768156A3D180061F4B1 /* CourseServices.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FE767156A3D180061F4B1 /* CourseServices.m */; };
 		CEC3259915611F0C002CB0FE /* MainApp.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC3259815611F0C002CB0FE /* MainApp.m */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		CE1704221557CCE7002137ED /* CourseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseEvent.m; sourceTree = "<group>"; };
 		CE1704231557CCE7002137ED /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		CE1704241557CCE7002137ED /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		CE5FE766156A3D180061F4B1 /* CourseServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseServices.h; sourceTree = "<group>"; };
+		CE5FE767156A3D180061F4B1 /* CourseServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseServices.m; sourceTree = "<group>"; };
 		CEC3259715611F0C002CB0FE /* MainApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainApp.h; sourceTree = "<group>"; };
 		CEC3259815611F0C002CB0FE /* MainApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainApp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +134,8 @@
 				A4175CDB15592D4B00602A7C /* Services.h */,
 				A4175CDC15592D4B00602A7C /* Services.m */,
 				A4175CDF15592D9500602A7C /* UserServices.h */,
+				CE5FE766156A3D180061F4B1 /* CourseServices.h */,
+				CE5FE767156A3D180061F4B1 /* CourseServices.m */,
 				A4175CE015592D9500602A7C /* UserServices.m */,
 			);
 			name = service;
@@ -200,6 +205,7 @@
 				A4175CDD15592D4B00602A7C /* Services.m in Sources */,
 				A4175CE115592D9500602A7C /* UserServices.m in Sources */,
 				CEC3259915611F0C002CB0FE /* MainApp.m in Sources */,
+				CE5FE768156A3D180061F4B1 /* CourseServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

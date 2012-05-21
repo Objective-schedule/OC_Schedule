@@ -12,6 +12,7 @@
 
 @synthesize databaseAddress = _databaseAddress;
 
+// createJsonFromDictionary , saveToDb, postUserToDb: only admin
 // create json from dictionary
 -(NSData*)createJsonFromDictionary:(NSDictionary*)dictionary {
     

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class User, Course, CourseEvent;
+@class User, Course, CourseEvent, CourseServices;
 
 @interface MainApp : NSObject
 
@@ -18,7 +18,7 @@
 -(void) initMenu;
 
 -(void)loadUserData:(NSString*) userid;
-
+-(void)loadCourseData:(NSString*) courseid;
 -(void)loadAllData;
 
 -(User*) thisActiveUser;

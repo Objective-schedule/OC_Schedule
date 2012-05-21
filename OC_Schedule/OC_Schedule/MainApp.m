@@ -11,10 +11,12 @@
 #import "Course.h"
 #import "CourseEvent.h"
 #import "UserServices.h"
+#import "CourseServices.h"
 
 NSArray *allUsers, *allCourses;
 
 User *activeUser;
+Course *activeCourse;
 
 @implementation MainApp
 
@@ -24,11 +26,15 @@ User *activeUser;
 {
     
     
-    char inputUserId[40];
-    NSLog(@"Hej vem är du?");
-    scanf("%s", &inputUserId);
-    [self loadUserData:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
-    
+    //char inputUserId[40];
+    char inputCourseId[40];
+   // NSLog(@"Hej vem är du?");
+    //scanf("%s", &inputUserId);
+    //[self loadUserData:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
+    NSLog(@"Give me courseid!");
+    scanf("%s", &inputCourseId);
+    [self loadCourseData:[NSString stringWithCString:inputCourseId encoding:NSUTF8StringEncoding]];
+
 
     
 }
@@ -81,17 +87,18 @@ User *activeUser;
     // UserService
     UserServices *userService = [[UserServices alloc]init];
     //NSLog(@"LoadUserData");
+    
     //*** Test data
    /// activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
     
     activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];//@"pedronygren@gmail.com"]];
     NSLog(@"dict2: %@", [userService dictionaryFromDbJson:userid]);
   
-    NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-           [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
+   // NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
+   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+     //      [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
 
-     Course *courseApputv = [Course courseWithCourseId:@"AppUtv2011" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:400 courseteacher:@"Anders Carlsson" courseLitterature:litterature];
+   /*  Course *courseApputv = [Course courseWithCourseId:@"AppUtv2011" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:400 courseteacher:@"Anders Carlsson" courseLitterature:litterature];
             CourseEvent *lecture1 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-09"]] 
                                             eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 11:15:00 +0000 ", @"2012-05-09"]] 
                                                            classRoom:@"401" 
@@ -123,8 +130,14 @@ User *activeUser;
           [courseApputv addCourseEvent:lecture8];
         
           [courseApputv addStudentToCourse:activeUser];
-          [activeUser addCourseToUser:courseApputv];
+          [activeUser addCourseToUser:courseApputv]; */
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
+}
+-(void)loadCourseData:(NSString*) courseid
+{
+    CourseServices *courseService = [[CourseServices alloc]init];
+    activeCourse = [Course courseFromDictionary:[courseService dictionaryFromDbJson:courseid]];//@"pedronygren@gmail.com"]];
+    NSLog(@"dict2: %@", [courseService dictionaryFromDbJson:courseid]);
 }
 
 -(void)loadAllData

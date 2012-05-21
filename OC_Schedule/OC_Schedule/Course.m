@@ -18,41 +18,62 @@
     NSArray *courseSchedule, *courseStudents;
 }
 
-@synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseLitterature = _courseLitterature;
+@synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseLitterature = _courseLitterature, db_courseId = _db_courseId, db_courseRev = _db_courseRev;
+
++(id) courseFromDictionary:(NSDictionary*) dictionary {
+    //NSLog(@"dict3 from user: %@", dictionary);
+    //NSLog(@"email from user: %@", [dictionary valueForKey:@"email"]);
+    
+    return [self courseWithCourseId:[dictionary valueForKey:@"courseId"]
+                          coursename:[dictionary valueForKey:@"courseName"]
+                          coursedescription:[dictionary valueForKey:@"courseDescription"]
+                              coursepoints:[dictionary valueForKey:@"coursePoints"]
+                             courseteacher: [dictionary valueForKey:@"courseTeacher"]
+                  courseLitterature: [dictionary valueForKey:@"courseLitterature"]
+                        db_courseId: [dictionary valueForKey:@"_id"]
+                       db_courseRev: [dictionary valueForKey:@"_rev"]];
+                           
+}
 
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
       coursedescription:(NSString*)courseDescription 
-           coursepoints:(NSUInteger)coursePoints 
-          courseteacher:(NSString*) courseTeacher 
-      courseLitterature:(NSArray*) courseLitterature
+           coursepoints:(NSString*)coursePoints 
+          courseteacher:(NSString*)courseTeacher 
+      courseLitterature:(NSArray*)courseLitterature
+            db_courseId:(NSString*)db_courseId
+           db_courseRev:(NSString*)db_courseRev;
 {
 
-    return [[self alloc] initWithCourseId:courseId coursename:courseName coursedescription:courseDescription coursepoints:coursePoints courseteacher:courseTeacher courseLitterature:courseLitterature];
+    return [[self alloc] initWithCourseId:courseId coursename:courseName coursedescription:courseDescription coursepoints:coursePoints courseteacher:courseTeacher courseLitterature:courseLitterature db_courseId: db_courseId db_courseRev: db_courseRev];
     
 }
 
 -(id)init
 {
-    return [self initWithCourseId:@"no-courseId" coursename:@"no-courseName" coursedescription:@"no description" coursepoints:0 courseteacher:@"No-teacher" courseLitterature:NULL];
+    return [self initWithCourseId:@"no-courseId" coursename:@"no-courseName" coursedescription:@"no description" coursepoints:@"0" courseteacher:@"No-teacher" courseLitterature:NULL db_courseId:@"no_id" db_courseRev: @"no-_rev"];
 }
 
 -(id)initWithCourseId:(NSString*)courseId 
            coursename:(NSString*)courseName 
     coursedescription:(NSString*)courseDescription 
-         coursepoints:(NSUInteger)coursePoints 
-        courseteacher:(NSString*) courseTeacher 
-    courseLitterature:(NSArray*) courseLitterature
+         coursepoints:(NSString*)coursePoints 
+        courseteacher:(NSString*)courseTeacher 
+    courseLitterature:(NSArray*)courseLitterature
+          db_courseId:(NSString*)db_courseId
+         db_courseRev:(NSString*)db_courseRev
 {
     if(self = [super init]) 
     {
         _courseId = [courseId copy];
         _courseName = [courseName copy];
         _courseDescription =[courseDescription copy];
-        _coursePoints = coursePoints;
+        _coursePoints = [coursePoints copy];
         _courseTeacher = [courseTeacher copy]; //Should be User object
         _courseLitterature = [courseLitterature copy];
         courseSchedule = [NSArray array];
+        _db_courseId = [db_courseId copy];
+        _db_courseRev = [db_courseRev copy];
         
             
     }
@@ -101,7 +122,8 @@
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                                                 self.courseId, @"courseId",
                                                self.courseName, @"courseName",
-                    [NSNumber numberWithInt:self.coursePoints], @"coursePoints",
+                   // [NSNumber numberWithInt:self.coursePoints], @"coursePoints",
+                                                self.coursePoints, @"coursePoints",
                                        self.courseLitterature, @"courseLitterature",
                                            self.courseTeacher, @"courseTeacher",
                                        self.courseDescription, @"courseDescription", 
