@@ -21,8 +21,9 @@
 
 
 //post a user to db-
-
 -(void)postUserToDb:(NSData*)jsonWithUser;
+//post a course to db-
+-(void)postCourseToDb:(NSData*)jsonWithCourse;
 
 -(void)getAllStudents;
 -(void)getUniqeDoc:(NSString*) dbId;

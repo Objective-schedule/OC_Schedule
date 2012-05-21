@@ -61,7 +61,7 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
         _status = [status copy];
         
     }
-    NSLog(@"self:%@", self);
+    //NSLog(@"self:%@", self);
     return self;
 }
 -(NSString*) description {

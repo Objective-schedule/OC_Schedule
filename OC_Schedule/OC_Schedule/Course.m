@@ -20,7 +20,7 @@
 
 @synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseLitterature = _courseLitterature, db_courseId = _db_courseId, db_courseRev = _db_courseRev;
 
-+(id) courseFromDictionary:(NSDictionary*) dictionary {
+/*+(id) courseFromDictionary:(NSDictionary*) dictionary {
     //NSLog(@"dict3 from user: %@", dictionary);
     //NSLog(@"email from user: %@", [dictionary valueForKey:@"email"]);
     
@@ -33,25 +33,25 @@
                         db_courseId: [dictionary valueForKey:@"_id"]
                        db_courseRev: [dictionary valueForKey:@"_rev"]];
                            
-}
+}*/
 
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
       coursedescription:(NSString*)courseDescription 
            coursepoints:(NSString*)coursePoints 
           courseteacher:(NSString*)courseTeacher 
-      courseLitterature:(NSArray*)courseLitterature
-            db_courseId:(NSString*)db_courseId
-           db_courseRev:(NSString*)db_courseRev;
+      courseLitterature:(NSArray*)courseLitterature;
+           // db_courseId:(NSString*)db_courseId
+           //db_courseRev:(NSString*)db_courseRev;
 {
 
-    return [[self alloc] initWithCourseId:courseId coursename:courseName coursedescription:courseDescription coursepoints:coursePoints courseteacher:courseTeacher courseLitterature:courseLitterature db_courseId: db_courseId db_courseRev: db_courseRev];
+    return [[self alloc] initWithCourseId:courseId coursename:courseName coursedescription:courseDescription coursepoints:coursePoints courseteacher:courseTeacher courseLitterature:courseLitterature];// db_courseId: db_courseId db_courseRev: db_courseRev];
     
 }
 
 -(id)init
 {
-    return [self initWithCourseId:@"no-courseId" coursename:@"no-courseName" coursedescription:@"no description" coursepoints:@"0" courseteacher:@"No-teacher" courseLitterature:NULL db_courseId:@"no_id" db_courseRev: @"no-_rev"];
+    return [self initWithCourseId:@"no-courseId" coursename:@"no-courseName" coursedescription:@"no description" coursepoints:@"0" courseteacher:@"No-teacher" courseLitterature:NULL]; //db_courseId:@"no_id" db_courseRev: @"no-_rev"];
 }
 
 -(id)initWithCourseId:(NSString*)courseId 
@@ -60,8 +60,8 @@
          coursepoints:(NSString*)coursePoints 
         courseteacher:(NSString*)courseTeacher 
     courseLitterature:(NSArray*)courseLitterature
-          db_courseId:(NSString*)db_courseId
-         db_courseRev:(NSString*)db_courseRev
+         // db_courseId:(NSString*)db_courseId
+         //db_courseRev:(NSString*)db_courseRev
 {
     if(self = [super init]) 
     {
@@ -72,8 +72,8 @@
         _courseTeacher = [courseTeacher copy]; //Should be User object
         _courseLitterature = [courseLitterature copy];
         courseSchedule = [NSArray array];
-        _db_courseId = [db_courseId copy];
-        _db_courseRev = [db_courseRev copy];
+       // _db_courseId = [db_courseId copy];
+       // _db_courseRev = [db_courseRev copy];
         
             
     }
@@ -128,7 +128,11 @@
                                            self.courseTeacher, @"courseTeacher",
                                        self.courseDescription, @"courseDescription", 
                                         courseEvents, @"courseSchema", nil];
+    
+                                       // courseStudents, @"courseStudents", nil]; // does not work
                                     //Studentlist should be added
+    //NSLog(@"courseStudents111111: %@", data);
+
     return data;
     
 }
@@ -152,6 +156,8 @@
     [newArray addObject:user];
     
     courseStudents = newArray;
+    //NSLog(@"courseStudents: %@", courseStudents);
+    
 }
 
 -(NSArray*) allEvents

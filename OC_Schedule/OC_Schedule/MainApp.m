@@ -26,14 +26,14 @@ Course *activeCourse;
 {
     
     
-    //char inputUserId[40];
-    char inputCourseId[40];
-   // NSLog(@"Hej vem är du?");
-    //scanf("%s", &inputUserId);
-    //[self loadUserData:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
-    NSLog(@"Give me courseid!");
-    scanf("%s", &inputCourseId);
-    [self loadCourseData:[NSString stringWithCString:inputCourseId encoding:NSUTF8StringEncoding]];
+    char inputUserId[40];
+   // char inputCourseId[40];
+    NSLog(@"Hej vem är du?");
+    scanf("%s", &inputUserId);
+    [self loadUserData:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
+    //NSLog(@"Give me courseid!");
+    //scanf("%s", &inputCourseId);
+    //[self loadCourseData:[NSString stringWithCString:inputCourseId encoding:NSUTF8StringEncoding]];
 
 
     
@@ -89,24 +89,24 @@ Course *activeCourse;
     //NSLog(@"LoadUserData");
     
     //*** Test data
-   /// activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
+   // activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
     
     activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];//@"pedronygren@gmail.com"]];
     NSLog(@"dict2: %@", [userService dictionaryFromDbJson:userid]);
   
-   // NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
-   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-     //      [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
+    NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+           [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
 
-   /*  Course *courseApputv = [Course courseWithCourseId:@"AppUtv2011" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:400 courseteacher:@"Anders Carlsson" courseLitterature:litterature];
+    Course *courseApputv = [Course courseWithCourseId:@"AppUtv2012" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:@"400" courseteacher:@"Anders Carlsson" courseLitterature:litterature];
             CourseEvent *lecture1 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-09"]] 
-                                            eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 11:15:00 +0000 ", @"2012-05-09"]] 
+                                            eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 11:15:00 +0000 ", @"2012-10-31"]] 
                                                            classRoom:@"401" 
                                                       alternetiveTeacher:@"" 
                                                  eventReadingInstructions:@"Read chap 1"];
            
             CourseEvent *lecture2 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 12:15:00 +0000 ", @"2012-05-21"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-06-01"]] classRoom:@"402" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 4"]; 
-            
+            /*
             CourseEvent *lecture3 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-03"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:15:00 +0000 ", @"2012-05-03"]] classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
             
            CourseEvent *lecture4 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-14"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 2"]; 
@@ -117,27 +117,33 @@ Course *activeCourse;
             
           CourseEvent *lecture7 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-14"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
            
-            CourseEvent *lecture8 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-17"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-17"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 6"]; 
+            CourseEvent *lecture8 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-17"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-17"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 6"]; */
     
     //Adding coursEvents to Course
           [courseApputv addCourseEvent:lecture1];
           [courseApputv addCourseEvent:lecture2];
+             /*
           [courseApputv addCourseEvent:lecture3];
           [courseApputv addCourseEvent:lecture4];
           [courseApputv addCourseEvent:lecture5];
           [courseApputv addCourseEvent:lecture6];
           [courseApputv addCourseEvent:lecture7];
           [courseApputv addCourseEvent:lecture8];
-        
-          [courseApputv addStudentToCourse:activeUser];
-          [activeUser addCourseToUser:courseApputv]; */
+        */
+          
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
+    
+    // problem in adding student to course
+    //[courseApputv addStudentToCourse:activeUser];
+   // [activeUser addCourseToUser:courseApputv]; 
+    //Services *service = [[Services alloc]init];
+    //[service saveToDb:[courseApputv asDictionary]];
 }
 -(void)loadCourseData:(NSString*) courseid
 {
-    CourseServices *courseService = [[CourseServices alloc]init];
-    activeCourse = [Course courseFromDictionary:[courseService dictionaryFromDbJson:courseid]];//@"pedronygren@gmail.com"]];
-    NSLog(@"dict2: %@", [courseService dictionaryFromDbJson:courseid]);
+   // CourseServices *courseService = [[CourseServices alloc]init];
+   // activeCourse = [Course courseFromDictionary:[courseService dictionaryFromDbJson:courseid]];//@"pedronygren@gmail.com"]];
+  //  NSLog(@"dict2: %@", [courseService dictionaryFromDbJson:courseid]);
 }
 
 -(void)loadAllData
