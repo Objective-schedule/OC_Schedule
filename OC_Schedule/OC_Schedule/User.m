@@ -22,13 +22,13 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 @implementation User
 
 {
-   NSArray *userCourses; 
+    NSArray *userCourses;
 }
 
 
 
 @synthesize userName = _userName, lastName = _lastName, userEmail = _userEmail,
-userMessages = _userMessages, userRole = _userRole;
+userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db_rev, status = _status;
 
 +(id) userFromDictionary:(NSDictionary*) dictionary {
     //NSLog(@"dict3 from user: %@", dictionary);
@@ -37,32 +37,39 @@ userMessages = _userMessages, userRole = _userRole;
     return [self userWithUserEmail:[dictionary valueForKey:@"email"]
                           username:[dictionary valueForKey:@"name"]
                           lastName:[dictionary valueForKey:@"lastName"]
-                              role:[dictionary valueForKey:@"role"]];
+                              role:[dictionary valueForKey:@"role"]
+                             db_id: [dictionary valueForKey:@"_id"]
+                            db_rev: [dictionary valueForKey:@"_rev"]
+                            status: [dictionary valueForKey:@"status"]];
 }
-+(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role {
-    return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent];
++(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status {
+    return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent db_id:db_id db_rev: db_rev status:status];
 }
 -(id) init {
-    return [self initWithUserEmail:@"no-user-email" username:@"no-username" lastName:@"no-userlastName" role:@"no-user-role"];
+    return [self initWithUserEmail:@"no-user-email" username:@"no-username" lastName:@"no-userlastName" role:@"no-user-role" db_id: @"no _id" db_rev:@"no _rev" status:@"no-status"];
 }
 
--(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role {
+-(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status{
     if(self = [super init]) {
         _userName = [userName copy];
         _lastName = [lastname copy];
         _userEmail = [userEmail copy];
         _userRole = [role copy];
          userCourses = [NSArray array];
+        _db_id = [db_id copy];
+        _db_rev = [db_rev copy];
+        _status = [status copy];
+        
     }
     NSLog(@"self:%@", self);
     return self;
 }
 -(NSString*) description {
-    return [NSString stringWithFormat:@"%@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole];
+    return [NSString stringWithFormat:@"%@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status];
 }
 // create dictionary with user
 -(NSDictionary*)saveUserAsDictionary {
-    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", nil];
+    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status", nil];
     return dictionaryWithUser;
 }
 

@@ -29,7 +29,7 @@
 
 -(void)postUserToDb:(NSData*)jsonWithUser  {
     // db adress can be put in a constant variable
-    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://couchdb.webappse.webfactional.com/couchDb/schedule/"];
+    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];
     
     //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
     

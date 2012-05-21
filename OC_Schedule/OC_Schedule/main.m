@@ -23,13 +23,12 @@ int main(int argc, const char * argv[])
         
         [mainApp initApp];
         
-        //[mainApp loadUserData:@"Test"];
+        //[mainApp loadUserData:@"Test"]; still no
         
         myActiveUser = [mainApp thisActiveUser];
         
-        //[myActiveUser weeklyInstructions:20];
+        //[myActiveUser weeklyInstructions:20]; still no
         [mainApp initMenu];
-                          
 
                 
     }

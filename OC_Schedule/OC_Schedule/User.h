@@ -22,15 +22,22 @@ extern NSString *const ATUserStatusInactive;
 @property(nonatomic, copy) NSString *userName;
 @property(nonatomic, copy) NSString *lastName;
 @property(nonatomic, copy) NSString *userEmail;
+@property(nonatomic, copy) NSString *db_id;
+@property(nonatomic, copy) NSString *db_rev;
+@property(nonatomic, copy) NSString *status;
+
+
+
+
 
 //@property(nonatomic, copy) NSArray *userCourses;
 @property(nonatomic, copy) NSArray *userMessages;
 
 // create user with role (done)
 // override init (done)
-+(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role;
++(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
 
--(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role;
+-(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
 // override description
 
 // create dictionary with user
