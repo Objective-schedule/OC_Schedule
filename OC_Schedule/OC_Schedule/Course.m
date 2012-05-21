@@ -131,7 +131,7 @@
     
                                        // courseStudents, @"courseStudents", nil]; // does not work
                                     //Studentlist should be added
-    //NSLog(@"courseStudents111111: %@", data);
+    //NSLog(@"courseStudents111111: %@", courseStudents);
 
     return data;
     
