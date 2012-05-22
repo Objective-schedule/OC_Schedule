@@ -24,6 +24,8 @@
     NSLog(@"dictionary from savetodb: %@", dict);
     //[self postUserToDb:[self createJsonFromDictionary:dict]];
     [self postCourseToDb:[self createJsonFromDictionary:dict]];
+    
+    // take away depending of update or new user, and course(_id, _rev) check if _id is empty
 }
 //send course to db
 

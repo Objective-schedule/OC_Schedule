@@ -134,10 +134,12 @@ Course *activeCourse;
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
     
     // problem in adding student to course
+    
     //[courseApputv addStudentToCourse:activeUser];
-   // [activeUser addCourseToUser:courseApputv]; 
-    //Services *service = [[Services alloc]init];
-    //[service saveToDb:[courseApputv asDictionary]];
+    //[activeUser addCourseToUser:courseApputv];
+    
+    Services *service = [[Services alloc]init];
+    [service saveToDb:[courseApputv asDictionary]];
 }
 -(void)loadCourseData:(NSString*) courseid
 {

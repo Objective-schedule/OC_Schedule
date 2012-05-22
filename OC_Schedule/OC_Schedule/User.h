@@ -43,6 +43,8 @@ extern NSString *const ATUserStatusInactive;
 // create dictionary with user
 -(NSDictionary*)saveUserAsDictionary;
 
+-(NSDictionary*)updateUserAsDictionary;
+
 -(void) addCourseToUser:(Course*) course;
 
 -(NSArray*) allCourseEvents;

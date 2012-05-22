@@ -67,8 +67,13 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
 -(NSString*) description {
     return [NSString stringWithFormat:@"%@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status];
 }
-// create dictionary with user
+// create new dictionary with new user
 -(NSDictionary*)saveUserAsDictionary {
+    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.status, @"status", nil];
+    return dictionaryWithUser;
+}
+// create new dictionary with update user
+-(NSDictionary*)updateUserAsDictionary {
     NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status", nil];
     return dictionaryWithUser;
 }

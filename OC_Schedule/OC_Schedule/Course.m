@@ -8,7 +8,7 @@
 
 #import "Course.h"
 #import "CourseEvent.h"
-
+#import "User.h"
 
 @implementation Course
 //Created by Kenth again....
@@ -117,7 +117,8 @@
 -(NSDictionary*) asDictionary
 {   
     
-    NSArray* courseEvents = [NSArray  arrayWithArray:[self getEventsAsDictionarys]];
+    NSArray *courseEvents = [NSArray  arrayWithArray:[self getEventsAsDictionarys]];
+    NSArray *studentListinCourse = [NSArray arrayWithArray:[self getStudentsIds]];
     
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
                                                 self.courseId, @"courseId",
@@ -127,17 +128,13 @@
                                        self.courseLitterature, @"courseLitterature",
                                            self.courseTeacher, @"courseTeacher",
                                        self.courseDescription, @"courseDescription", 
-                                        courseEvents, @"courseSchema", nil];
-    
-                                       // courseStudents, @"courseStudents", nil]; // does not work
-                                    //Studentlist should be added
-    //NSLog(@"courseStudents111111: %@", courseStudents);
-
+                                        courseEvents, @"courseSchema",    
+                                       studentListinCourse, @"courseStudents", nil];
     return data;
     
 }
 
--(NSArray*)getEventsAsDictionarys;
+-(NSArray*)getEventsAsDictionarys
 {
      NSMutableArray* eventArray = [NSMutableArray array];
     
@@ -146,6 +143,16 @@
         [eventArray addObject:[event asDictionary]]; 
     }
     return eventArray;
+}
+-(NSArray*)getStudentsIds
+{
+    NSMutableArray *studentIdList = [NSMutableArray array];
+    for(User *student in courseStudents)
+    {
+        [studentIdList addObject:student.db_id];
+    }
+    return studentIdList;
+    
 }
 
 -(void) addStudentToCourse:(User*) user

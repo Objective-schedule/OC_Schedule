@@ -56,7 +56,7 @@
 -(NSInteger) endWeek;
 
 -(NSArray*)getEventsAsDictionarys;
-
+-(NSArray*)getStudentsIds;
 -(NSDictionary*) asDictionary;
 
 // create dictionary with course
