@@ -172,6 +172,8 @@ Course *activeCourse;
     Services *service = [[Services alloc]init];
     [service saveToDb:[student saveUserAsDictionary]];
     
+    // get back the id and rev to update the newly created user
+    [student updateUserAsDictionary];// wrong, needs to get the return dictionary from sateToDb
 }
 -(void)loadCourseData:(NSString*) courseid
 {

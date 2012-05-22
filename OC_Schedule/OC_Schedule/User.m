@@ -97,6 +97,7 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
 
     NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status",courseListinStudent, @"studentCourses", nil];
     
+    NSLog(@"dictionaryWithUser update _id, _rev: %@",dictionaryWithUser);
     return dictionaryWithUser;
 }
 
