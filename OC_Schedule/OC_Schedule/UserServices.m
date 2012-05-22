@@ -42,7 +42,7 @@
         // Check for problems
         if (requestError != nil) {
             //
-            NSLog(@"something is wrong");
+            NSLog(@"something is wrong: %@", requestError);
             
         }
     }

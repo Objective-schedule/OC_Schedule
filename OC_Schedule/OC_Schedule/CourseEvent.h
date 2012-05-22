@@ -20,6 +20,8 @@
 @property(nonatomic) NSDate *eventStartDate;
 @property(nonatomic) NSDate *eventEndDate;
 @property(nonatomic, copy) NSString *eventReadingInstructions;
+@property(nonatomic, copy) NSString *eventDescription;
+
 
 // create course event
 // override init
@@ -27,14 +29,17 @@
                  eventEndDate:(NSDate*) eventEndDate 
                      classRoom:(NSString*) classRoom 
             alternetiveTeacher:(NSString*) alternativeTeacher 
-eventReadingInstructions:(NSString*) eventReadingInstructions;
+eventReadingInstructions:(NSString*) eventReadingInstructions
+eventDescription:(NSString*)eventDescription;
                          
 
 -(id)initWithStartDate:(NSDate*) eventStartDate
             eventEndDate:(NSDate*) eventEndDate 
                classRoom:(NSString*) classRoom 
         ternetiveTeacher:(NSString*) alternativeTeacher 
-eventReadingInstructions:(NSString*) eventReadingInstructions;
+eventReadingInstructions:(NSString*) eventReadingInstructions
+      eventDescription:(NSString*)eventDescription;
+
                          
 
 

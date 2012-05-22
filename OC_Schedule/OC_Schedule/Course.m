@@ -97,7 +97,14 @@
 -(NSInteger) startWeek
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-   return [[calendar components: NSWeekCalendarUnit fromDate:[[courseSchedule objectAtIndex:0] eventStartDate]] week]; 
+    if([courseSchedule count] != 0)
+    {
+        return [[calendar components: NSWeekCalendarUnit fromDate:[[courseSchedule objectAtIndex:0] eventStartDate]] week];
+    }
+    else
+    {
+        return 0;
+    }
    
 }
 
@@ -105,7 +112,16 @@
 -(NSInteger) endWeek
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    return [[calendar components: NSWeekCalendarUnit fromDate:[[courseSchedule lastObject] eventEndDate]] week];
+    if([courseSchedule count] != 0)
+    {
+        return [[calendar components: NSWeekCalendarUnit fromDate:[[courseSchedule lastObject] eventEndDate]] week];
+    }
+    else
+    {
+        return 0;
+    }
+    
+
 }
 
 -(void) addCourseEvent:(CourseEvent*) newEvent
