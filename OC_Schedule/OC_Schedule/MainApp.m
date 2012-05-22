@@ -64,6 +64,9 @@ Course *activeCourse;
                 case 4:
                     [activeUser weeklyInstructions:thisWeekNum];
                     break;
+                case 5:
+                    [self newStudent];
+                    break;
                 default:
                     break;
             }
@@ -74,6 +77,7 @@ Course *activeCourse;
         NSLog(@"veckoshema: 2\n");
         NSLog(@"dagens läsinstruktioner: 3\n");
         NSLog(@"veckans läsinstruktioner: 4\n");
+        NSLog(@"create new user: 5\n");
         NSLog(@"Avlsuta: 0\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue > 0);
@@ -145,6 +149,29 @@ Course *activeCourse;
     
    // Services *service = [[Services alloc]init];
     //[service saveToDb:[courseApputv asDictionary]];
+}
+-(void)newStudent {
+    
+    char e[40];
+    char n[40];
+    char l[40];
+    
+   
+    NSLog(@"email?");
+    scanf("%s", &e);
+    NSLog(@"Name");
+    scanf("%s", &n);
+    NSLog(@"Last Name");
+    scanf("%s", &l);
+    
+    NSString *email = [NSString stringWithCString:e encoding:NSUTF8StringEncoding];
+    NSString *name = [NSString stringWithCString:n encoding:NSUTF8StringEncoding];
+    NSString *lastName = [NSString stringWithCString:l encoding:NSUTF8StringEncoding];
+
+    User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
+    Services *service = [[Services alloc]init];
+    [service saveToDb:[student saveUserAsDictionary]];
+    
 }
 -(void)loadCourseData:(NSString*) courseid
 {

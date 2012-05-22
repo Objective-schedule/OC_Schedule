@@ -19,7 +19,8 @@
 -(void)saveToDb:(NSDictionary*)dict;
 
 
-
+// post
+-(NSDictionary*)postData:(NSData*)jsonWithUser;
 //post a user to db-
 -(void)postUserToDb:(NSData*)jsonWithUser;
 //post a course to db-

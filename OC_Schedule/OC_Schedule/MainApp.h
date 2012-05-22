@@ -22,7 +22,7 @@
 -(void)loadAllData;
 
 -(User*) thisActiveUser;
-
+-(void)newStudent;
 
 
 @end

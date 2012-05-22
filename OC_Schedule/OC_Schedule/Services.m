@@ -23,8 +23,8 @@
 -(void)saveToDb:(NSDictionary*)dict {
     NSLog(@"dictionary from savetodb: %@", dict);
     //[self postUserToDb:[self createJsonFromDictionary:dict]];
-    [self postCourseToDb:[self createJsonFromDictionary:dict]];
-    
+    //[self postCourseToDb:[self createJsonFromDictionary:dict]];
+    [self postData:[self createJsonFromDictionary:dict]];
     // take away depending of update or new user, and course(_id, _rev) check if _id is empty
 }
 //send course to db
@@ -80,7 +80,63 @@
     
     [[NSRunLoop currentRunLoop]run];
 }
-//send user to db
+
+// to do synchronousRequest
+-(NSDictionary*)postData:(NSData*)jsonWithUser
+{
+    NSMutableDictionary *dbDictionary = [NSMutableDictionary dictionary];
+    // db adress can be put in a constant variable
+    NSString *urlWithId = [NSString stringWithFormat:@"http://127.0.0.1:5984/schedule/"];
+    
+    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:urlWithId];
+    //NSLog(@"urlAsString: %@", urlAsString);
+    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
+    //[urlAsString appendString:dbId];
+    
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    //NSLog(@"url :%@", url);
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    // set method
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:jsonWithUser];
+    //set headers
+    NSString *contentType = [NSString stringWithFormat:@"application/json"];
+    [urlRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    
+    
+    NSError *requestError;
+    NSURLResponse *urlResponse = nil;
+    NSData *response = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&urlResponse error:&requestError];
+    /* Return Value
+     The downloaded data for the URL request. Returns nil if a connection could not be created or if the download fails.
+     */
+    if (response == nil) {
+        // Check for problems
+        if (requestError != nil) {
+            //
+            NSLog(@"something is wrong");
+            
+        }
+    }
+    else {
+        // Data was received.. continue processing
+        //NSLog(@"response: %lu", [response length]);
+        NSData *data = [NSData dataWithData:response];
+        dbDictionary = [NSJSONSerialization JSONObjectWithData:data 
+                                                       options:NSJSONReadingMutableContainers 
+                                                         error:NULL];
+        
+        //NSArray *arr = [dbDictionary  valueForKey:@"rows"];
+        //dbDictionary = [[arr objectAtIndex:0] objectForKey:@"value"];
+        // NSLog(@"dictionary:%@", dbDictionary);
+        
+        
+    }
+    NSLog(@"uniquedoc dictionary: %@", dbDictionary);
+    return dbDictionary;
+}
+//send user to db 
 -(void)postUserToDb:(NSData*)jsonWithUser  {
     // db adress can be put in a constant variable
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];
@@ -112,8 +168,8 @@
                  incomingData = [[NSMutableData alloc]init];
              }
              [incomingData appendData:data];
-             NSString *string = [[NSString alloc]initWithData:incomingData
-                                                     encoding:NSUTF8StringEncoding];
+             //NSString *string = [[NSString alloc]initWithData:incomingData
+               //                                      encoding:NSUTF8StringEncoding];
              incomingData = nil;
              //NSLog(@"string has %lu characters", [string length]);
              //NSLog(@"save successfully!!! %@", string);
