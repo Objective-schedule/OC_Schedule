@@ -29,28 +29,30 @@
 // test
 // create course (in progress)
 // override init (done)
-//+(id) courseFromDictionary:(NSDictionary*) dictionary;
++(id) courseFromDictionary:(NSDictionary*) dictionary;
 
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
         coursedescription:(NSString*)courseDescription 
            coursepoints:(NSString*)coursePoints 
           courseteacher:(NSString*) courseTeacher 
-      courseLitterature:(NSArray*) courseLitterature;
-           /* db_courseId:(NSString*)db_courseId
-           db_courseRev:(NSString*)db_courseRev;*/
+      courseLitterature:(NSArray*) courseLitterature
+           db_courseId:(NSString*)db_courseId
+           db_courseRev:(NSString*)db_courseRev;
 
 -(id)initWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
       coursedescription:(NSString*)courseDescription 
            coursepoints:(NSString*)coursePoints 
           courseteacher:(NSString*) courseTeacher 
-    courseLitterature:(NSArray*) courseLitterature;
-         /* db_courseId:(NSString*)db_courseId
-         db_courseRev:(NSString*)db_courseRev;*/
+    courseLitterature:(NSArray*) courseLitterature
+         db_courseId:(NSString*)db_courseId
+         db_courseRev:(NSString*)db_courseRev;
 
 
--(void) addCourseEvent:(CourseEvent*) newEvent;
+-(void) addCourseEvent:(CourseEvent*) newEvent; 
+
++(id)courseFromDictionaryWithEvents:(NSDictionary*)dictionaryWithEvents;
 
 -(NSInteger) startWeek;
 -(NSInteger) endWeek;

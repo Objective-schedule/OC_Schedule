@@ -56,9 +56,15 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 
 -(NSDictionary*) asDictionary
 {
-   NSString* eventStartDateAsString = [self.eventStartDate descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
     
-    NSString* eventEndDateAsString = [self.eventEndDate descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
+    // must save with time clock!!
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSString* eventStartDateAsString = [dateFormatter stringFromDate:[self eventStartDate]];
+   //NSString* eventStartDateAsString = [self.eventStartDate descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
+    
+    NSString* eventEndDateAsString = [dateFormatter stringFromDate:[self eventEndDate]];
     
 
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:eventStartDateAsString, @"eventStartDate",
@@ -69,6 +75,19 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
                                                         
     return data;
     
+}
++(id)courseEventFromDictionary:(NSDictionary*)dictionaryWithEvent
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+       [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    
+    return [self courseEventWithStartDate:[dateFormatter dateFromString:[dictionaryWithEvent valueForKey:@"eventStartDate"]]
+                     eventEndDate:[dateFormatter dateFromString:[dictionaryWithEvent valueForKey:@"eventEndDate"]]
+                                classRoom:[dictionaryWithEvent valueForKey:@"classRoom"]
+                       alternetiveTeacher:[dictionaryWithEvent valueForKey:@"alternativeTeacher"]
+                 eventReadingInstructions:[dictionaryWithEvent valueForKey:@"eventReadingInstructions"]];
+            
 }
 
 -(NSString*) description {

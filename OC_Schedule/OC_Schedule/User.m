@@ -9,6 +9,7 @@
 #import "User.h"
 #import "Course.h"
 #import "CourseEvent.h"
+#import "Services.h"
 
 extern NSString *const ATRoleStudent = @"Student";
 extern NSString *const ATRoleTeacher = @"Teacher";
@@ -31,8 +32,6 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db_rev, status = _status;
 
 +(id) userFromDictionary:(NSDictionary*) dictionary {
-    //NSLog(@"dict3 from user: %@", dictionary);
-    //NSLog(@"email from user: %@", [dictionary valueForKey:@"email"]);
     
     return [self userWithUserEmail:[dictionary valueForKey:@"email"]
                           username:[dictionary valueForKey:@"name"]
@@ -42,6 +41,25 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
                             db_rev: [dictionary valueForKey:@"_rev"]
                             status: [dictionary valueForKey:@"status"]];
 }
++(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses {
+    
+    User *newUser = [self userFromDictionary:dictionaryWithCourses];
+    
+    Services *service = [[Services alloc]init];
+    NSLog(@"[dictionaryWithCourses: %@", [dictionaryWithCourses valueForKey:@"studentCourses"]);
+    
+    for(NSString *courseId in [dictionaryWithCourses valueForKey:@"studentCourses"]){
+
+        Course *newCourse = [Course courseFromDictionaryWithEvents:[service getUniqeDoc:courseId]];
+
+        [newUser addCourseToUser:newCourse];
+        
+        NSLog(@"courseid: %@",courseId);
+    }    
+    NSLog(@"new user: %@", newUser);
+    return newUser;
+}
+
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status {
     return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent db_id:db_id db_rev: db_rev status:status];
 }
@@ -61,11 +79,11 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
         _status = [status copy];
         
     }
-    //NSLog(@"self:%@", self);
     return self;
 }
 -(NSString*) description {
-    return [NSString stringWithFormat:@"%@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status];
+    [self getCoursesIds];
+    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status];
 }
 // create new dictionary with new user
 -(NSDictionary*)saveUserAsDictionary {
@@ -74,7 +92,11 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
 }
 // create new dictionary with update user
 -(NSDictionary*)updateUserAsDictionary {
-    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status", nil];
+    
+    NSArray *courseListinStudent = [NSArray arrayWithArray:[self getCoursesIds]];
+
+    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status",courseListinStudent, @"studentCourses", nil];
+    
     return dictionaryWithUser;
 }
 
@@ -88,6 +110,17 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
           
     userCourses = newArray;
 }
+-(NSArray*)getCoursesIds
+{
+    NSMutableArray *courseIdList = [NSMutableArray array];
+    for(Course *course in userCourses)
+    {
+        [courseIdList addObject:course.db_courseId];
+        NSLog(@"courses:%@",course);
+    }
+    return courseIdList;
+    
+}
 
 -(NSArray*) allCourseEvents
 {
@@ -100,7 +133,6 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
         }
     }
     
-    //NSLog(@"%@", allEvents);
     return totalEvents;
 }
 
@@ -111,7 +143,6 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
     NSString *dateToShowString = [dateToShow descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:
     [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
    
-    //NSLog(@"TODAY -> %@", dateToShowString);
     for(Course* course in userCourses)
     {
         for(CourseEvent *event in [course allEvents])

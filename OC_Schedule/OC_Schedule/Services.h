@@ -26,6 +26,6 @@
 -(void)postCourseToDb:(NSData*)jsonWithCourse;
 
 -(void)getAllStudents;
--(void)getUniqeDoc:(NSString*) dbId;
+-(NSDictionary*)getUniqeDoc:(NSString*) dbId;
 
 @end

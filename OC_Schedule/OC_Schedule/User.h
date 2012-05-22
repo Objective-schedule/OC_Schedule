@@ -45,7 +45,11 @@ extern NSString *const ATUserStatusInactive;
 
 -(NSDictionary*)updateUserAsDictionary;
 
--(void) addCourseToUser:(Course*) course;
++(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses;
+
+-(void) addCourseToUser:(Course*) course; 
+
+-(NSArray*)getCoursesIds;
 
 -(NSArray*) allCourseEvents;
 

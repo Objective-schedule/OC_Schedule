@@ -9,6 +9,7 @@
 #import "CourseServices.h"
 
 @implementation CourseServices
+
 -(NSDictionary*)dictionaryFromDbJson:(NSString*)dbId {
     NSMutableDictionary *courseDictionary = [NSMutableDictionary dictionary];
     // db adress can be put in a constant variable
@@ -47,7 +48,7 @@
     }
     else {
         // Data was received.. continue processing
-        NSLog(@"response: %lu", [response length]);
+        //NSLog(@"response: %lu", [response length]);
         NSData *data = [NSData dataWithData:response];
         courseDictionary = [NSJSONSerialization JSONObjectWithData:data 
                                                          options:NSJSONReadingMutableContainers 

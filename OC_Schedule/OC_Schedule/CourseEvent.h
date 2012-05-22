@@ -39,7 +39,7 @@ eventReadingInstructions:(NSString*) eventReadingInstructions;
 
 
 -(NSDictionary*) asDictionary;
-
++(id)courseEventFromDictionary:(NSDictionary*)dictionaryWithEvent;
 // create dictionary
 // create JSON
 // save to db
