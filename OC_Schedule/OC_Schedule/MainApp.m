@@ -444,6 +444,7 @@ Course *tempCourses;
         
         NSLog(@"want to create event for this course: y / n ");
         scanf("%s", &answer);
+        // if more than one event is created "document update conflict" from db and no error
         answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
     } while ([answ isEqualToString:@"y"]);
 
