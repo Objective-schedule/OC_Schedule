@@ -23,6 +23,6 @@
 
 -(User*) thisActiveUser;
 -(void)newStudent;
-
+-(void)newCourse;
 
 @end

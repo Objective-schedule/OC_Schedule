@@ -48,7 +48,7 @@ Course *activeCourse;
     int inputUserMenue = 10;
     
     do {
-        if (inputUserMenue != 0)
+        if (inputUserMenue != 9)
         {
             switch (inputUserMenue) {
                 case 1:
@@ -81,9 +81,9 @@ Course *activeCourse;
         NSLog(@"veckans läsinstruktioner: 4\n");
         NSLog(@"create new user: 5\n");
         NSLog(@"create new course: 6\n");
-        NSLog(@"Avlsuta: 0\n\n");
+        NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
-    } while (inputUserMenue > 0);
+    } while (inputUserMenue != 9);
     
     
    //NSLog(@"\nDu är %d",inputUserMenue);
@@ -223,12 +223,63 @@ Course *activeCourse;
 
     Course *course = [Course courseWithCourseId:courseid coursename:coursename coursedescription:coursedescription coursepoints:coursepoints courseteacher:courseteacher courseLitterature:litterature db_courseId:@"" db_courseRev:@""];
     
-    NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[course asDictionary]]];
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithDictionary:[service saveToDb:[course asDictionary]]];
     
     // get back the id and rev to update the newly created user
     course.db_courseId = [resultDictionary valueForKey:@"id"];
     course.db_courseRev = [resultDictionary valueForKey:@"rev"];
     NSLog(@"course: %@", course);
+     char answer[10];
+     NSString *answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"want to create event for this course: y / n ");
+    scanf("%s", &answer);
+    do {
+
+       // NSLog(@"are we there yet!!!!");
+        
+        char startdateforevent[40];
+        char starttimeofevent[40];
+        char endtimeforevent[40];
+        char classroom[40];
+        char altteacher[40];
+        char eventreadinginst[40];
+        char eventdesc[40];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        
+        NSLog(@"classroom number:");
+        scanf("%s", &classroom);
+        NSLog(@"alternative teacher ");
+        scanf("%s", &altteacher);
+        NSLog(@"event reading instructions ");
+        scanf("%s", &eventreadinginst);
+        NSLog(@"event description ");
+        scanf("%s", &eventdesc);
+        
+        NSString *startdateforeventstart = [NSString stringWithCString:startdateforevent encoding:NSUTF8StringEncoding];
+        startdateforeventstart = [startdateforeventstart stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+        NSString *starttimeofeventstart = [NSString stringWithCString:starttimeofevent encoding:NSUTF8StringEncoding];
+        starttimeofeventstart = [starttimeofeventstart stringByReplacingOccurrencesOfString:@"_" withString:@":"];
+        NSString *endtimeforeventend = [NSString stringWithCString:endtimeforevent encoding:NSUTF8StringEncoding];
+        endtimeforeventend = [endtimeforeventend stringByReplacingOccurrencesOfString:@"_" withString:@":"];
+        NSString *classroomev = [NSString stringWithCString:classroom encoding:NSUTF8StringEncoding];
+        NSString *altteachereve = [NSString stringWithCString:altteacher encoding:NSUTF8StringEncoding];
+        NSString *eventreadinginsteve = [NSString stringWithCString:eventreadinginst encoding:NSUTF8StringEncoding];
+        NSString *eventdesceve = [NSString stringWithCString:eventdesc encoding:NSUTF8StringEncoding];
+        
+        CourseEvent *event = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-23 08:15"]]  eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-23 12:15"]] classRoom:classroomev alternetiveTeacher:altteachereve eventReadingInstructions:eventreadinginsteve eventDescription:eventdesceve];
+        [course addCourseEvent:event];
+        NSLog(@"course: %@", course);
+        [resultDictionary setDictionary:[service saveToDb:[course updateCourseAsDictionary]]];
+        
+        course.db_courseRev = [resultDictionary valueForKey:@"rev"];
+        
+        NSLog(@"want to create event for this course: y / n ");
+        scanf("%s", &answer);
+        answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
+    } while ([answ isEqualToString:@"y"]);
+
 }
 -(void)loadCourseData:(NSString*) courseid
 {

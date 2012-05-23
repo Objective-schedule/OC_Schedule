@@ -60,7 +60,7 @@
 -(NSArray*)getEventsAsDictionarys;
 -(NSArray*)getStudentsIds;
 -(NSDictionary*) asDictionary;
-
+-(NSDictionary*) updateCourseAsDictionary;
 // create dictionary with course
 
 -(void) addStudentToCourse:(User*) user;

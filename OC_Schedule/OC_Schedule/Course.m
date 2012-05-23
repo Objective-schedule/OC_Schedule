@@ -162,11 +162,11 @@
     return data;
     
 }
--(NSDictionary*)updateCourseAsDictionary
+-(NSDictionary*) updateCourseAsDictionary
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[self asDictionary]];
-    [dict setValue:[self db_courseId] forKey:@"_id"];
-    [dict setValue:[self db_courseRev] forKey:@"_rev"];
+    [dict setValue:[self db_courseId] forKey:@"id"];
+    [dict setValue:[self db_courseRev] forKey:@"rev"];
     return dict;
 }
 
