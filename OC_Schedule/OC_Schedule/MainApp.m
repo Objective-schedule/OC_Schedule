@@ -14,7 +14,7 @@
 #import "CourseServices.h"
 
 NSArray *allUsers, *allCourses;
-
+Services *service;
 User *activeUser;
 Course *activeCourse;
 
@@ -24,7 +24,7 @@ Course *activeCourse;
 
 -(void) initApp
 {
-    
+    service = [[Services alloc]init];
     
     char inputUserId[40];
    // char inputCourseId[40];
@@ -54,7 +54,6 @@ Course *activeCourse;
                 case 1:
                     NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
                     break;
-                
                 case 2:
                     NSLog(@"%@",[activeUser weeklySchema:thisWeekNum]);
                     break;
@@ -67,6 +66,9 @@ Course *activeCourse;
                 case 5:
                     [self newStudent];
                     break;
+                case 6:
+                    [self newCourse];
+                    break;
                 default:
                     break;
             }
@@ -78,6 +80,7 @@ Course *activeCourse;
         NSLog(@"dagens läsinstruktioner: 3\n");
         NSLog(@"veckans läsinstruktioner: 4\n");
         NSLog(@"create new user: 5\n");
+        NSLog(@"create new course: 6\n");
         NSLog(@"Avlsuta: 0\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue > 0);
@@ -169,13 +172,14 @@ Course *activeCourse;
     NSString *lastName = [NSString stringWithCString:l encoding:NSUTF8StringEncoding];
 
     User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
-    Services *service = [[Services alloc]init];
+    //Services *service = [[Services alloc]init];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[student saveUserAsDictionary]]];
     
     // get back the id and rev to update the newly created user
-    student.db_id = [resultDictionary valueForKey:@"_id"];
-    student.db_rev = [resultDictionary valueForKey:@"_rev"];
-    [student updateUserAsDictionary];
+    student.db_id = [resultDictionary valueForKey:@"id"];
+    student.db_rev = [resultDictionary valueForKey:@"rev"];
+    NSLog(@"student: %@", student);
+//    [student updateUserAsDictionary];
 }
 -(void)newCourse {
     
@@ -185,9 +189,12 @@ Course *activeCourse;
     char cd[40];//course description
     char cp[40];//course points
     char ct[40];//course teacher
-    //char cl[40];//course litterature
-    NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
-
+    int numberOfBooks;//course litterature
+    char book[40];
+    
+    NSMutableArray *litterature = [NSMutableArray array];
+    // ask how scanf or something similar can take spaces
+    
     NSLog(@"courseId: ");
     scanf("%s", &ci);
     NSLog(@"coursename: ");
@@ -198,11 +205,30 @@ Course *activeCourse;
     scanf("%s", &cp);
     NSLog(@"course teacher: ");
     scanf("%s", &ct);
+    
+    NSLog(@"how many books: ");
+    scanf("%i", &numberOfBooks);
+    for (int j = 0; j < numberOfBooks; j++) {
+        NSLog(@"enter title of book number %d:", j);
+        scanf("%s", &book);
+        [litterature addObject:[NSString stringWithCString:book encoding:NSUTF8StringEncoding]];
+    }
 
+    NSString *courseid = [NSString stringWithCString:ci encoding:NSUTF8StringEncoding];
+    NSString *coursename = [NSString stringWithCString:cn encoding:NSUTF8StringEncoding];
+    NSString *coursedescription = [NSString stringWithCString:cn encoding:NSUTF8StringEncoding];
+    NSString *coursepoints = [NSString stringWithCString:cp encoding:NSUTF8StringEncoding];
+    NSString *courseteacher = [NSString stringWithCString:ct encoding:NSUTF8StringEncoding];
+    
 
-
-
-  //  Course *course = [Course courseWithCourseId:<#(NSString *)#> coursename:<#(NSString *)#> coursedescription:<#(NSString *)#> coursepoints:<#(NSString *)#> courseteacher:<#(NSString *)#> ////courseLitterature:<#(NSArray *)#> db_courseId:<#(NSString *)#> db_courseRev:<#(NSString *)#>];
+    Course *course = [Course courseWithCourseId:courseid coursename:coursename coursedescription:coursedescription coursepoints:coursepoints courseteacher:courseteacher courseLitterature:litterature db_courseId:@"" db_courseRev:@""];
+    
+    NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[course asDictionary]]];
+    
+    // get back the id and rev to update the newly created user
+    course.db_courseId = [resultDictionary valueForKey:@"id"];
+    course.db_courseRev = [resultDictionary valueForKey:@"rev"];
+    NSLog(@"course: %@", course);
 }
 -(void)loadCourseData:(NSString*) courseid
 {

@@ -77,7 +77,7 @@
      }];
     
     
-    [[NSRunLoop currentRunLoop]run];
+    //[[NSRunLoop currentRunLoop]run];
 }
 
 // to do synchronousRequest
@@ -185,7 +185,7 @@
      }];
      
 
-    [[NSRunLoop currentRunLoop]run];
+   // [[NSRunLoop currentRunLoop]run];
 }
 -(void)getAllStudents
 {
@@ -237,7 +237,7 @@
          
      }];
     
-    [[NSRunLoop currentRunLoop]run];
+    //[[NSRunLoop currentRunLoop]run];
 
 }
 
