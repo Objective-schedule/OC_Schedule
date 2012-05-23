@@ -16,7 +16,7 @@
 
 // create json from dictionary
 -(NSData*)createJsonFromDictionary:(NSDictionary*)dictionary;
--(void)saveToDb:(NSDictionary*)dict;
+-(NSDictionary*)saveToDb:(NSDictionary*)dict;
 
 
 // post

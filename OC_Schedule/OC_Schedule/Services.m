@@ -20,15 +20,14 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
     return jsonData;
 }
--(void)saveToDb:(NSDictionary*)dict {
+-(NSDictionary*)saveToDb:(NSDictionary*)dict {
     NSLog(@"dictionary from savetodb: %@", dict);
     //[self postUserToDb:[self createJsonFromDictionary:dict]];
     //[self postCourseToDb:[self createJsonFromDictionary:dict]];
-    [self postData:[self createJsonFromDictionary:dict]];
+    return [self postData:[self createJsonFromDictionary:dict]];
     // take away depending of update or new user, and course(_id, _rev) check if _id is empty
 }
 //send course to db
-
 -(void)postCourseToDb:(NSData*)jsonWithCourse {
     // db adress can be put in a constant variable
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];

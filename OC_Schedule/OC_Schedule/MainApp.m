@@ -170,10 +170,39 @@ Course *activeCourse;
 
     User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
     Services *service = [[Services alloc]init];
-    [service saveToDb:[student saveUserAsDictionary]];
+    NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[student saveUserAsDictionary]]];
     
     // get back the id and rev to update the newly created user
-    [student updateUserAsDictionary];// wrong, needs to get the return dictionary from sateToDb
+    student.db_id = [resultDictionary valueForKey:@"_id"];
+    student.db_rev = [resultDictionary valueForKey:@"_rev"];
+    [student updateUserAsDictionary];
+}
+-(void)newCourse {
+    
+    
+    char ci[40];//courseid
+    char cn[40];//coursename
+    char cd[40];//course description
+    char cp[40];//course points
+    char ct[40];//course teacher
+    //char cl[40];//course litterature
+    NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
+
+    NSLog(@"courseId: ");
+    scanf("%s", &ci);
+    NSLog(@"coursename: ");
+    scanf("%s", &cn);
+    NSLog(@"course description: ");
+    scanf("%s", &cd);
+    NSLog(@"course points: ");
+    scanf("%s", &cp);
+    NSLog(@"course teacher: ");
+    scanf("%s", &ct);
+
+
+
+
+  //  Course *course = [Course courseWithCourseId:<#(NSString *)#> coursename:<#(NSString *)#> coursedescription:<#(NSString *)#> coursepoints:<#(NSString *)#> courseteacher:<#(NSString *)#> ////courseLitterature:<#(NSArray *)#> db_courseId:<#(NSString *)#> db_courseRev:<#(NSString *)#>];
 }
 -(void)loadCourseData:(NSString*) courseid
 {
