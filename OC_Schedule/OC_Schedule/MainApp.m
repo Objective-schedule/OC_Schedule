@@ -440,7 +440,7 @@ Course *tempCourses;
         NSLog(@"course: %@", course);
         [resultDictionary setDictionary:[service saveToDb:[course updateCourseAsDictionary]]];
         
-        course.db_courseRev = [resultDictionary valueForKey:@"rev"];
+        course.db_courseRev = [resultDictionary valueForKey:@"_rev"];
         
         NSLog(@"want to create event for this course: y / n ");
         scanf("%s", &answer);
