@@ -13,7 +13,7 @@
 -(NSDictionary*)dictionaryFromDbJson:(NSString*)dbId {
     NSMutableDictionary *userDictionary = [NSMutableDictionary dictionary];
     // db adress can be put in a constant variable
-    NSString *urlWithEmail = [NSString stringWithFormat:@"http://127.0.0.1:5984/schedule/_design/views/_view/byemail?key=%%22%@%%22" , dbId];  
+    NSString *urlWithEmail = [NSString stringWithFormat:@"http://127.0.0.1:5984/schema/_design/views/_view/byemail?key=%%22%@%%22" , dbId];  
     
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:urlWithEmail];
     //NSLog(@"urlAsString: %@", urlAsString);

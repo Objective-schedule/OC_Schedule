@@ -28,7 +28,7 @@ int main(int argc, const char * argv[])
         myActiveUser = [mainApp thisActiveUser];
         
         //[myActiveUser weeklyInstructions:20]; still no
-        [mainApp initMenu];
+        //[mainApp initMenu];
 
                 
     }

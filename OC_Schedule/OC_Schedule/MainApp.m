@@ -17,10 +17,12 @@ NSArray *allUsers, *allCourses;
 Services *service;
 User *activeUser;
 Course *activeCourse;
+User *tempUser;
+Course *tempCourses;
 
 @implementation MainApp
 
-@synthesize activeUser = _activeUser;
+@synthesize activeUser = _activeUser, tempUser = _tempUser, tempCourses = _tempCourses;
 
 -(void) initApp
 {
@@ -30,7 +32,7 @@ Course *activeCourse;
    // char inputCourseId[40];
     NSLog(@"Hej vem är du?");
     scanf("%s", &inputUserId);
-    [self loadUserData:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
+    [self checkLogin:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
     //NSLog(@"Give me courseid!");
     //scanf("%s", &inputCourseId);
     //[self loadCourseData:[NSString stringWithCString:inputCourseId encoding:NSUTF8StringEncoding]];
@@ -39,7 +41,7 @@ Course *activeCourse;
     
 }
 
--(void) initMenu
+-(void) studentMenu
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
@@ -88,6 +90,171 @@ Course *activeCourse;
     
    //NSLog(@"\nDu är %d",inputUserMenue);
 }
+
+-(void) adminMenu
+{
+    // GET ALL STUDENTS //
+    
+    NSDictionary* adminAllStudents = [NSDictionary dictionaryWithDictionary:[service getAllStudents]];
+    
+    NSMutableArray* tempAllStudentsArr = [[NSMutableArray alloc]init];
+    
+    for (id myDict in [adminAllStudents valueForKey:@"rows"]){
+        
+        // calling the dictionary within the db object
+        tempUser = [User userFromDictionary:[myDict valueForKey:@"key"]];
+        
+        //add ready object to temporary array
+        [tempAllStudentsArr addObject:tempUser];// resultatet ifrån saveUserAsDictionary komm in hit ];
+    }
+    allUsers = tempAllStudentsArr;
+    
+    NSLog(@"testing all users: %@" ,allUsers);
+    
+    // GET ALL COURSES //
+    
+    
+    NSDictionary* adminAllCourses = [NSDictionary dictionaryWithDictionary:[service getAllCourses]];
+    
+    
+    NSMutableArray* tempAllCoursesArr = [[NSMutableArray alloc]init];
+    
+    for (id myDict in [adminAllCourses valueForKey:@"rows"]){
+        
+        // calling the dictionary within the db object
+        tempCourses = [Course courseFromDictionary:[myDict valueForKey:@"key"]];
+        //add ready object to temporary array
+        [tempAllCoursesArr addObject:tempCourses];// resultatet ifrån saveUserAsDictionary komm in hit ];
+    }
+    
+    allCourses = tempAllCoursesArr;
+    
+    NSLog(@"testing all courses: %@" ,allCourses);
+    
+    
+    
+    /////////////////////////////
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
+    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
+    
+    int inputUserMenue = 10;
+    
+    do {
+        if (inputUserMenue != 9)
+        {
+            switch (inputUserMenue) {
+                case 1:
+                    NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
+                    break;
+                    
+                case 2:
+                    NSLog(@"%@",[activeUser weeklySchema:thisWeekNum]);
+                    break;
+                case 3:
+                    [self adminCourseMenu];
+                    break;
+                case 4:
+                    [activeUser weeklyInstructions:thisWeekNum];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        NSLog(@"Visa:\n");
+        NSLog(@"Lägg till student: 1\n");
+        NSLog(@"Lägg till kurs: 2\n");
+        NSLog(@"aministrera kurs: 3\n"); //skapar ny meny med ny alternativ
+        NSLog(@"veckans läsinstruktioner: 4\n");
+        NSLog(@"Avlsuta: 0\n\n");
+        scanf("%d", &inputUserMenue);
+    } while (inputUserMenue != 9);
+    
+    
+    //NSLog(@"\nDu är %d",inputUserMenue);
+    
+}
+
+-(void) adminCourseMenu
+{
+    
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
+    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
+    
+    int inputUserMenue = 10;
+    
+    do {
+        if (inputUserMenue != 9)
+        {
+            switch (inputUserMenue) {
+                case 1:
+                    NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
+                    break;
+                    
+                case 2:
+                    NSLog(@"%@",[activeUser weeklySchema:thisWeekNum]);
+                    break;
+                case 3:
+                    [activeUser dailyInstructions:[NSDate date]];
+                    break;
+                case 4:
+                    [activeUser weeklyInstructions:thisWeekNum];
+                    break;
+                case 5:
+                    [self adminMenu];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        NSLog(@"Visa:\n");
+        NSLog(@"Lägg till kurstillfälle: 1\n");
+        NSLog(@"Uppdatera kurstillfälle: 2\n");
+        NSLog(@"Lägg till student till kursen: 3\n"); 
+        NSLog(@"Uppdatera befintlig kurs: 4\n");
+        NSLog(@"Tillbaka till huvudmeny: 5\n");
+        
+        NSLog(@"Avlsuta: 0\n\n");
+        scanf("%d", &inputUserMenue);
+    } while (inputUserMenue != 9);
+    
+    
+    //NSLog(@"\nDu är %d",inputUserMenue);
+    
+}
+
+
+//create menues
+
+-(void)checkLogin:(NSString* ) userid
+{   
+    // create UserService
+    UserServices *userService = [[UserServices alloc]init];
+    
+    //get userDictionary from Db
+    activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];
+    NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
+    
+    //check if role is admin or student
+    NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
+    NSString *student = [[NSString alloc] initWithFormat:@"Student"];
+    
+    if([[loginUserDict valueForKey:@"role"] isEqualToString:student]) {
+        NSLog(@"you are student");
+        
+        [self studentMenu];
+        
+    }else if([[loginUserDict valueForKey:@"role"] isEqualToString:admin]){
+        NSLog(@"you are Admin");
+        [self adminMenu];
+    }
+}
+
 
 -(void)loadUserData:(NSString*) userid
 {   
