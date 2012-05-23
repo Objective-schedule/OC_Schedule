@@ -193,7 +193,7 @@
     NSMutableDictionary *allUserDictionary = [NSMutableDictionary dictionary];
     // NSArray *arr = [[NSArray alloc]init];
     // db adress can be put in a constant variable
-    NSString *urlAllStudents = [NSString stringWithFormat:@"http://127.0.0.1:5984/schema/_design/views/_view/getallstudents"];  
+    NSString *urlAllStudents = [NSString stringWithFormat:@"http://127.0.0.1:5984/schedule/_design/views/_view/getallstudents"];  
     
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:urlAllStudents];
     //NSLog(@"urlAsString: %@", urlAsString);
@@ -247,7 +247,7 @@
     NSMutableDictionary *allCoursesDictionary = [NSMutableDictionary dictionary];
     //NSArray *arr = [[NSArray alloc]init];
     // db adress can be put in a constant variable
-    NSString *urlAllCourses = [NSString stringWithFormat:@"http://127.0.0.1:5984/schema/_design/views/_view/getallcourses"];  
+    NSString *urlAllCourses = [NSString stringWithFormat:@"http://127.0.0.1:5984/schedule/_design/views/_view/getallcourses"];  
     
     NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:urlAllCourses];
     //NSLog(@"urlAsString: %@", urlAsString);
