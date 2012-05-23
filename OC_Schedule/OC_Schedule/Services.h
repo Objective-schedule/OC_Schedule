@@ -26,7 +26,10 @@
 //post a course to db-
 -(void)postCourseToDb:(NSData*)jsonWithCourse;
 
--(void)getAllStudents;
+//get all students
+-(NSDictionary*)getAllStudents;
+// get all courses
+-(NSDictionary*)getAllCourses;
 -(NSDictionary*)getUniqeDoc:(NSString*) dbId;
 
 @end
