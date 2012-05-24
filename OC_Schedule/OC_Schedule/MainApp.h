@@ -18,13 +18,15 @@
 
 
 -(void) initApp;
--(void) initMenu;
+//-(void) initMenu;
 
 -(void)loadUserData:(NSString*) userid;
 -(void)loadCourseData:(NSString*) courseid;
 -(void)loadAllData;
 -(void)checkLogin:(NSString* ) userid;
 -(void) adminMenu;
+-(void) adminCourseMenu;
+-(void) studentMenu;
 
 -(User*) thisActiveUser;
 -(void)newStudent;
