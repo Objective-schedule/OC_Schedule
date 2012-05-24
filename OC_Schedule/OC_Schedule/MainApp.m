@@ -52,6 +52,8 @@ Course *tempCourses;
     do {
         if (inputUserMenue != 9)
         {
+            NSLog(@"inputUserMenue: %i",inputUserMenue);
+
             switch (inputUserMenue) {
                 case 1:
                     NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
@@ -72,6 +74,7 @@ Course *tempCourses;
                     [self newCourse];
                     break;
                 default:
+                    NSLog(@"default");
                     break;
             }
         }
@@ -440,7 +443,7 @@ Course *tempCourses;
         NSLog(@"course: %@", course);
         [resultDictionary setDictionary:[service saveToDb:[course updateCourseAsDictionary]]];
         
-        course.db_courseRev = [resultDictionary valueForKey:@"_rev"];
+        course.db_courseRev = [resultDictionary valueForKey:@"rev"];
         
         NSLog(@"want to create event for this course: y / n ");
         scanf("%s", &answer);

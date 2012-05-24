@@ -36,7 +36,7 @@ eventDescription:(NSString*)eventDescription;
 -(id)initWithStartDate:(NSDate*) eventStartDate
             eventEndDate:(NSDate*) eventEndDate 
                classRoom:(NSString*) classRoom 
-        ternetiveTeacher:(NSString*) alternativeTeacher 
+        alternetiveTeacher:(NSString*) alternativeTeacher 
 eventReadingInstructions:(NSString*) eventReadingInstructions
       eventDescription:(NSString*)eventDescription;
 

@@ -16,12 +16,12 @@
 @synthesize classRoom = _classRoom, alternativeTeacher = _alternativeTeacher, eventStartDate = _eventStartDate, eventEndDate = _eventEndDate, eventReadingInstructions = _eventReadingInstructions, eventDescription = _eventDescription;
 
 
-+(id)courseEventWithStartDate:(NSDate*)eventStartDate 
-            eventEndDate:(NSDate*) eventEndDate 
-               classRoom:(NSString*) classRoom 
-      alternetiveTeacher:(NSString*) alternativeTeacher 
-eventReadingInstructions:(NSString*) eventReadingInstructions
-eventDescription:(NSString*)eventDescription
++(id)courseEventWithStartDate:(NSDate*) eventStartDate
+                 eventEndDate:(NSDate*) eventEndDate 
+                    classRoom:(NSString*) classRoom 
+           alternetiveTeacher:(NSString*) alternativeTeacher 
+     eventReadingInstructions:(NSString*) eventReadingInstructions
+             eventDescription:(NSString*)eventDescription
                   
 {
     
@@ -35,12 +35,12 @@ eventDescription:(NSString*)eventDescription
               
 }
 
--(id)initWithStartDate:(NSDate*)eventStartDate 
-                        eventEndDate:(NSDate*) eventEndDate 
-                         classRoom:(NSString*) classRoom 
-                alternetiveTeacher:(NSString*) alternativeTeacher 
-          eventReadingInstructions:(NSString*) eventReadingInstructions
-                eventDescription:(NSString*)eventDescription
+-(id)initWithStartDate:(NSDate*) eventStartDate
+          eventEndDate:(NSDate*) eventEndDate 
+             classRoom:(NSString*) classRoom 
+    alternetiveTeacher:(NSString*) alternativeTeacher 
+eventReadingInstructions:(NSString*) eventReadingInstructions
+      eventDescription:(NSString*)eventDescription
                             
 {
     if(self = [super init]) 
