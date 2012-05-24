@@ -125,11 +125,7 @@
         dbDictionary = [NSJSONSerialization JSONObjectWithData:data 
                                                        options:NSJSONReadingMutableContainers 
                                                          error:NULL];
-        
-        //NSArray *arr = [dbDictionary  valueForKey:@"rows"];
-        //dbDictionary = [[arr objectAtIndex:0] objectForKey:@"value"];
-        // NSLog(@"dictionary:%@", dbDictionary);
-        
+  
         
     }
     NSLog(@"uniquedoc dictionary: %@", dbDictionary);

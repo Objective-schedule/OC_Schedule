@@ -32,4 +32,8 @@
 -(void)newStudent;
 -(void)newCourse;
 
+-(void)newCourseEvent:(Course*)activeCourse;
+-(NSArray*)listAllCoursesSortedByName;
+-(NSArray*)listAllStudentsSortedByName;
+
 @end

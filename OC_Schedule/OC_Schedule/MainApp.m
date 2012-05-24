@@ -29,15 +29,9 @@ Course *tempCourses;
     service = [[Services alloc]init];
     
     char inputUserId[40];
-   // char inputCourseId[40];
     NSLog(@"Hej vem är du?");
     scanf("%s", &inputUserId);
     [self checkLogin:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
-    //NSLog(@"Give me courseid!");
-    //scanf("%s", &inputCourseId);
-    //[self loadCourseData:[NSString stringWithCString:inputCourseId encoding:NSUTF8StringEncoding]];
-
-
     
 }
 
@@ -89,14 +83,10 @@ Course *tempCourses;
         NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);
-    
-    
-   //NSLog(@"\nDu är %d",inputUserMenue);
 }
 
 -(void) adminMenu
 {
-    // GET ALL STUDENTS //
     
     NSDictionary* adminAllStudents = [NSDictionary dictionaryWithDictionary:[service getAllStudents]];
     
@@ -110,12 +100,11 @@ Course *tempCourses;
         //add ready object to temporary array
         [tempAllStudentsArr addObject:tempUser];// resultatet ifrån saveUserAsDictionary komm in hit ];
     }
+    
     allUsers = tempAllStudentsArr;
     
     NSLog(@"testing all users: %@" ,allUsers);
-    
-    // GET ALL COURSES //
-    
+
     
     NSDictionary* adminAllCourses = [NSDictionary dictionaryWithDictionary:[service getAllCourses]];
     
@@ -125,18 +114,32 @@ Course *tempCourses;
     for (id myDict in [adminAllCourses valueForKey:@"rows"]){
         
         // calling the dictionary within the db object
-        tempCourses = [Course courseFromDictionary:[myDict valueForKey:@"key"]];
+        tempCourses = [Course courseFromDictionaryWithEvents:[myDict valueForKey:@"key"]];
+        NSLog(@"mydict: %@", [[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]);
+        
+        NSArray *courseStudents = [NSArray arrayWithArray:[[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]];
+        NSLog(@"courseStudents: %@", courseStudents);
+        for(NSString *stuid in courseStudents){
+            NSLog(@"stuid: %@",stuid);
+            NSMutableArray *temp = [NSMutableArray arrayWithArray:allUsers];
+             NSLog(@"temp: %@", temp);
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"db_id == %@", stuid];
+            NSLog(@"predicate: %@", [predicate description]);
+            NSArray *toBeReclaimed = [temp filteredArrayUsingPredicate:predicate];
+           
+            if([toBeReclaimed count] > 0) {
+                [tempCourses addStudentToCourse:[toBeReclaimed objectAtIndex:0]];
+                [[toBeReclaimed objectAtIndex:0]addCourseToUser:tempCourses];
+            }
+            //Course *activeCourse = [toBeReclaimed objectAtIndex:0];
+            NSLog(@"toBeReclaimed: %@", toBeReclaimed);
+        }
+
         //add ready object to temporary array
         [tempAllCoursesArr addObject:tempCourses];// resultatet ifrån saveUserAsDictionary komm in hit ];
     }
     
     allCourses = tempAllCoursesArr;
-    
-    NSLog(@"testing all courses: %@" ,allCourses);
-    
-    
-    
-    /////////////////////////////
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
@@ -149,35 +152,35 @@ Course *tempCourses;
         {
             switch (inputUserMenue) {
                 case 1:
-                    NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
+                    NSLog(@"%@",[self listAllCoursesSortedByName]);
                     break;
                     
                 case 2:
-                    NSLog(@"%@",[activeUser weeklySchema:thisWeekNum]);
+                    NSLog(@"%@",[self listAllStudentsSortedByName]);
                     break;
                 case 3:
-                    [self adminCourseMenu];
+                    [self newCourse];
                     break;
                 case 4:
-                    [activeUser weeklyInstructions:thisWeekNum];
+                    [self newStudent];
+                    break;
+                case 5:
+                    [self adminCourseMenu];
                     break;
                 default:
                     break;
             }
         }
         
-        NSLog(@"Visa:\n");
-        NSLog(@"Lägg till student: 1\n");
-        NSLog(@"Lägg till kurs: 2\n");
-        NSLog(@"aministrera kurs: 3\n"); //skapar ny meny med ny alternativ
-        NSLog(@"veckans läsinstruktioner: 4\n");
-        NSLog(@"Avlsuta: 0\n\n");
+        //NSLog(@"Visa:\n");
+        NSLog(@"lista alla kurser: 1\n");
+        NSLog(@"lista alla studenter: 2\n");
+        NSLog(@"Skapa ny kurs: 3\n");
+        NSLog(@"Skapa ny student: 4\n");
+        NSLog(@"Administrera kurs: 5\n"); //skapar ny meny med ny alternativ
+        NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);
-    
-    
-    //NSLog(@"\nDu är %d",inputUserMenue);
-    
 }
 
 -(void) adminCourseMenu
@@ -186,8 +189,18 @@ Course *tempCourses;
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
-    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
-    
+    char cid[50];
+    NSLog(@"\nAnge kurs id:");
+     scanf("%s", &cid);
+    NSString *courseid = [NSString stringWithCString:cid encoding:NSUTF8StringEncoding];
+
+   
+        
+    NSMutableArray *temp = [NSMutableArray arrayWithArray:allCourses]; 
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"courseId == %@", courseid];
+    NSArray *toBeReclaimed = [temp filteredArrayUsingPredicate:predicate];
+    Course *activeCourse = [toBeReclaimed objectAtIndex:0];
+
     int inputUserMenue = 10;
     
     do {
@@ -195,7 +208,7 @@ Course *tempCourses;
         {
             switch (inputUserMenue) {
                 case 1:
-                    NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
+                    [self newCourseEvent:activeCourse];
                     break;
                     
                 case 2:
@@ -225,14 +238,8 @@ Course *tempCourses;
         NSLog(@"Avlsuta: 0\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);
-    
-    
-    //NSLog(@"\nDu är %d",inputUserMenue);
-    
 }
 
-
-//create menues
 
 -(void)checkLogin:(NSString* ) userid
 {   
@@ -240,13 +247,22 @@ Course *tempCourses;
     UserServices *userService = [[UserServices alloc]init];
     
     //get userDictionary from Db
+    NSLog(@"%@",[userService dictionaryFromDbJson:userid]);
     activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];
-    NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
+   // NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
     
     //check if role is admin or student
-    NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
-    NSString *student = [[NSString alloc] initWithFormat:@"Student"];
-    
+   // NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
+   // NSString *student = [[NSString alloc] initWithFormat:@"Student"];
+    if([activeUser.userRole isEqualToString:ATRoleAdmin]){
+        NSLog(@"activeUser.userRole: %@", activeUser.userRole);
+        [self adminMenu];
+        
+    } else{
+        NSLog(@"you are stud");
+        [self studentMenu];
+    }
+    /*
     if([[loginUserDict valueForKey:@"role"] isEqualToString:student]) {
         NSLog(@"you are student");
         
@@ -255,73 +271,16 @@ Course *tempCourses;
     }else if([[loginUserDict valueForKey:@"role"] isEqualToString:admin]){
         NSLog(@"you are Admin");
         [self adminMenu];
-    }
+    }*/
 }
 
 
 -(void)loadUserData:(NSString*) userid
 {   
-    // UserService
     UserServices *userService = [[UserServices alloc]init];
-    //NSLog(@"LoadUserData");
-    
-    //*** Test data
-   // activeUser = [User userWithUserEmail:@"test@gmail.com" username:@"Test" lastName:@"Testsson" role:ATRoleStudent];
-    
-   // activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];//@"pedronygren@gmail.com"]];
     activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
-    NSLog(@"dict2: %@", [userService dictionaryFromDbJson:userid]);
-  
-   // NSArray *litterature = [NSArray arrayWithObjects:@"Objective C programming guide",@"Bok 2 om objective c",nil];
-   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-     //      [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
-    
-   // Course *courseApputv = [Course courseWithCourseId:@"AppUtv2012" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:@"400" courseteacher:@"Anders Carlsson" courseLitterature:litterature db_courseId:@"" db_courseRev:@""];
-    
-    //Course *courseApputv = [Course courseWithCourseId:@"AppUtv2012" coursename:@"Apputveckling för mobila enheter" coursedescription:@"Kursen går ut på att lära sig utveckla appar för mobila enheter som iPad, iPhone och Andriod enehter" coursepoints:@"400" courseteacher:@"Anders Carlsson" courseLitterature:litterature];
-         /*   CourseEvent *lecture1 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-09 08:15:00 +0000"]] 
-                                            eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-10-31 11:15:00 +0000"]] 
-                                                           classRoom:@"401" 
-                                                      alternetiveTeacher:@"" 
-                                                 eventReadingInstructions:@"Read chap 1"];
-           
-            CourseEvent *lecture2 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-21 12:15:00 +0000"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-06-01 13:15:00 +0000"]] classRoom:@"402" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 4"]; 
-         
-            CourseEvent *lecture3 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-03"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:15:00 +0000 ", @"2012-05-03"]] classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
-            
-           CourseEvent *lecture4 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-14"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 2"]; 
-           
-          CourseEvent *lecture5 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 09:15:00 +0000 ", @"2012-05-10"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:15:00 +0000 ", @"2012-05-10"]] classRoom:@"403" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
-            
-           CourseEvent *lecture6 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 08:15:00 +0000 ", @"2012-05-15"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 13:15:00 +0000 ", @"2012-05-15"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 5"]; 
-            
-          CourseEvent *lecture7 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-14"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-14"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 3"]; 
-           
-            CourseEvent *lecture8 = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 10:00:00 +0000 ", @"2012-05-17"]] eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@ 14:00:00 +0000 ", @"2012-05-17"]] classRoom:@"404" alternetiveTeacher:@"" eventReadingInstructions:@"Read chap 6"]; */
-    
-    //Adding coursEvents to Course
-         // [courseApputv addCourseEvent:lecture1];
-         // [courseApputv addCourseEvent:lecture2];
-             /*
-          [courseApputv addCourseEvent:lecture3];
-          [courseApputv addCourseEvent:lecture4];
-          [courseApputv addCourseEvent:lecture5];
-          [courseApputv addCourseEvent:lecture6];
-          [courseApputv addCourseEvent:lecture7];
-          [courseApputv addCourseEvent:lecture8];
-        */
           
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
-    
-    // problem in adding student to course
-    
-    //[courseApputv addStudentToCourse:activeUser];
-    //[activeUser addCourseToUser:courseApputv];
-    // save user, save course
-    // update to db, user and course
-    
-   // Services *service = [[Services alloc]init];
-    //[service saveToDb:[courseApputv asDictionary]];
 }
 -(void)newStudent {
     
@@ -342,14 +301,12 @@ Course *tempCourses;
     NSString *lastName = [NSString stringWithCString:l encoding:NSUTF8StringEncoding];
 
     User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
-    //Services *service = [[Services alloc]init];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[student saveUserAsDictionary]]];
     
     // get back the id and rev to update the newly created user
     student.db_id = [resultDictionary valueForKey:@"id"];
     student.db_rev = [resultDictionary valueForKey:@"rev"];
     NSLog(@"student: %@", student);
-//    [student updateUserAsDictionary];
 }
 -(void)newCourse {
     
@@ -398,59 +355,68 @@ Course *tempCourses;
     // get back the id and rev to update the newly created user
     course.db_courseId = [resultDictionary valueForKey:@"id"];
     course.db_courseRev = [resultDictionary valueForKey:@"rev"];
-    NSLog(@"course: %@", course);
+    //NSLog(@"course: %@", course);
      char answer[10];
-     NSString *answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
+    
     
     NSLog(@"want to create event for this course: y / n ");
     scanf("%s", &answer);
-    do {
+    NSString *answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
+    
+    if([answ isEqualToString:@"y"])
+    {
+         NSLog(@"are we there yet!!!!");
+        do {
+            [self newCourseEvent:course];
+            NSLog(@"want to create event for this course: y / n ");
+            scanf("%s", &answer);
+            // if more than one event is created "document update conflict" from db and no error
+            answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
+        } while ([answ isEqualToString:@"y"]);
+    }
+}
+-(void)newCourseEvent:(Course*)activeCourse{
 
-       // NSLog(@"are we there yet!!!!");
-        
-        char startdateforevent[40];
-        char starttimeofevent[40];
-        char endtimeforevent[40];
-        char classroom[40];
-        char altteacher[40];
-        char eventreadinginst[40];
-        char eventdesc[40];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-        
-        NSLog(@"classroom number:");
-        scanf("%s", &classroom);
-        NSLog(@"alternative teacher ");
-        scanf("%s", &altteacher);
-        NSLog(@"event reading instructions ");
-        scanf("%s", &eventreadinginst);
-        NSLog(@"event description ");
-        scanf("%s", &eventdesc);
-        
-        NSString *startdateforeventstart = [NSString stringWithCString:startdateforevent encoding:NSUTF8StringEncoding];
-        startdateforeventstart = [startdateforeventstart stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
-        NSString *starttimeofeventstart = [NSString stringWithCString:starttimeofevent encoding:NSUTF8StringEncoding];
-        starttimeofeventstart = [starttimeofeventstart stringByReplacingOccurrencesOfString:@"_" withString:@":"];
-        NSString *endtimeforeventend = [NSString stringWithCString:endtimeforevent encoding:NSUTF8StringEncoding];
-        endtimeforeventend = [endtimeforeventend stringByReplacingOccurrencesOfString:@"_" withString:@":"];
-        NSString *classroomev = [NSString stringWithCString:classroom encoding:NSUTF8StringEncoding];
-        NSString *altteachereve = [NSString stringWithCString:altteacher encoding:NSUTF8StringEncoding];
-        NSString *eventreadinginsteve = [NSString stringWithCString:eventreadinginst encoding:NSUTF8StringEncoding];
-        NSString *eventdesceve = [NSString stringWithCString:eventdesc encoding:NSUTF8StringEncoding];
-        
-        CourseEvent *event = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-23 08:15"]]  eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-23 12:15"]] classRoom:classroomev alternetiveTeacher:altteachereve eventReadingInstructions:eventreadinginsteve eventDescription:eventdesceve];
-        [course addCourseEvent:event];
-        NSLog(@"course: %@", course);
-        [resultDictionary setDictionary:[service saveToDb:[course updateCourseAsDictionary]]];
-        
-        course.db_courseRev = [resultDictionary valueForKey:@"rev"];
-        
-        NSLog(@"want to create event for this course: y / n ");
-        scanf("%s", &answer);
-        // if more than one event is created "document update conflict" from db and no error
-        answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
-    } while ([answ isEqualToString:@"y"]);
-
+    NSLog(@"activecourse: %@", activeCourse);
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
+    char startdateforevent[40];
+    char starttimeofevent[40];
+    char endtimeforevent[40];
+    char classroom[40];
+    char altteacher[40];
+    char eventreadinginst[40];
+    char eventdesc[40];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSLog(@"classroom number:");
+    scanf("%s", &classroom);
+    NSLog(@"alternative teacher ");
+    scanf("%s", &altteacher);
+    NSLog(@"event reading instructions ");
+    scanf("%s", &eventreadinginst);
+    NSLog(@"event description ");
+    scanf("%s", &eventdesc);
+    
+    NSString *startdateforeventstart = [NSString stringWithCString:startdateforevent encoding:NSUTF8StringEncoding];
+    startdateforeventstart = [startdateforeventstart stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+    NSString *starttimeofeventstart = [NSString stringWithCString:starttimeofevent encoding:NSUTF8StringEncoding];
+    starttimeofeventstart = [starttimeofeventstart stringByReplacingOccurrencesOfString:@"_" withString:@":"];
+    NSString *endtimeforeventend = [NSString stringWithCString:endtimeforevent encoding:NSUTF8StringEncoding];
+    endtimeforeventend = [endtimeforeventend stringByReplacingOccurrencesOfString:@"_" withString:@":"];
+    NSString *classroomev = [NSString stringWithCString:classroom encoding:NSUTF8StringEncoding];
+    NSString *altteachereve = [NSString stringWithCString:altteacher encoding:NSUTF8StringEncoding];
+    NSString *eventreadinginsteve = [NSString stringWithCString:eventreadinginst encoding:NSUTF8StringEncoding];
+    NSString *eventdesceve = [NSString stringWithCString:eventdesc encoding:NSUTF8StringEncoding];
+    
+    CourseEvent *event = [CourseEvent courseEventWithStartDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-23 08:15"]]  eventEndDate:[dateFormatter dateFromString:[NSString stringWithFormat:@"%@", @"2012-05-23 12:15"]] classRoom:classroomev alternetiveTeacher:altteachereve eventReadingInstructions:eventreadinginsteve eventDescription:eventdesceve];
+    [activeCourse addCourseEvent:event];
+    NSLog(@"course from new event: %@", activeCourse);
+    [resultDictionary setDictionary:[service saveToDb:[activeCourse updateCourseAsDictionary]]];
+    
+    [activeCourse setDb_courseRev:[resultDictionary valueForKey:@"rev"]];
+    
+    
 }
 -(void)loadCourseData:(NSString*) courseid
 {
@@ -468,5 +434,26 @@ Course *tempCourses;
 {
   return activeUser;
 }
+-(NSArray*)listAllCoursesSortedByName {
+    
+    NSMutableArray *tempAllSortedCourses = [NSMutableArray arrayWithArray:allCourses]; 
+    //Sort array  
+    NSSortDescriptor *sortAll = [NSSortDescriptor sortDescriptorWithKey:@"courseName" ascending:TRUE];
+    NSArray *sortDecArray = [NSArray arrayWithObject:sortAll];
+    
+    return [tempAllSortedCourses sortedArrayUsingDescriptors:sortDecArray];
+    
+}
+-(NSArray*)listAllStudentsSortedByName {
+    
+    NSMutableArray *tempAllSortedStudents = [NSMutableArray arrayWithArray:allUsers]; 
+    //Sort array  
+    NSSortDescriptor *sortAllByLastName = [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:TRUE];
+    NSSortDescriptor *sortAllByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:TRUE];
 
+    NSArray *sortDecArray = [NSArray arrayWithObjects:sortAllByLastName, sortAllByName, nil];
+    
+    return [tempAllSortedStudents sortedArrayUsingDescriptors:sortDecArray];
+    
+}
 @end
