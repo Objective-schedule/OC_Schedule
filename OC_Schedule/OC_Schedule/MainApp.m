@@ -249,20 +249,21 @@ Course *tempCourses;
     //get userDictionary from Db
     NSLog(@"%@",[userService dictionaryFromDbJson:userid]);
     activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];
-   // NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
+    NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
     
     //check if role is admin or student
-   // NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
-   // NSString *student = [[NSString alloc] initWithFormat:@"Student"];
-    if([activeUser.userRole isEqualToString:ATRoleAdmin]){
+    NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
+    NSString *student = [[NSString alloc] initWithFormat:@"Student"];
+    // ideal solution but needs more work
+    /*if([activeUser.userRole isEqualToString:ATRoleAdmin]){
         NSLog(@"activeUser.userRole: %@", activeUser.userRole);
         [self adminMenu];
         
     } else{
         NSLog(@"you are stud");
         [self studentMenu];
-    }
-    /*
+    }*/
+    
     if([[loginUserDict valueForKey:@"role"] isEqualToString:student]) {
         NSLog(@"you are student");
         
@@ -271,7 +272,7 @@ Course *tempCourses;
     }else if([[loginUserDict valueForKey:@"role"] isEqualToString:admin]){
         NSLog(@"you are Admin");
         [self adminMenu];
-    }*/
+    }
 }
 
 

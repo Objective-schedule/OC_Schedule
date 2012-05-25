@@ -63,6 +63,7 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status {
     return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent db_id:db_id db_rev: db_rev status:status];
 }
+
 -(id) init {
     return [self initWithUserEmail:@"no-user-email" username:@"no-username" lastName:@"no-userlastName" role:@"no-user-role" db_id: @"no _id" db_rev:@"no _rev" status:@"no-status"];
 }
