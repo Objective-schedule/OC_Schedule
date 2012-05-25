@@ -12,6 +12,7 @@
 #import "CourseEvent.h"
 #import "UserServices.h"
 #import "CourseServices.h"
+#import "Message.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -170,6 +171,9 @@ Course *tempCourses;
                 case 5:
                     [self adminCourseMenu];
                     break;
+                case 6:
+                    [self newMessage];
+                    break;
                 default:
                     break;
             }
@@ -181,6 +185,7 @@ Course *tempCourses;
         NSLog(@"Skapa ny kurs: 3\n");
         NSLog(@"Skapa ny student: 4\n");
         NSLog(@"Administrera kurs: 5\n"); //skapar ny meny med ny alternativ
+        NSLog(@"Create Message: 6\n");
         NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);
@@ -310,6 +315,46 @@ Course *tempCourses;
     student.db_id = [resultDictionary valueForKey:@"id"];
     student.db_rev = [resultDictionary valueForKey:@"rev"];
     NSLog(@"student: %@", student);
+}
+-(void)newMessage {
+    char t[255]; // title
+    //char sd[40]; // sent date
+    char co[255]; // content
+    char cb[255]; // created by
+    NSString *title;
+    NSString *content;
+    NSString *createdBy;
+
+
+    NSLog(@"Title: ");
+    scanf("%s", &t);
+    
+
+    NSLog(@"Content");
+    scanf("%s", &co);
+
+    NSLog(@"Created by");
+    scanf("%s", &cb);
+
+    
+    title = [NSString stringWithCString:t encoding:NSUTF8StringEncoding];
+    content = [NSString stringWithCString:co encoding:NSUTF8StringEncoding];
+    createdBy = [NSString stringWithCString:cb encoding:NSUTF8StringEncoding];
+ 
+    Message *message = [Message messageWithTitle:title sentDate:[NSDate date] content:content createdBy:createdBy db_id:@"" db_rev:@""];
+    
+    // which student?  all
+    for (User *student in allUsers) {
+        [message addStudent:student.db_id];
+    }
+    
+   [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
+    
+//    // get back the id and rev to update the newly created message
+//    message.db_id = [resultDictionary valueForKey:@"id"];
+//    message.db_rev = [resultDictionary valueForKey:@"rev"];
+    NSLog(@"message: %@", message);
+    
 }
 -(void)newCourse {
     
@@ -454,7 +499,7 @@ Course *tempCourses;
 
     char roomN[40];
     char readInst[256];
-    char evDesc[200];
+    //char evDesc[200];
     char altteach[200];
     
     NSString *readingInst;

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "User.h"
 @interface Message : NSObject
 
 @property(nonatomic, copy) NSString *title;
@@ -21,4 +21,7 @@
 
 -(id)initMessageWithTitle:(NSString*)title sentDate:(NSDate*)sentDate content:(NSString*)content createdBy:(NSString*)createdBy db_id:(NSString*)db_id db_rev:(NSString*)db_rev;
 
+-(void)addStudent:(NSString*)student;
+
+-(NSDictionary*)saveMessageAsDictionary;
 @end

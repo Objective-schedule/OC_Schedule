@@ -30,6 +30,7 @@
 
 -(User*) thisActiveUser;
 -(void)newStudent;
+-(void)newMessage;
 -(void)newCourse;
 -(NSDate*) requestEventDate;
 -(NSString*) requestUserInputText:(NSString*) textToUser;

@@ -18,7 +18,7 @@
     return [[self alloc] initMessageWithTitle:title sentDate:sentDate content:content createdBy:createdBy db_id:db_id db_rev: db_rev];
 }
 -(id) init {
-    return [self initMessageWithTitle:@"no-title" sentDate:@"no-sentDate" content:@"no-content" createdBy:@"no-createdBy" db_id: @"" db_rev:@""];
+    return [self initMessageWithTitle:@"no-title" sentDate:nil content:@"no-content" createdBy:@"no-createdBy" db_id: @"" db_rev:@""];
 }
 
 -(id)initMessageWithTitle:(NSString*)title sentDate:(NSDate*)sentDate content:(NSString*)content createdBy:(NSString*)createdBy db_id:(NSString*)db_id db_rev:(NSString*)db_rev {
@@ -40,15 +40,26 @@
     return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@", self.title, self.sentDate, self.content, self.createdBy, self.db_id, self.db_rev];
 }
 
--(NSArray*)getStudentsIds
-{
-    NSMutableArray *studentIdList = [NSMutableArray array];
-    for(User *student in sentTo)
-    {
-        [studentIdList addObject:student.db_id];
-    }
-    return studentIdList;
+
+-(void)addStudent:(NSString*)student {
+    NSMutableArray* newArray = [NSMutableArray arrayWithArray:sentTo];
     
+    [newArray addObject:student];
+    
+    sentTo = newArray;
+}
+// create new dictionary with new user
+
+-(NSDictionary*)saveMessageAsDictionary {
+    
+    // must save with time clock!!
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss +0000"];
+    
+    NSString *nowDate = [dateFormatter stringFromDate:[self sentDate]];
+    NSDictionary *dictionaryWithMessage = [NSDictionary dictionaryWithObjectsAndKeys:self.title, @"title",nowDate, @"sentDate",self.content, @"content", self.createdBy, @"createdBy", sentTo, @"sentTo", nil];
+    NSLog(@"dictionaryWithMessage: %@", dictionaryWithMessage);
+    return dictionaryWithMessage;
 }
 
 @end
