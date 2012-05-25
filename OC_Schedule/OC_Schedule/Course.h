@@ -51,7 +51,8 @@
 
 
 -(void) addCourseEvent:(CourseEvent*) newEvent; 
--(void)updateCourse:(Services*)service;
+-(void)updateCourse;
+-(void)sortCourseEvents;
 +(id)courseFromDictionaryWithEvents:(NSDictionary*)dictionaryWithEvents;
 
 -(NSInteger) startWeek;

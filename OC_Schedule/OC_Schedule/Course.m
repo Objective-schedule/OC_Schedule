@@ -9,12 +9,14 @@
 #import "Course.h"
 #import "CourseEvent.h"
 #import "User.h"
+#import "Services.h"
 @implementation Course
 //Created by Kenth again....
 //Pedro
 //Hector
 {
     NSArray *courseSchedule, *courseStudents;
+    Services *service;
 }
 
 @synthesize courseId = _courseId, courseName = _courseName, coursePoints = _coursePoints, courseTeacher = _courseTeacher, courseDescription = _courseDescription, courseLitterature = _courseLitterature, db_courseId = _db_courseId, db_courseRev = _db_courseRev;
@@ -130,16 +132,24 @@
    NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
        
    [newArray addObject:newEvent];
-    
-   NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    courseSchedule = newArray;
+       
+   //NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
   
-   
+    [self sortCourseEvents];
+//    //Sort array  
+//    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
+//    NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
+//       
+            
+}
+-(void)sortCourseEvents{
+    NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
     //Sort array  
     NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
     NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
-       
-   courseSchedule = [newArray sortedArrayUsingDescriptors:sortDecArray];
-            
+    courseSchedule = [newArray sortedArrayUsingDescriptors:sortDecArray];
+
 }
 
 -(NSDictionary*) asDictionary // update course
@@ -168,8 +178,8 @@
     [dict setValue:[self db_courseRev] forKey:@"_rev"];
     return dict;
 }
--(void)updateCourse:(Services*)service {
-    //Services *service = [[Services alloc]init];
+-(void)updateCourse {
+    service = [[Services alloc]init];
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
     [resultDictionary setDictionary:[service saveToDb:[self updateCourseAsDictionary]]];
     

@@ -32,7 +32,9 @@
 -(void)newStudent;
 -(void)newCourse;
 -(NSDate*) requestEventDate;
+-(NSString*) requestUserInputText:(NSString*) textToUser;
 -(void)newCourseEvent:(Course*)activeCourse;
+-(void)addStudentToCourse:(Course*)activeCourse;
 -(NSArray*)listAllCoursesSortedByName;
 -(NSArray*)listAllStudentsSortedByName;
 

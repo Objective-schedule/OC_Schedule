@@ -12,7 +12,9 @@
 #import "CourseEvent.h"
 #import "UserServices.h"
 #import "CourseServices.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 NSArray *allUsers, *allCourses;
 Services *service;
 User *activeUser;
@@ -21,6 +23,7 @@ User *tempUser;
 Course *tempCourses;
 
 @implementation MainApp
+#define MAX_NAME_SZ 256
 
 @synthesize activeUser = _activeUser, tempUser = _tempUser, tempCourses = _tempCourses;
 
@@ -215,7 +218,7 @@ Course *tempCourses;
                     [self editCourseEvent:activeCourse];
                     break;
                 case 3:
-                   // [activeUser dailyInstructions:[NSDate date]];
+                    [self addStudentToCourse:activeCourse];
                     break;
                 case 4:
                    // [activeUser weeklyInstructions:thisWeekNum];
@@ -375,6 +378,7 @@ Course *tempCourses;
         } while ([answ isEqualToString:@"y"]);
     }
 }
+
 -(void)newCourseEvent:(Course*)activeCourse{
 
     NSLog(@"activecourse: %@", activeCourse);
@@ -418,6 +422,19 @@ Course *tempCourses;
     
     
 }
+-(void)addStudentToCourse:(Course*)activeCourse {
+    NSLog(@"activeCourse: %@", activeCourse);
+    int studentindex = 1000;
+    //NSLog(@"students here: %@",[activeCourse allStudents]);
+    NSLog(@"the list with all students: %@", [self listAllStudentsSortedByName]);
+    NSLog(@"choose student");
+    scanf("%d", &studentindex);
+    User *tempUser = [[self listAllStudentsSortedByName] objectAtIndex:studentindex];
+    [activeCourse addStudentToCourse:tempUser];
+    [activeCourse updateCourse];
+
+    //NSLog(@"temp user: %@", tempUser);
+}
 -(void)editCourseEvent:(Course*)activeCourse{
     NSInteger i = 0;
     int indexOfEvent = 10;
@@ -436,7 +453,7 @@ Course *tempCourses;
     
 
     char roomN[40];
-    char readInst[40];
+    char readInst[256];
     char evDesc[200];
     char altteach[200];
     
@@ -468,14 +485,14 @@ Course *tempCourses;
                     break;
                 case 4:
                     NSLog(@"enter readingInst: ");
-                    scanf("%s", &readInst);
+                    scanf("%255[^\n]", &readInst);
                     readingInst = [NSString stringWithCString:readInst encoding:NSUTF8StringEncoding];
                     [tempEvent setEventReadingInstructions:readingInst];
                     break;
                 case 5:
-                    NSLog(@"enter event description: ");
-                    scanf("%s", &evDesc);
-                    eventdescr = [NSString stringWithCString:evDesc encoding:NSUTF8StringEncoding];
+                    //NSLog(@"enter event description: ");
+                    //scanf("%s", &evDesc);
+                    eventdescr = [self requestUserInputText:@"enter event description: "];
                     [tempEvent setEventDescription:eventdescr];
                     break;
                 case 6:
@@ -500,8 +517,8 @@ Course *tempCourses;
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);
     
-    // update course and send back to db
-    [activeCourse updateCourse:service];
+    [activeCourse sortCourseEvents];
+    [activeCourse updateCourse];
                                           
 }
 -(void)loadCourseData:(NSString*) courseid
@@ -543,6 +560,34 @@ Course *tempCourses;
     //NSDate *theDate = [dateFormatter dateFromString:datetime];
     //NSLog(@"date object:%@", courseDate);
     return  theDate;
+}
+-(NSString*) requestUserInputText:(NSString*) textToUser
+{
+    char *inputStr = malloc (MAX_NAME_SZ);
+    const char *displayText = [textToUser UTF8String];
+    //displayText = [textToUser 
+    
+    if (inputStr == NULL) {
+        printf ("No memory\n");
+        return @"No memory";
+    }
+    
+    /* Ask user for name. */
+    
+    printf(displayText);
+    printf("\n");
+    /* Get the name, with size limit. */
+    fgets (inputStr, MAX_NAME_SZ, stdin);
+    
+    /* Remove trailing newline, if there. */
+    if (inputStr[strlen (inputStr) - 1] == '\n')
+        inputStr[strlen (inputStr) - 1] = '\0';
+    
+    /* Say hello. */
+    NSString *text = [NSString stringWithCString:inputStr encoding:NSUTF8StringEncoding];
+    /* Free memory and exit. */
+    free (inputStr);
+    return text;
 }
 -(User*) thisActiveUser
 {
