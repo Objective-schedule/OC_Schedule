@@ -36,6 +36,7 @@
 -(NSString*) requestUserInputText:(NSString*) textToUser;
 -(void)newCourseEvent:(Course*)activeCourse;
 -(void)addStudentToCourse:(Course*)activeCourse;
+//-(void)addCourseToStudent:(User*)student;
 -(NSArray*)listAllCoursesSortedByName;
 -(NSArray*)listAllStudentsSortedByName;
 

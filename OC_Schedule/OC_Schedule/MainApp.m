@@ -66,10 +66,10 @@ Course *tempCourses;
                     [activeUser weeklyInstructions:thisWeekNum];
                     break;
                 case 5:
-                    [self newStudent];
+                    //[self newStudent];
                     break;
                 case 6:
-                    [self newCourse];
+                    //[self newCourse];
                     break;
                 default:
                     NSLog(@"default");
@@ -82,7 +82,7 @@ Course *tempCourses;
         NSLog(@"veckoshema: 2\n");
         NSLog(@"dagens läsinstruktioner: 3\n");
         NSLog(@"veckans läsinstruktioner: 4\n");
-        NSLog(@"create new user: 5\n");
+        NSLog(@"get messages: 5\n");
         NSLog(@"create new course: 6\n");
         NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
@@ -477,9 +477,11 @@ Course *tempCourses;
     User *tempUser = [[self listAllStudentsSortedByName] objectAtIndex:studentindex];
     [activeCourse addStudentToCourse:tempUser];
     [activeCourse updateCourse];
-
-    //NSLog(@"temp user: %@", tempUser);
+    
+    // add course to student
+    //[tempUser addCourseToUser:activeCourse];
 }
+
 -(void)editCourseEvent:(Course*)activeCourse{
     NSInteger i = 0;
     int indexOfEvent = 10;

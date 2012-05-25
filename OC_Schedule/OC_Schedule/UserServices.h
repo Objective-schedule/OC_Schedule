@@ -11,6 +11,6 @@
 @interface UserServices : Services
 // all the different gets to db  goes here
 -(NSDictionary*)dictionaryFromDbJson:(NSString*)dbId;
-
+-(NSDictionary*)dictionaryFromMessageDbJson:(NSString*)dbId;
 
 @end
