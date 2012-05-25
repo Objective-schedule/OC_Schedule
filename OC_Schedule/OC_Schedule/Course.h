@@ -10,7 +10,7 @@
 
 @class CourseEvent;
 @class User;
-
+@class Services;
 @interface Course : NSObject
 
 @property(nonatomic, copy) NSString *courseDescription;
@@ -51,7 +51,7 @@
 
 
 -(void) addCourseEvent:(CourseEvent*) newEvent; 
-
+-(void)updateCourse:(Services*)service;
 +(id)courseFromDictionaryWithEvents:(NSDictionary*)dictionaryWithEvents;
 
 -(NSInteger) startWeek;

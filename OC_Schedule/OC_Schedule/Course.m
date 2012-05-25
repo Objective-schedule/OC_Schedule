@@ -9,7 +9,6 @@
 #import "Course.h"
 #import "CourseEvent.h"
 #import "User.h"
-
 @implementation Course
 //Created by Kenth again....
 //Pedro
@@ -169,7 +168,13 @@
     [dict setValue:[self db_courseRev] forKey:@"_rev"];
     return dict;
 }
-
+-(void)updateCourse:(Services*)service {
+    //Services *service = [[Services alloc]init];
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
+    [resultDictionary setDictionary:[service saveToDb:[self updateCourseAsDictionary]]];
+    
+    [self setDb_courseRev:[resultDictionary valueForKey:@"rev"]];
+}
 
 -(NSArray*)getEventsAsDictionarys
 {

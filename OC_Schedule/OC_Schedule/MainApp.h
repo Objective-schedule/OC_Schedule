@@ -31,7 +31,7 @@
 -(User*) thisActiveUser;
 -(void)newStudent;
 -(void)newCourse;
-
+-(NSDate*) requestEventDate;
 -(void)newCourseEvent:(Course*)activeCourse;
 -(NSArray*)listAllCoursesSortedByName;
 -(NSArray*)listAllStudentsSortedByName;

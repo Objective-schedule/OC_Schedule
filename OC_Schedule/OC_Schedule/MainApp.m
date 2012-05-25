@@ -152,11 +152,11 @@ Course *tempCourses;
         {
             switch (inputUserMenue) {
                 case 1:
-                    NSLog(@"%@",[self listAllCoursesSortedByName]);
+                    NSLog(@"Kurs Lista: %@",[self listAllCoursesSortedByName]);
                     break;
                     
                 case 2:
-                    NSLog(@"%@",[self listAllStudentsSortedByName]);
+                    NSLog(@"Student Lista: %@",[self listAllStudentsSortedByName]);
                     break;
                 case 3:
                     [self newCourse];
@@ -212,13 +212,13 @@ Course *tempCourses;
                     break;
                     
                 case 2:
-                    NSLog(@"%@",[activeUser weeklySchema:thisWeekNum]);
+                    [self editCourseEvent:activeCourse];
                     break;
                 case 3:
-                    [activeUser dailyInstructions:[NSDate date]];
+                   // [activeUser dailyInstructions:[NSDate date]];
                     break;
                 case 4:
-                    [activeUser weeklyInstructions:thisWeekNum];
+                   // [activeUser weeklyInstructions:thisWeekNum];
                     break;
                 case 5:
                     [self adminMenu];
@@ -228,14 +228,13 @@ Course *tempCourses;
             }
         }
         
-        NSLog(@"Visa:\n");
         NSLog(@"Lägg till kurstillfälle: 1\n");
         NSLog(@"Uppdatera kurstillfälle: 2\n");
         NSLog(@"Lägg till student till kursen: 3\n"); 
         NSLog(@"Uppdatera befintlig kurs: 4\n");
         NSLog(@"Tillbaka till huvudmeny: 5\n");
         
-        NSLog(@"Avlsuta: 0\n\n");
+        NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);
 }
@@ -419,6 +418,92 @@ Course *tempCourses;
     
     
 }
+-(void)editCourseEvent:(Course*)activeCourse{
+    NSInteger i = 0;
+    int indexOfEvent = 10;
+    
+    for(CourseEvent *event in [activeCourse allEvents]){
+        
+        NSLog(@"event: %@ (%ld)", [event eventStartDate], i);
+        i++;
+    }
+    NSLog(@"which event do you want to update? from 0 as i: %ld", i);
+    scanf("%d", &indexOfEvent);
+   
+    NSLog(@"your choice: %@",[[activeCourse allEvents]objectAtIndex:indexOfEvent]);
+    CourseEvent *tempEvent = [[activeCourse allEvents]objectAtIndex:indexOfEvent];
+    NSLog(@"Room number: %@", [tempEvent classRoom]);
+    
+
+    char roomN[40];
+    char readInst[40];
+    char evDesc[200];
+    char altteach[200];
+    
+    NSString *readingInst;
+    NSDate *newDate;
+    NSString *roomnumber;
+    NSString *eventdescr;
+    NSString *alterTeacher;
+    // menu to update event
+    int inputUserMenue = 10;
+    
+    do {
+        if (inputUserMenue != 9)
+        {
+            switch (inputUserMenue) {
+                case 1:
+                    newDate = [self requestEventDate];
+                    [tempEvent setEventStartDate:newDate];
+                    break;
+                case 2:
+                    newDate = [self requestEventDate];
+                    [tempEvent setEventEndDate:newDate];
+                    break;
+                case 3:
+                    NSLog(@"enter new room number: ");
+                    scanf("%s", &roomN);
+                    roomnumber = [NSString stringWithCString:roomN encoding:NSUTF8StringEncoding];
+                    [tempEvent setClassRoom:roomnumber];
+                    break;
+                case 4:
+                    NSLog(@"enter readingInst: ");
+                    scanf("%s", &readInst);
+                    readingInst = [NSString stringWithCString:readInst encoding:NSUTF8StringEncoding];
+                    [tempEvent setEventReadingInstructions:readingInst];
+                    break;
+                case 5:
+                    NSLog(@"enter event description: ");
+                    scanf("%s", &evDesc);
+                    eventdescr = [NSString stringWithCString:evDesc encoding:NSUTF8StringEncoding];
+                    [tempEvent setEventDescription:eventdescr];
+                    break;
+                case 6:
+                    NSLog(@"alternative teacher: ");
+                    scanf("%s", &altteach);
+                    alterTeacher = [NSString stringWithCString:altteach encoding:NSUTF8StringEncoding];
+                    [tempEvent setAlternativeTeacher:alterTeacher];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        NSLog(@"Update start date: 1\n");
+        NSLog(@"Update End date: 2\n");
+        NSLog(@"Update room number: 3\n"); 
+        NSLog(@"Update Reading instructions: 4\n");
+        NSLog(@"Update Event description: 5\n");
+        NSLog(@"Alternative teacher: 6\n");
+        
+        NSLog(@"Save all: 9\n\n");
+        scanf("%d", &inputUserMenue);
+    } while (inputUserMenue != 9);
+    
+    // update course and send back to db
+    [activeCourse updateCourse:service];
+                                          
+}
 -(void)loadCourseData:(NSString*) courseid
 {
    // CourseServices *courseService = [[CourseServices alloc]init];
@@ -430,7 +515,35 @@ Course *tempCourses;
 {
     
 }
-
+-(NSDate*) requestEventDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    
+    
+    char y[40];
+    char t[40];
+    
+    
+    NSLog(@"Ange datum (yyyy-mm-dd):");
+    scanf("%s", &y);
+    NSLog(@"Klockslag (hh:mm):");
+    scanf("%s", &t);
+    //        NSLog(@"Last Name");
+    //        scanf("%s", &l);
+    NSString *date = [NSString stringWithCString:y encoding:NSUTF8StringEncoding];
+    NSString *time = [NSString stringWithCString:t encoding:NSUTF8StringEncoding];
+    // NSLog(@"time:%@", time);
+    NSString *datetime = [NSString stringWithFormat:@"%@ %@:00 +0000",date, time];
+    //NSString *datetime = [NSString stringWithFormat:@"%@ %@:00 +0000",@"2010-05-22", time];
+    
+    NSDate *theDate = [NSDate dateWithString:datetime];
+    
+    //NSDate *theDate = [dateFormatter dateFromString:datetime];
+    //NSLog(@"date object:%@", courseDate);
+    return  theDate;
+}
 -(User*) thisActiveUser
 {
   return activeUser;
