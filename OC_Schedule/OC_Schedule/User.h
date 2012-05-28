@@ -44,7 +44,7 @@ extern NSString *const ATUserStatusInactive;
 -(NSDictionary*)saveUserAsDictionary;
 
 -(NSDictionary*)updateUserAsDictionary;
-
+-(void)updateUser;
 +(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses;
 
 -(void) addCourseToUser:(Course*) course; 

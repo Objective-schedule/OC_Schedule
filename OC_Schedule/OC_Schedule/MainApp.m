@@ -39,8 +39,12 @@ Course *tempCourses;
     
 }
 
--(void) studentMenu
+-(void) studentMenu:(NSString*) userid
+
 {
+    UserServices *userService = [[UserServices alloc]init];
+    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
+    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
@@ -274,7 +278,7 @@ Course *tempCourses;
     if([[loginUserDict valueForKey:@"role"] isEqualToString:student]) {
         NSLog(@"you are student");
         
-        [self studentMenu];
+        [self studentMenu: userid];
         
     }else if([[loginUserDict valueForKey:@"role"] isEqualToString:admin]){
         NSLog(@"you are Admin");
@@ -479,8 +483,8 @@ Course *tempCourses;
     [activeCourse updateCourse];
     
     // add course to student
-    //[tempUser addCourseToUser:activeCourse];
-    [tempUser updateUserAsDictionary];
+    [tempUser addCourseToUser:activeCourse];
+    [tempUser updateUser];
     NSLog(@"tempuser from addStudentToCourse: %@",tempUser);
 }
 

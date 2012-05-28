@@ -103,13 +103,13 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
     NSLog(@"dictionaryWithUser update _id, _rev: %@",dictionaryWithUser);
     return dictionaryWithUser;
 }
-/*-(void)updateUser {
+-(void)updateUser {
     service = [[Services alloc]init];
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
-    [resultDictionary setDictionary:[service saveToDb:[self updateCourseAsDictionary]]];
+    [resultDictionary setDictionary:[service saveToDb:[self updateUserAsDictionary]]];
     
-    [self setDb_courseRev:[resultDictionary valueForKey:@"rev"]];
-}*/
+    [self setDb_rev:[resultDictionary valueForKey:@"rev"]];
+}
 
 -(void) addCourseToUser:(Course*) course
 {
