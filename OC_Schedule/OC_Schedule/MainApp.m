@@ -480,6 +480,8 @@ Course *tempCourses;
     
     // add course to student
     //[tempUser addCourseToUser:activeCourse];
+    [tempUser updateUserAsDictionary];
+    NSLog(@"tempuser from addStudentToCourse: %@",tempUser);
 }
 
 -(void)editCourseEvent:(Course*)activeCourse{

@@ -24,6 +24,8 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 
 {
     NSArray *userCourses;
+    Services *service;
+
 }
 
 
@@ -84,7 +86,7 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
 }
 -(NSString*) description {
     [self getCoursesIds];
-    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status];
+    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status, userCourses];
 }
 // create new dictionary with new user
 -(NSDictionary*)saveUserAsDictionary {
@@ -101,6 +103,13 @@ userMessages = _userMessages, userRole = _userRole, db_id = _db_id, db_rev = _db
     NSLog(@"dictionaryWithUser update _id, _rev: %@",dictionaryWithUser);
     return dictionaryWithUser;
 }
+/*-(void)updateUser {
+    service = [[Services alloc]init];
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
+    [resultDictionary setDictionary:[service saveToDb:[self updateCourseAsDictionary]]];
+    
+    [self setDb_courseRev:[resultDictionary valueForKey:@"rev"]];
+}*/
 
 -(void) addCourseToUser:(Course*) course
 {
