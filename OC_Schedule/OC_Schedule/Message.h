@@ -24,4 +24,5 @@
 -(void)addStudent:(NSString*)student;
 
 -(NSDictionary*)saveMessageAsDictionary;
++(id) messageFromDictionary:(NSDictionary*) dictionary;
 @end

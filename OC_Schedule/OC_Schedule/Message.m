@@ -49,7 +49,6 @@
     sentTo = newArray;
 }
 // create new dictionary with new user
-
 -(NSDictionary*)saveMessageAsDictionary {
     
     // must save with time clock!!
@@ -57,9 +56,34 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss +0000"];
     
     NSString *nowDate = [dateFormatter stringFromDate:[self sentDate]];
-    NSDictionary *dictionaryWithMessage = [NSDictionary dictionaryWithObjectsAndKeys:self.title, @"title",nowDate, @"sentDate",self.content, @"content", self.createdBy, @"createdBy", sentTo, @"sentTo", nil];
+    NSDictionary *dictionaryWithMessage = [NSDictionary dictionaryWithObjectsAndKeys:self.title,
+                                           @"title",nowDate, 
+                                           @"sentDate",self.content,
+                                           @"content", self.createdBy,
+                                           @"createdBy", sentTo,
+                                           @"sentTo", nil];
+    
     NSLog(@"dictionaryWithMessage: %@", dictionaryWithMessage);
     return dictionaryWithMessage;
 }
++(id) messageFromDictionary:(NSDictionary*) dictionary {
+    
+    return [self messageWithTitle:[dictionary valueForKey:@"title"]
+                         sentDate:[dictionary valueForKey:@"sentDate"]
+                          content:[dictionary valueForKey:@"content"]
+                        createdBy:[dictionary valueForKey:@"createdBy"]
+                            db_id:[dictionary valueForKey:@"_id"]
+                           db_rev:[dictionary valueForKey:@"_rev"]];
+                   
+    
+}
+
+//-(NSDictionary*) updateMessageAsDictionary
+//{
+//    NSMutableDictionary *messageDictionary = [NSMutableDictionary dictionaryWithDictionary:[self saveMessageAsDictionary]];
+//    [messageDictionary setValue:[self db_id] forKey:@"_id"];
+//    [messageDictionary setValue:[self db_rev] forKey:@"_rev"];
+//    return messageDictionary;
+//}
 
 @end

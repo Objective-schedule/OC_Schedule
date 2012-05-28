@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Course, CourseEvent;
+@class Course, CourseEvent, Message;
 
 extern NSString *const ATRoleStudent;
 extern NSString *const ATRoleTeacher;
@@ -26,30 +26,28 @@ extern NSString *const ATUserStatusInactive;
 @property(nonatomic, copy) NSString *db_rev;
 @property(nonatomic, copy) NSString *status;
 
-
-
-
-
 //@property(nonatomic, copy) NSArray *userCourses;
-@property(nonatomic, copy) NSArray *userMessages;
+//@property(nonatomic, copy) NSArray *userMessages;
 
 // create user with role (done)
 // override init (done)
-+(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
++(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status userMessages:(NSMutableArray*)userMessages;
 
--(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
+-(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status userMessages:(NSMutableArray*)userMessages;
 // override description
 
 // create dictionary with user
 -(NSDictionary*)saveUserAsDictionary;
-
++(id)userFromDictionaryWithMessages: (NSDictionary*)dictionaryWithMessages;
 -(NSDictionary*)updateUserAsDictionary;
 -(void)updateUser;
 +(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses;
 
 -(void) addCourseToUser:(Course*) course; 
-
+-(void) addMessageToUser:(Message*) message;
+-(void)addMessage:(NSString*)messageId;
 -(NSArray*)getCoursesIds;
+-(NSArray*)getMessagesIds;
 
 -(NSArray*) allCourseEvents;
 

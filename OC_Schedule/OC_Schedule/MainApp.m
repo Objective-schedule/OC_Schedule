@@ -22,6 +22,7 @@ User *activeUser;
 Course *activeCourse;
 User *tempUser;
 Course *tempCourses;
+Message *tempMessages;
 
 @implementation MainApp
 #define MAX_NAME_SZ 256
@@ -70,7 +71,7 @@ Course *tempCourses;
                     [activeUser weeklyInstructions:thisWeekNum];
                     break;
                 case 5:
-                    //[self newStudent];
+                    [activeUser getMessagesIds];
                     break;
                 case 6:
                     //[self newCourse];
@@ -113,18 +114,24 @@ Course *tempCourses;
     
     NSLog(@"testing all users: %@" ,allUsers);
 
+    // get all messages
+    
     
     NSDictionary* adminAllCourses = [NSDictionary dictionaryWithDictionary:[service getAllCourses]];
     
     
     NSMutableArray* tempAllCoursesArr = [[NSMutableArray alloc]init];
-    
+    //NSMutableArray* tempAllMessagesArr = [[NSMutableArray alloc]init];
+
     for (id myDict in [adminAllCourses valueForKey:@"rows"]){
         
         // calling the dictionary within the db object
         tempCourses = [Course courseFromDictionaryWithEvents:[myDict valueForKey:@"key"]];
-        NSLog(@"mydict: %@", [[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]);
+        //tempMessages = [Message messageFromDictionary:[myDict valueForKey:@"key"]];
         
+        NSLog(@"mydict: %@", [[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]);
+        NSLog(@"mydict with studentMessages: %@", [[myDict valueForKey:@"key"] valueForKey:@"studentMessages"]);
+
         NSArray *courseStudents = [NSArray arrayWithArray:[[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]];
         NSLog(@"courseStudents: %@", courseStudents);
         for(NSString *stuid in courseStudents){
@@ -258,10 +265,10 @@ Course *tempCourses;
     UserServices *userService = [[UserServices alloc]init];
     
     //get userDictionary from Db
-    NSLog(@"%@",[userService dictionaryFromDbJson:userid]);
+//    NSLog(@"%@",[userService dictionaryFromDbJson:userid]);
     activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];
     NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
-    
+    NSLog(@"");
     //check if role is admin or student
     NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
     NSString *student = [[NSString alloc] initWithFormat:@"Student"];
@@ -312,7 +319,7 @@ Course *tempCourses;
     NSString *name = [NSString stringWithCString:n encoding:NSUTF8StringEncoding];
     NSString *lastName = [NSString stringWithCString:l encoding:NSUTF8StringEncoding];
 
-    User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
+    User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive userMessages:nil];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[student saveUserAsDictionary]]];
     
     // get back the id and rev to update the newly created user
@@ -347,16 +354,25 @@ Course *tempCourses;
  
     Message *message = [Message messageWithTitle:title sentDate:[NSDate date] content:content createdBy:createdBy db_id:@"" db_rev:@""];
     
-    // which student?  all
+    // send message to all students
     for (User *student in allUsers) {
         [message addStudent:student.db_id];
+      
     }
     
-   [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
-    
-//    // get back the id and rev to update the newly created message
-//    message.db_id = [resultDictionary valueForKey:@"id"];
-//    message.db_rev = [resultDictionary valueForKey:@"rev"];
+   NSMutableDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
+    message.db_id = [resultDictionary valueForKey:@"id"];
+    message.db_rev = [resultDictionary valueForKey:@"rev"];
+    NSLog(@"message.db_id from callback: %@", message.db_id);
+    // save message id in student object
+    for (User *student in allUsers) {
+        [student addMessageToUser:message];
+        [student updateUser];
+        //[student addMessage:message.db_id];
+        //NSLog(@"message.db_id: %@", message.db_id);
+        //[student updateUser];
+    }
+
     NSLog(@"message: %@", message);
     
 }
