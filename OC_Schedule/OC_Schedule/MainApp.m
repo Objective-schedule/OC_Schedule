@@ -46,6 +46,7 @@ Message *tempMessages;
     UserServices *userService = [[UserServices alloc]init];
     activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
     
+    //activeUser  = [User userFromDictionaryWithMessages:[userService dictionaryFromMessageDbJson:[activeUser.db_id];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
@@ -71,10 +72,8 @@ Message *tempMessages;
                     [activeUser weeklyInstructions:thisWeekNum];
                     break;
                 case 5:
-                    [activeUser getMessagesIds];
-                    break;
-                case 6:
-                    //[self newCourse];
+                    // read messages
+                    [activeUser getMessages];
                     break;
                 default:
                     NSLog(@"default");
@@ -88,7 +87,6 @@ Message *tempMessages;
         NSLog(@"dagens läsinstruktioner: 3\n");
         NSLog(@"veckans läsinstruktioner: 4\n");
         NSLog(@"get messages: 5\n");
-        NSLog(@"create new course: 6\n");
         NSLog(@"Avlsuta: 9\n\n");
         scanf("%d", &inputUserMenue);
     } while (inputUserMenue != 9);

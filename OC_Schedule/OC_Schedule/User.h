@@ -48,7 +48,7 @@ extern NSString *const ATUserStatusInactive;
 -(void)addMessage:(NSString*)messageId;
 -(NSArray*)getCoursesIds;
 -(NSArray*)getMessagesIds;
-
+-(NSArray*)getMessages;
 -(NSArray*) allCourseEvents;
 
 -(NSArray*) dailySchema:(NSDate*) dateToShow;

@@ -65,7 +65,8 @@
     
 }
 // get messages
--(NSDictionary*)dictionaryFromMessageDbJson:(NSString*)dbId {
+-(NSArray*)dictionaryFromMessageDbJson:(NSString*)dbId {
+    NSArray *messageArray = [NSArray array];
     NSMutableDictionary *userDictionary = [NSMutableDictionary dictionary];
     // db adress can be put in a constant variable
     //http://127.0.0.1:5984/schedule/_design/views/_view/bymessages?key=%22f44c610065caa490bb3fc5225e002325%22
@@ -110,14 +111,14 @@
                                                          options:NSJSONReadingMutableContainers 
                                                            error:NULL];
         
-        NSArray *arr = [userDictionary  valueForKey:@"rows"];
-        userDictionary = [[arr objectAtIndex:0] objectForKey:@"value"];
+        messageArray = [userDictionary  valueForKey:@"rows"];
+        //userDictionary = [[arr objectAtIndex:0] objectForKey:@"value"];
         //NSLog(@"dictionary:%@", userDictionary);
         
         
     }
-    //NSLog(@"dictionary: %@", userDictionary);
-    return userDictionary;
+   // NSLog(@"messages dictionary: %@", messageArray);
+    return messageArray;
     
 }
 

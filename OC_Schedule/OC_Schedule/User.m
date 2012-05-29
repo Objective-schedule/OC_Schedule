@@ -10,6 +10,7 @@
 #import "Course.h"
 #import "CourseEvent.h"
 #import "Services.h"
+#import "UserServices.h"
 #import "Message.h"
 
 extern NSString *const ATRoleStudent = @"Student";
@@ -43,12 +44,13 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
                             db_rev: [dictionary valueForKey:@"_rev"]
                             status: [dictionary valueForKey:@"status"]];
 }
-// maybe edit this method to apply messages as well
 +(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses {
     
     User *newUser = [self userFromDictionary:dictionaryWithCourses];
     
+    UserServices *userServices = [[UserServices alloc]init];
     Services *service = [[Services alloc]init];
+    
     //NSLog(@"[dictionaryWithCourses: %@", [dictionaryWithCourses valueForKey:@"studentCourses"]);
     
     for(NSString *courseId in [dictionaryWithCourses valueForKey:@"studentCourses"]){
@@ -59,29 +61,37 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
         //NSLog(@"courseid: %@",courseId);
     }   
     //NSLog(@"new user: %@", newUser);
+   NSArray *arrayWithDictionaryWithMessages = [userServices dictionaryFromMessageDbJson:[newUser db_id]]; 
+    for(NSDictionary *message in arrayWithDictionaryWithMessages){
+        //NSLog(@"the messages: %@",[message valueForKey:@"value"]);
+        Message *tempMessage = [Message messageFromDictionary:[message valueForKey:@"value"]];
+        [newUser addMessageToUser:tempMessage];
+    }
+    //NSLog(@"newUser: %@", newUser);
+    //[newUser getMessages];
     return newUser;
 }
-+(id)userFromDictionaryWithMessages: (NSDictionary*)dictionaryWithMessages {
-    
-    User *tempUser = [self userFromDictionary:dictionaryWithMessages];
-    NSMutableArray *tempMessages = [NSMutableArray array];
-
-//    Services *service = [[Services alloc]init];
-//    for(NSString *messageId in [dictionaryWithMessages valueForKey:@"studentMessages"]){
+//+(id)userFromDictionaryWithMessages: (NSDictionary*)dictionaryWithMessages {
+//    
+//    User *tempUser = [self userFromDictionary:dictionaryWithMessages];
+//    NSMutableArray *tempMessages = [NSMutableArray array];
 //
-//        Message *tempMessage = [Message messageFromDictionary:[service getUniqeDoc:messageId]];
-//        [tempUser addMessageToUser:tempMessage];
-//    }
-//    NSLog(@"new user: %@", tempUser);
-    for(NSDictionary *event in [dictionaryWithMessages valueForKey:@"studentMessages"]){
-        Message *tempMessage = [Message messageFromDictionary: event];
-        [tempMessages addObject:tempMessage]; 
-    }    
-    tempUser->userMessages = [NSArray arrayWithArray:tempMessages];
-    NSLog(@"tempUser from userFromDictionaryWithMessages: %@", tempUser);
-    return tempUser;
-
-}
+////    Services *service = [[Services alloc]init];
+////    for(NSString *messageId in [dictionaryWithMessages valueForKey:@"studentMessages"]){
+////
+////        Message *tempMessage = [Message messageFromDictionary:[service getUniqeDoc:messageId]];
+////        [tempUser addMessageToUser:tempMessage];
+////    }
+////    NSLog(@"new user: %@", tempUser);
+//    for(NSDictionary *event in [dictionaryWithMessages valueForKey:@"studentMessages"]){
+//        Message *tempMessage = [Message messageFromDictionary: event];
+//        [tempMessages addObject:tempMessage]; 
+//    }    
+//    tempUser->userMessages = [NSArray arrayWithArray:tempMessages];
+//    NSLog(@"tempUser from userFromDictionaryWithMessages: %@", tempUser);
+//    return tempUser;
+//
+//}
 
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status {
     return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent db_id:db_id db_rev: db_rev status:status];
@@ -108,7 +118,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 }
 -(NSString*) description {
     [self getCoursesIds];
-    return [NSString stringWithFormat:@" users from all users: %@, %@, %@, %@, %@, %@, %@, %@, %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status, userCourses, userMessages];
+    return [NSString stringWithFormat:@" users from all users: %@, %@, %@, %@, %@, %@, %@, %@, messages: %@", self.userName, self.lastName, self.userEmail, self.userRole, self.db_id, self.db_rev, self.status, userCourses, userMessages];
 }
 // create new dictionary with new user
 -(NSDictionary*)saveUserAsDictionary {
@@ -120,9 +130,9 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 -(NSDictionary*)updateUserAsDictionary {
     
     NSArray *courseListinStudent = [NSArray arrayWithArray:[self getCoursesIds]];
-    NSArray *messageListinStudent = [NSArray arrayWithArray:[self getMessagesIds]];
+   // NSArray *messageListinStudent = [NSArray arrayWithArray:[self getMessagesIds]];
 
-    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status",courseListinStudent, @"studentCourses",messageListinStudent, @"studentMessages",  nil];
+    NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status",courseListinStudent, @"studentCourses",  nil];
     
     NSLog(@"dictionaryWithUser update _id, _rev: %@",dictionaryWithUser);
     return dictionaryWithUser;
@@ -143,6 +153,17 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
           
     userCourses = newArray;
 }
+-(NSArray*)getCoursesIds
+{
+    NSMutableArray *courseIdList = [NSMutableArray array];
+    for(Course *course in userCourses)
+    {
+        [courseIdList addObject:course.db_courseId];
+        // NSLog(@"courses:%@",course);
+    }
+    return courseIdList;
+    
+}
 -(void) addMessageToUser:(Message*) message
 {
     NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];
@@ -153,38 +174,28 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     NSLog(@"userMessages from addMessageToUser : %@", userMessages);
 
 }
--(void)addMessage:(NSString*)messageId {
-    NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];
-    
-    [newArray addObject:messageId];
-    
-    userMessages = newArray;
-}
--(NSArray*)getCoursesIds
-{
-    NSMutableArray *courseIdList = [NSMutableArray array];
-    for(Course *course in userCourses)
-    {
-        [courseIdList addObject:course.db_courseId];
-       // NSLog(@"courses:%@",course);
-    }
-    return courseIdList;
-    
-}
--(NSArray*)getMessagesIds
-{
-     
-    NSMutableArray *messageIdList = [NSMutableArray array];
-    for(Message *message in userMessages)
-    {
-        [messageIdList addObject:message.db_id];
-         NSLog(@"messageIdList addObject:message.db_id:%@",messageIdList);
-    }
-    NSLog(@"messageIdList addObject:message.db_id:%@",messageIdList);
+//-(void)addMessage:(NSString*)messageId {
+//    NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];
+//    
+//    [newArray addObject:messageId];
+//    
+//    userMessages = newArray;
+//}
 
-    return messageIdList;
-    
-}
+//-(NSArray*)getMessagesIds
+//{
+//     
+//    NSMutableArray *messageIdList = [NSMutableArray array];
+//    for(Message *message in userMessages)
+//    {
+//        [messageIdList addObject:message.db_id];
+//         NSLog(@"messageIdList addObject:message.db_id:%@",messageIdList);
+//    }
+//    NSLog(@"messageIdList addObject:message.db_id:%@",messageIdList);
+//
+//    return messageIdList;
+//    
+//}
 
 -(NSArray*) allCourseEvents
 {
@@ -199,7 +210,15 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     
     return totalEvents;
 }
-
+-(NSArray*)getMessages{
+    NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];
+    //Sort array  
+    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"sentDate" ascending:FALSE];
+    NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
+    userMessages = [newArray sortedArrayUsingDescriptors:sortDecArray];
+    NSLog(@"userMessages sorted: %@", userMessages);
+    return userMessages;    
+}
 -(NSArray*) dailySchema:(NSDate*) dateToShow
 {
     NSMutableArray *dailyEvents = [NSMutableArray array];

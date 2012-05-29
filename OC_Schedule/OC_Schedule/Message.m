@@ -37,7 +37,7 @@
 }
 -(NSString*) description {
     //[self getCoursesIds];
-    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@", self.title, self.sentDate, self.content, self.createdBy, self.db_id, self.db_rev];
+    return [NSString stringWithFormat:@"Title:%@, SentDate: %@, Content; %@, SentBy: %@", self.title, self.sentDate, self.content, self.createdBy];
 }
 
 
