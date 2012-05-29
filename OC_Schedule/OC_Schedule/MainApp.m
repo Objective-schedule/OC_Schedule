@@ -352,26 +352,45 @@ Message *tempMessages;
  
     Message *message = [Message messageWithTitle:title sentDate:[NSDate date] content:content createdBy:createdBy db_id:@"" db_rev:@""];
     
-    // send message to all students
-    for (User *student in allUsers) {
-        [message addStudent:student.db_id];
-      
+    char answerForSendingMessage[10];
+    
+    NSLog(@"Do you want to send this message to all students? y = yes, n = no ");
+    scanf("%s", &answerForSendingMessage);
+    NSString *answMessage = [NSString stringWithCString:answerForSendingMessage encoding:NSUTF8StringEncoding];
+    
+    if([answMessage isEqualToString:@"y"]){
+        // send message to all students
+        for (User *student in allUsers) {
+            [message addStudent:student.db_id];      
+        }
+        
+        NSMutableDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
+        message.db_id = [resultDictionary valueForKey:@"id"];
+        message.db_rev = [resultDictionary valueForKey:@"rev"];
+        NSLog(@"message.db_id from callback: %@", message.db_id);
+        // save message id in student object
+        for (User *student in allUsers) {
+            [student addMessageToUser:message];
+            [student updateUser];
+        }
+        
+        NSLog(@"Message sent to all students!");
+    } else{
+        // get list of student and display so that i can choose index
+        int studentindex = 1000;
+        //NSLog(@"students here: %@",[activeCourse allStudents]);
+        NSLog(@"the list with all students: %@", [self listAllStudentsSortedByName]);
+        NSLog(@"choose student");
+        scanf("%d", &studentindex);
+        User *tempUser = [[self listAllStudentsSortedByName] objectAtIndex:studentindex];
+        [message addStudent:tempUser.db_id];
+        
+        NSMutableDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
+        message.db_id = [resultDictionary valueForKey:@"id"];
+        message.db_rev = [resultDictionary valueForKey:@"rev"];
     }
     
-   NSMutableDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
-    message.db_id = [resultDictionary valueForKey:@"id"];
-    message.db_rev = [resultDictionary valueForKey:@"rev"];
-    NSLog(@"message.db_id from callback: %@", message.db_id);
-    // save message id in student object
-    for (User *student in allUsers) {
-        [student addMessageToUser:message];
-        [student updateUser];
-        //[student addMessage:message.db_id];
-        //NSLog(@"message.db_id: %@", message.db_id);
-        //[student updateUser];
-    }
-
-    NSLog(@"message: %@", message);
+        //NSLog(@"message: %@", message);
     
 }
 -(void)newCourse {
