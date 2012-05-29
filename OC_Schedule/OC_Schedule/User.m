@@ -20,8 +20,6 @@ extern NSString *const ATRoleAdmin = @"Admin";
 extern NSString *const ATUserStatusActive = @"Active";
 extern NSString *const ATUserStatusInactive = @"Inactive";
 
-
-
 @implementation User
 
 {
@@ -115,6 +113,10 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
         
     }
     return self;
+}
+-(NSString*)simpleDescription {
+    return [NSString stringWithFormat:@"Namn: %@ Efternamn: %@\n", self.userName, self.lastName];
+    
 }
 -(NSString*) description {
     [self getCoursesIds];
@@ -237,7 +239,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
             }                
         }
     }
-        return dailyEvents;
+    return dailyEvents;
 }
 
 -(NSArray*) weeklySchema:(NSInteger) weekNum
@@ -270,7 +272,9 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
             }
         }
     }
-    return weeklyEvents;
+    NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
+    NSArray *sortDecArray = [NSArray arrayWithObjects:sortByDate, nil];
+    return [weeklyEvents sortedArrayUsingDescriptors:sortDecArray];
 }
 
 -(void) dailyInstructions:(NSDate*) dateToShow

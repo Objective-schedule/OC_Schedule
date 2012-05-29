@@ -60,13 +60,13 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 {
     
     // must save with time clock!!
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    //NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    //[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
-    NSString* eventStartDateAsString = [dateFormatter stringFromDate:[self eventStartDate]];
+    NSString* eventStartDateAsString = [[self eventStartDate]description];
    //NSString* eventStartDateAsString = [self.eventStartDate descriptionWithCalendarFormat:@"%Y-%m-%d" timeZone:nil locale:[[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
     
-    NSString* eventEndDateAsString = [dateFormatter stringFromDate:[self eventEndDate]];
+    NSString* eventEndDateAsString = [[self eventEndDate]description];
     
 
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:eventStartDateAsString, @"eventStartDate",
@@ -81,12 +81,12 @@ eventReadingInstructions:(NSString*) eventReadingInstructions
 }
 +(id)courseEventFromDictionary:(NSDictionary*)dictionaryWithEvent
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-       [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+   // NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+     //  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
     
-    return [self courseEventWithStartDate:[dateFormatter dateFromString:[dictionaryWithEvent valueForKey:@"eventStartDate"]]
-                     eventEndDate:[dateFormatter dateFromString:[dictionaryWithEvent valueForKey:@"eventEndDate"]]
+    return [self courseEventWithStartDate:[NSDate dateWithString:[dictionaryWithEvent valueForKey:@"eventStartDate"]]
+                     eventEndDate:[NSDate dateWithString:[dictionaryWithEvent valueForKey:@"eventEndDate"]]
                                 classRoom:[dictionaryWithEvent valueForKey:@"classRoom"]
                        alternetiveTeacher:[dictionaryWithEvent valueForKey:@"alternativeTeacher"]
                  eventReadingInstructions:[dictionaryWithEvent valueForKey:@"eventReadingInstructions"]

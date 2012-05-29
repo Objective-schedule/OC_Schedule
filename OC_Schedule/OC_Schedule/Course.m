@@ -219,9 +219,12 @@
     NSArray *students = [NSArray arrayWithArray:courseStudents];
     return students;
 }
+-(NSString*)simpleDescription {
+    return [NSString stringWithFormat:@"Kursnamn: %@ KursID: %@\n", self.courseName, self.courseId];
 
+}
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %@\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kursstart vecka: %d\n Kursslut vecka: %d\n", self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, [self startWeek], [self endWeek]];
+    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %@\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kursstart vecka: %d\n Kursslut vecka: %d\n Kurstillfällen: %@", self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, [self startWeek], [self endWeek], courseSchedule];
 }
 
 @end

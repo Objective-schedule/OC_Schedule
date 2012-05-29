@@ -68,5 +68,5 @@
 
 -(NSArray*) allEvents;
 -(NSArray*) allStudents;
-
+-(NSString*)simpleDescription;
 @end
