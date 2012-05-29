@@ -39,5 +39,6 @@
 //-(void)addCourseToStudent:(User*)student;
 -(NSArray*)listAllCoursesSortedByName;
 -(NSArray*)listAllStudentsSortedByName;
+-(void)studentMessages;
 
 @end

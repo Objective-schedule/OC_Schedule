@@ -30,10 +30,8 @@
                              courseteacher: [dictionary valueForKey:@"courseTeacher"]
                   courseLitterature: [dictionary valueForKey:@"courseLitterature"]
                         db_courseId: [dictionary valueForKey:@"_id"]
-                       db_courseRev: [dictionary valueForKey:@"_rev"]];
-                           
+                       db_courseRev: [dictionary valueForKey:@"_rev"]];                           
 }
-
 
 +(id)courseWithCourseId:(NSString*)courseId 
              coursename:(NSString*)courseName 
@@ -48,7 +46,6 @@
     return [[self alloc] initWithCourseId:courseId coursename:courseName coursedescription:courseDescription coursepoints:coursePoints courseteacher:courseTeacher courseLitterature:courseLitterature db_courseId: db_courseId db_courseRev: db_courseRev];
     
 }
-
 
 -(id)init
 {
@@ -105,10 +102,8 @@
     else
     {
         return 0;
-    }
-   
+    }   
 }
-
 
 -(NSInteger) endWeek
 {
@@ -121,13 +116,10 @@
     {
         return 0;
     }
-    
-
 }
 
 -(void) addCourseEvent:(CourseEvent*) newEvent
-{
-    
+{    
         //Init courseSchedule array when needed, instead of in init function?
    NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
        
@@ -149,7 +141,6 @@
     NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
     NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
     courseSchedule = [newArray sortedArrayUsingDescriptors:sortDecArray];
-
 }
 
 -(NSDictionary*) asDictionary // update course
@@ -168,8 +159,7 @@
                                        self.courseDescription, @"courseDescription", 
                                         courseEvents, @"courseSchema",    
                                        studentListinCourse, @"courseStudents", nil];
-    return data;
-    
+    return data;    
 }
 -(NSDictionary*) updateCourseAsDictionary
 {
@@ -231,7 +221,7 @@
 }
 
 -(NSString*) description {
-    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %@\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kursstart vecka: %d\n Kursslut vecka: %d\n Kurstillfällen: %@" , self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, [self startWeek], [self endWeek], courseSchedule];
+    return [NSString stringWithFormat:@"Kursnamn: %@\n KursID: %@\n Kurspoäng: %@\n Kursbeskrivning: %@\n Kurslitteratur: %@\n Kursstart vecka: %d\n Kursslut vecka: %d\n", self.courseName, self.courseId, self.coursePoints, self.courseDescription, self.courseLitterature, [self startWeek], [self endWeek]];
 }
 
 @end

@@ -28,57 +28,57 @@
     // take away depending of update or new user, and course(_id, _rev) check if _id is empty
 }
 //send course to db
--(void)postCourseToDb:(NSData*)jsonWithCourse {
-    // db adress can be put in a constant variable
-    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];
-    
-    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
-    
-    NSURL *url = [NSURL URLWithString:urlAsString];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    // set method
-    [urlRequest setHTTPMethod:@"POST"];
-    
-    //set headers
-    NSString *contentType = [NSString stringWithFormat:@"application/json"];
-    [urlRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
-    
-    [urlRequest setHTTPBody:jsonWithCourse];
-    // send sendAsynchronous
-    [NSURLConnection
-     sendAsynchronousRequest:urlRequest
-     queue:[[NSOperationQueue alloc] init]
-     completionHandler:^(NSURLResponse *urlResponse,
-                         NSData *data,
-                         NSError *error) {
-         
-         if ([data length] > 0 && error == NULL){ // do success or error call with true or false
-             NSMutableData *incomingData;
-             if(!incomingData) {
-                 incomingData = [[NSMutableData alloc]init];
-             }
-             [incomingData appendData:data];
-             NSString *string = [[NSString alloc]initWithData:incomingData
-                                                     encoding:NSUTF8StringEncoding];
-             incomingData = nil;
-             //NSLog(@"string has %lu characters", [string length]);
-             //NSLog(@"save successfully!!! %@", string);
-             NSLog(@"the data: %@", string);
-             
-         }
-         else if ([data length] == 0 && error == nil){
-             NSLog(@"Nothing was downloaded.");
-         }
-         else if (error != nil){
-             NSLog(@"Error = %@", error);
-         }
-         
-     }];
-    
-    
-    //[[NSRunLoop currentRunLoop]run];
-}
+//-(void)postCourseToDb:(NSData*)jsonWithCourse {
+//    // db adress can be put in a constant variable
+//    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];
+//    
+//    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
+//    
+//    NSURL *url = [NSURL URLWithString:urlAsString];
+//    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+//    
+//    // set method
+//    [urlRequest setHTTPMethod:@"POST"];
+//    
+//    //set headers
+//    NSString *contentType = [NSString stringWithFormat:@"application/json"];
+//    [urlRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
+//    
+//    [urlRequest setHTTPBody:jsonWithCourse];
+//    // send sendAsynchronous
+//    [NSURLConnection
+//     sendAsynchronousRequest:urlRequest
+//     queue:[[NSOperationQueue alloc] init]
+//     completionHandler:^(NSURLResponse *urlResponse,
+//                         NSData *data,
+//                         NSError *error) {
+//         
+//         if ([data length] > 0 && error == NULL){ // do success or error call with true or false
+//             NSMutableData *incomingData;
+//             if(!incomingData) {
+//                 incomingData = [[NSMutableData alloc]init];
+//             }
+//             [incomingData appendData:data];
+//             NSString *string = [[NSString alloc]initWithData:incomingData
+//                                                     encoding:NSUTF8StringEncoding];
+//             incomingData = nil;
+//             //NSLog(@"string has %lu characters", [string length]);
+//             //NSLog(@"save successfully!!! %@", string);
+//             NSLog(@"the data: %@", string);
+//             
+//         }
+//         else if ([data length] == 0 && error == nil){
+//             NSLog(@"Nothing was downloaded.");
+//         }
+//         else if (error != nil){
+//             NSLog(@"Error = %@", error);
+//         }
+//         
+//     }];
+//    
+//    
+//    //[[NSRunLoop currentRunLoop]run];
+//}
 
 // to do synchronousRequest
 -(NSDictionary*)postData:(NSData*)jsonWithUser
@@ -132,57 +132,57 @@
     return dbDictionary;
 }
 //send user to db 
--(void)postUserToDb:(NSData*)jsonWithUser  {
-    // db adress can be put in a constant variable
-    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];
-    
-    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
-    
-    NSURL *url = [NSURL URLWithString:urlAsString];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    // set method
-    [urlRequest setHTTPMethod:@"POST"];
-    
-    //set headers
-    NSString *contentType = [NSString stringWithFormat:@"application/json"];
-    [urlRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
-    
-    [urlRequest setHTTPBody:jsonWithUser];
-    // send sendAsynchronous
-    [NSURLConnection
-     sendAsynchronousRequest:urlRequest
-     queue:[[NSOperationQueue alloc] init]
-     completionHandler:^(NSURLResponse *urlResponse,
-                         NSData *data,
-                         NSError *error) {
-         
-         if ([data length] > 0 && error == NULL){ // do success or error call with true or false
-             NSMutableData *incomingData;
-             if(!incomingData) {
-                 incomingData = [[NSMutableData alloc]init];
-             }
-             [incomingData appendData:data];
-             //NSString *string = [[NSString alloc]initWithData:incomingData
-               //                                      encoding:NSUTF8StringEncoding];
-             incomingData = nil;
-             //NSLog(@"string has %lu characters", [string length]);
-             //NSLog(@"save successfully!!! %@", string);
-             // NSLog(@"the data: %@", string);
-             
-                      }
-         else if ([data length] == 0 && error == nil){
-             NSLog(@"Nothing was downloaded.");
-         }
-         else if (error != nil){
-             NSLog(@"Error = %@", error);
-         }
-         
-     }];
-     
-
-   // [[NSRunLoop currentRunLoop]run];
-}
+//-(void)postUserToDb:(NSData*)jsonWithUser  {
+//    // db adress can be put in a constant variable
+//    NSMutableString *urlAsString = [[NSMutableString alloc] initWithString:@"http://127.0.0.1:5984/schedule/"];
+//    
+//    //[urlAsString setString:@"http://127.0.0.1:5984/schema/"];
+//    
+//    NSURL *url = [NSURL URLWithString:urlAsString];
+//    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+//    
+//    // set method
+//    [urlRequest setHTTPMethod:@"POST"];
+//    
+//    //set headers
+//    NSString *contentType = [NSString stringWithFormat:@"application/json"];
+//    [urlRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
+//    
+//    [urlRequest setHTTPBody:jsonWithUser];
+//    // send sendAsynchronous
+//    [NSURLConnection
+//     sendAsynchronousRequest:urlRequest
+//     queue:[[NSOperationQueue alloc] init]
+//     completionHandler:^(NSURLResponse *urlResponse,
+//                         NSData *data,
+//                         NSError *error) {
+//         
+//         if ([data length] > 0 && error == NULL){ // do success or error call with true or false
+//             NSMutableData *incomingData;
+//             if(!incomingData) {
+//                 incomingData = [[NSMutableData alloc]init];
+//             }
+//             [incomingData appendData:data];
+//             //NSString *string = [[NSString alloc]initWithData:incomingData
+//               //                                      encoding:NSUTF8StringEncoding];
+//             incomingData = nil;
+//             //NSLog(@"string has %lu characters", [string length]);
+//             //NSLog(@"save successfully!!! %@", string);
+//             // NSLog(@"the data: %@", string);
+//             
+//                      }
+//         else if ([data length] == 0 && error == nil){
+//             NSLog(@"Nothing was downloaded.");
+//         }
+//         else if (error != nil){
+//             NSLog(@"Error = %@", error);
+//         }
+//         
+//     }];
+//     
+//
+//   // [[NSRunLoop currentRunLoop]run];
+//}
 
 
 -(NSDictionary*)getAllStudents {

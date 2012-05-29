@@ -134,14 +134,14 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 
     NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status",courseListinStudent, @"studentCourses",  nil];
     
-    NSLog(@"dictionaryWithUser update _id, _rev: %@",dictionaryWithUser);
+    //NSLog(@"dictionaryWithUser update _id, _rev: %@",dictionaryWithUser);
     return dictionaryWithUser;
 }
 -(void)updateUser {
     service = [[Services alloc]init];
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
     [resultDictionary setDictionary:[service saveToDb:[self updateUserAsDictionary]]];
-    NSLog(@"self: %@", self);
+    //NSLog(@"self: %@", self);
     [self setDb_rev:[resultDictionary valueForKey:@"rev"]];
 }
 
@@ -171,7 +171,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     [newArray addObject:message];
     
     userMessages = newArray;
-    NSLog(@"userMessages from addMessageToUser : %@", userMessages);
+    //NSLog(@"userMessages from addMessageToUser : %@", userMessages);
 
 }
 //-(void)addMessage:(NSString*)messageId {
@@ -216,7 +216,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"sentDate" ascending:FALSE];
     NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
     userMessages = [newArray sortedArrayUsingDescriptors:sortDecArray];
-    NSLog(@"userMessages sorted: %@", userMessages);
+    //NSLog(@"userMessages sorted: %@", userMessages);
     return userMessages;    
 }
 -(NSArray*) dailySchema:(NSDate*) dateToShow
