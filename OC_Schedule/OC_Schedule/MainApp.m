@@ -452,9 +452,9 @@ Message *tempMessages;
     char starttimeofevent[40];
     char endtimeforevent[40];
     char classroom[40];
-    char altteacher[40];
-    char eventreadinginst[40];
-    char eventdesc[40];
+    char altteacher[256];
+    char eventreadinginst[256];
+    char eventdesc[256];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
@@ -462,8 +462,11 @@ Message *tempMessages;
     scanf("%s", &classroom);
     NSLog(@"alternative teacher ");
     scanf("%s", &altteacher);
-    NSLog(@"event reading instructions ");
+    NSLog(@"enter readingInst: ");
     scanf("%s", &eventreadinginst);
+    //NSLog(@"event reading instructions ");
+    //scanf("%s", &eventreadinginst);
+    
     NSLog(@"event description ");
     scanf("%s", &eventdesc);
     
@@ -523,7 +526,7 @@ Message *tempMessages;
 
     char roomN[40];
     char readInst[256];
-    //char evDesc[200];
+    char evDesc[200];
     char altteach[200];
     
     NSString *readingInst;
@@ -559,10 +562,14 @@ Message *tempMessages;
                     [tempEvent setEventReadingInstructions:readingInst];
                     break;
                 case 5:
-                    //NSLog(@"enter event description: ");
-                    //scanf("%s", &evDesc);
-                    eventdescr = [self requestUserInputText:@"enter event description: "];
-                    [tempEvent setEventDescription:eventdescr];
+                    NSLog(@"enter event description: ");
+                    scanf("%255[^\n]", &evDesc);
+                      //NSLog(@"enter event description: ");
+                      //scanf("%s", &evDesc);
+                      eventdescr = [NSString stringWithCString:evDesc encoding:NSUTF8StringEncoding];
+
+ //                   eventdescr = [self requestUserInputText:@"enter event description: "];
+//                    [tempEvent setEventDescription:eventdescr];
                     break;
                 case 6:
                     NSLog(@"alternative teacher: ");
