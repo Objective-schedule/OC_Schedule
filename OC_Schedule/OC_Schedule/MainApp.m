@@ -329,10 +329,8 @@ Message *tempMessages;
     char t[255]; // title
     //char sd[40]; // sent date
     char co[255]; // content
-    char cb[255]; // created by
     NSString *title;
     NSString *content;
-    NSString *createdBy;
 
 
     NSLog(@"Title: ");
@@ -342,15 +340,11 @@ Message *tempMessages;
     NSLog(@"Content");
     scanf("%s", &co);
 
-    NSLog(@"Created by");
-    scanf("%s", &cb);
-
     
     title = [NSString stringWithCString:t encoding:NSUTF8StringEncoding];
     content = [NSString stringWithCString:co encoding:NSUTF8StringEncoding];
-    createdBy = [NSString stringWithCString:cb encoding:NSUTF8StringEncoding];
  
-    Message *message = [Message messageWithTitle:title sentDate:[NSDate date] content:content createdBy:createdBy db_id:@"" db_rev:@""];
+    Message *message = [Message messageWithTitle:title sentDate:[NSDate date] content:content createdBy:[NSString stringWithFormat:@"%@ %@",activeUser.userName,activeUser.lastName] db_id:@"" db_rev:@""];
     
     char answerForSendingMessage[10];
     
@@ -371,9 +365,8 @@ Message *tempMessages;
         // save message id in student object
         for (User *student in allUsers) {
             [student addMessageToUser:message];
-            [student updateUser];
+            //[student updateUser];
         }
-        
         NSLog(@"Message sent to all students!");
     } else{
         // get list of student and display so that i can choose index
