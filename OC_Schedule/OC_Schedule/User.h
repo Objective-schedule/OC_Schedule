@@ -26,39 +26,24 @@ extern NSString *const ATUserStatusInactive;
 @property(nonatomic, copy) NSString *db_rev;
 @property(nonatomic, copy) NSString *status;
 
-//@property(nonatomic, copy) NSArray *userCourses;
-//@property(nonatomic, copy) NSArray *userMessages;
-
-// create user with role (done)
-// override init (done)
++(id) userFromDictionary:(NSDictionary*) dictionary;
++(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses;
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
-
 -(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
-// override description
-
-// create dictionary with user
+-(NSString*)simpleDescription;
 -(NSDictionary*)saveUserAsDictionary;
-+(id)userFromDictionaryWithMessages: (NSDictionary*)dictionaryWithMessages;
 -(NSDictionary*)updateUserAsDictionary;
 -(void)updateUser;
-+(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses;
-
--(void) addCourseToUser:(Course*) course; 
--(void) addMessageToUser:(Message*) message;
--(void)addMessage:(NSString*)messageId;
+-(void)addCourseToUser:(Course*) course;
 -(NSArray*)getCoursesIds;
--(NSArray*)getMessagesIds;
+-(NSArray*)allCourses;
+-(void) addMessageToUser:(Message*) message;
+-(NSArray*)allCourseEvents;
 -(NSArray*)getMessages;
--(NSArray*) allCourseEvents;
-
--(NSArray*) dailySchema:(NSDate*) dateToShow;
-
+-(NSArray*)dailySchema:(NSDate*) dateToShow;
 -(NSArray*) weeklySchema:(NSInteger) weekNum;
+-(void)dailyInstructions:(NSDate*) dateToShow;
+-(void)weeklyInstructions:(NSInteger) weekNum;
 
--(void) dailyInstructions:(NSDate*) dateToShow;
--(void) weeklyInstructions:(NSInteger) weekNum;
 
-+(id) userFromDictionary:(NSDictionary*) dictionary;
--(NSString*)simpleDescription;
--(NSArray*) allCourses;
 @end

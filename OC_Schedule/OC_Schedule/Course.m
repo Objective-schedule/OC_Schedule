@@ -1,19 +1,10 @@
-//
-//  Course.m
-//  Schedule
-//
-//  Created by Kenth on 5/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import "Course.h"
 #import "CourseEvent.h"
 #import "User.h"
 #import "Services.h"
 @implementation Course
-//Created by Kenth again....
-//Pedro
-//Hector
+
 {
     NSArray *courseSchedule, *courseStudents;
     Services *service;
@@ -33,18 +24,10 @@
                        db_courseRev: [dictionary valueForKey:@"_rev"]];                           
 }
 
-+(id)courseWithCourseId:(NSString*)courseId 
-             coursename:(NSString*)courseName 
-      coursedescription:(NSString*)courseDescription 
-           coursepoints:(NSString*)coursePoints 
-          courseteacher:(NSString*)courseTeacher 
-      courseLitterature:(NSArray*)courseLitterature
-            db_courseId:(NSString*)db_courseId
-           db_courseRev:(NSString*)db_courseRev;
++(id)courseWithCourseId:(NSString*)courseId coursename:(NSString*)courseName coursedescription:(NSString*)courseDescription coursepoints:(NSString*)coursePoints courseteacher:(NSString*)courseTeacher courseLitterature:(NSArray*)courseLitterature db_courseId:(NSString*)db_courseId db_courseRev:(NSString*)db_courseRev
 {
 
     return [[self alloc] initWithCourseId:courseId coursename:courseName coursedescription:courseDescription coursepoints:coursePoints courseteacher:courseTeacher courseLitterature:courseLitterature db_courseId: db_courseId db_courseRev: db_courseRev];
-    
 }
 
 -(id)init
@@ -52,14 +35,7 @@
     return [self initWithCourseId:@"no-courseId" coursename:@"no-courseName" coursedescription:@"no description" coursepoints:@"0" courseteacher:@"No-teacher" courseLitterature:NULL db_courseId:@"no_id" db_courseRev: @"no-_rev"];
 }
 
--(id)initWithCourseId:(NSString*)courseId 
-           coursename:(NSString*)courseName 
-    coursedescription:(NSString*)courseDescription 
-         coursepoints:(NSString*)coursePoints 
-        courseteacher:(NSString*)courseTeacher 
-    courseLitterature:(NSArray*)courseLitterature
-         db_courseId:(NSString*)db_courseId
-         db_courseRev:(NSString*)db_courseRev
+-(id)initWithCourseId:(NSString*)courseId coursename:(NSString*)courseName coursedescription:(NSString*)courseDescription coursepoints:(NSString*)coursePoints courseteacher:(NSString*)courseTeacher courseLitterature:(NSArray*)courseLitterature db_courseId:(NSString*)db_courseId db_courseRev:(NSString*)db_courseRev
 {
     if(self = [super init]) 
     {
@@ -120,22 +96,14 @@
 
 -(void) addCourseEvent:(CourseEvent*) newEvent
 {    
-        //Init courseSchedule array when needed, instead of in init function?
    NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
        
    [newArray addObject:newEvent];
     courseSchedule = newArray;
-       
-   //NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-  
-    [self sortCourseEvents];
-//    //Sort array  
-//    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
-//    NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
-//       
+    [self sortCourseEvents];      
             
 }
--(void)sortCourseEvents{
+-(void)sortCourseEvents {
     NSMutableArray* newArray = [NSMutableArray arrayWithArray:courseSchedule];
     //Sort array  
     NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"eventStartDate" ascending:TRUE];
@@ -196,7 +164,6 @@
     return studentIdList;
     
 }
-
 
 -(void) addStudentToCourse:(User*) user
 {

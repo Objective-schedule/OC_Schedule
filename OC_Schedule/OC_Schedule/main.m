@@ -1,7 +1,3 @@
-//
-//  main.m
-//  Schedule
-
 
 #import <Foundation/Foundation.h>
 #import "User.h"
@@ -22,14 +18,8 @@ int main(int argc, const char * argv[])
         User *myActiveUser;
         
         [mainApp initApp];
-        
-        //[mainApp loadUserData:@"Test"]; still no
-        
+              
         myActiveUser = [mainApp thisActiveUser];
-        
-        //[myActiveUser weeklyInstructions:20]; still no
-        //[mainApp initMenu];
-
                 
     }
     return 0;

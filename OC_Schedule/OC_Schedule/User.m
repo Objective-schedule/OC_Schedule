@@ -1,10 +1,3 @@
-//
-//  User.m
-//  Schedule
-//
-//  Created by Student vid Yrkeshögskola C3L on 5/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import "User.h"
 #import "Course.h"
@@ -29,7 +22,6 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     Services *service;
 }
 
-
 @synthesize userName = _userName, lastName = _lastName, userEmail = _userEmail, userRole = _userRole, db_id = _db_id, db_rev = _db_rev, status = _status;
 
 +(id) userFromDictionary:(NSDictionary*) dictionary {
@@ -42,7 +34,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
                             db_rev: [dictionary valueForKey:@"_rev"]
                             status: [dictionary valueForKey:@"status"]];
 }
-+(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses {
++(id)userFromDictionaryWithCourses:(NSDictionary*)dictionaryWithCourses { // there are messages here too
     
     User *newUser = [self userFromDictionary:dictionaryWithCourses];
     
@@ -69,27 +61,6 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     //[newUser getMessages];
     return newUser;
 }
-//+(id)userFromDictionaryWithMessages: (NSDictionary*)dictionaryWithMessages {
-//    
-//    User *tempUser = [self userFromDictionary:dictionaryWithMessages];
-//    NSMutableArray *tempMessages = [NSMutableArray array];
-//
-////    Services *service = [[Services alloc]init];
-////    for(NSString *messageId in [dictionaryWithMessages valueForKey:@"studentMessages"]){
-////
-////        Message *tempMessage = [Message messageFromDictionary:[service getUniqeDoc:messageId]];
-////        [tempUser addMessageToUser:tempMessage];
-////    }
-////    NSLog(@"new user: %@", tempUser);
-//    for(NSDictionary *event in [dictionaryWithMessages valueForKey:@"studentMessages"]){
-//        Message *tempMessage = [Message messageFromDictionary: event];
-//        [tempMessages addObject:tempMessage]; 
-//    }    
-//    tempUser->userMessages = [NSArray arrayWithArray:tempMessages];
-//    NSLog(@"tempUser from userFromDictionaryWithMessages: %@", tempUser);
-//    return tempUser;
-//
-//}
 
 +(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status {
     return [[self alloc] initWithUserEmail:userEmail username:userName lastName:lastName role:ATRoleStudent db_id:db_id db_rev: db_rev status:status];
@@ -99,7 +70,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     return [self initWithUserEmail:@"no-user-email" username:@"no-username" lastName:@"no-userlastName" role:@"no-user-role" db_id: @"no _id" db_rev:@"no _rev" status:@"no-status"];
 }
 
--(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status{
+-(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status {
     if(self = [super init]) {
         _userName = [userName copy];
         _lastName = [lastname copy];
@@ -128,11 +99,9 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     return dictionaryWithUser;
 }
 // create new dictionary with update user
-// to do: add messages here ***********
 -(NSDictionary*)updateUserAsDictionary {
     
     NSArray *courseListinStudent = [NSArray arrayWithArray:[self getCoursesIds]];
-   // NSArray *messageListinStudent = [NSArray arrayWithArray:[self getMessagesIds]];
 
     NSDictionary *dictionaryWithUser = [NSDictionary dictionaryWithObjectsAndKeys:self.userName, @"name",self.lastName, @"lastName",self.userEmail, @"email", self.userRole, @"role", self.db_id, @"_id", self.db_rev, @"_rev", self.status, @"status",courseListinStudent, @"studentCourses",  nil];
     
@@ -143,7 +112,6 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     service = [[Services alloc]init];
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
     [resultDictionary setDictionary:[service saveToDb:[self updateUserAsDictionary]]];
-    //NSLog(@"self: %@", self);
     [self setDb_rev:[resultDictionary valueForKey:@"rev"]];
 }
 
@@ -161,7 +129,6 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     for(Course *course in userCourses)
     {
         [courseIdList addObject:course.db_courseId];
-        // NSLog(@"courses:%@",course);
     }
     return courseIdList;
     
@@ -178,31 +145,8 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     [newArray addObject:message];
     
     userMessages = newArray;
-    NSLog(@"userMessages from addMessageToUser : %@", userMessages);
 
 }
-//-(void)addMessage:(NSString*)messageId {
-//    NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];
-//    
-//    [newArray addObject:messageId];
-//    
-//    userMessages = newArray;
-//}
-
-//-(NSArray*)getMessagesIds
-//{
-//     
-//    NSMutableArray *messageIdList = [NSMutableArray array];
-//    for(Message *message in userMessages)
-//    {
-//        [messageIdList addObject:message.db_id];
-//         NSLog(@"messageIdList addObject:message.db_id:%@",messageIdList);
-//    }
-//    NSLog(@"messageIdList addObject:message.db_id:%@",messageIdList);
-//
-//    return messageIdList;
-//    
-//}
 
 -(NSArray*) allCourseEvents
 {
@@ -217,13 +161,12 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     
     return totalEvents;
 }
--(NSArray*)getMessages{
+-(NSArray*)getMessages {
+    
     NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];
-    //Sort array  
     NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"sentDate" ascending:FALSE];
     NSArray *sortDecArray = [NSArray arrayWithObject:sortDesc];
     userMessages = [newArray sortedArrayUsingDescriptors:sortDecArray];
-    //NSLog(@"userMessages sorted: %@", userMessages);
     return userMessages;    
 }
 -(NSArray*) dailySchema:(NSDate*) dateToShow
@@ -249,9 +192,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
 
 -(NSArray*) weeklySchema:(NSInteger) weekNum
 {
-    // set up date components
-    //NSDateComponents *components = [[NSDateComponents alloc] init];
-    
+
     // create a calendar
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     if(weekNum == 0 || weekNum > 52)

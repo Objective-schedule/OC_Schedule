@@ -1,10 +1,3 @@
-//
-//  Course.h
-//  Schedule
-//
-//  Created by Kenth on 5/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 
@@ -18,56 +11,27 @@
 @property(nonatomic, copy) NSString *courseId;
 @property(nonatomic, copy) NSString *db_courseId;
 @property(nonatomic, copy) NSString *db_courseRev;
-
-
-
 @property(nonatomic, copy) NSString *coursePoints;
 @property(nonatomic, copy) NSString *courseTeacher; //Should be a User instead
 @property(nonatomic, copy) NSArray *courseLitterature;
-//@property(nonatomic, copy) NSDictionary *courseStudents;
-//@property(nonatomic, copy) NSArray *courseSchedule;
-// test
-// create course (in progress)
-// override init (done)
+
 +(id) courseFromDictionary:(NSDictionary*) dictionary;
-
-+(id)courseWithCourseId:(NSString*)courseId 
-             coursename:(NSString*)courseName 
-        coursedescription:(NSString*)courseDescription 
-           coursepoints:(NSString*)coursePoints 
-          courseteacher:(NSString*) courseTeacher 
-      courseLitterature:(NSArray*) courseLitterature
-           db_courseId:(NSString*)db_courseId
-           db_courseRev:(NSString*)db_courseRev;
-
--(id)initWithCourseId:(NSString*)courseId 
-             coursename:(NSString*)courseName 
-      coursedescription:(NSString*)courseDescription 
-           coursepoints:(NSString*)coursePoints 
-          courseteacher:(NSString*) courseTeacher 
-    courseLitterature:(NSArray*) courseLitterature
-         db_courseId:(NSString*)db_courseId
-         db_courseRev:(NSString*)db_courseRev;
-
-
--(void) addCourseEvent:(CourseEvent*) newEvent; 
--(void)updateCourse;
--(void)sortCourseEvents;
++(id)courseWithCourseId:(NSString*)courseId coursename:(NSString*)courseName coursedescription:(NSString*)courseDescription coursepoints:(NSString*)coursePoints courseteacher:(NSString*)courseTeacher courseLitterature:(NSArray*)courseLitterature db_courseId:(NSString*)db_courseId db_courseRev:(NSString*)db_courseRev;
+-(id)initWithCourseId:(NSString*)courseId coursename:(NSString*)courseName coursedescription:(NSString*)courseDescription coursepoints:(NSString*)coursePoints courseteacher:(NSString*)courseTeacher courseLitterature:(NSArray*)courseLitterature db_courseId:(NSString*)db_courseId db_courseRev:(NSString*)db_courseRev;
 +(id)courseFromDictionaryWithEvents:(NSDictionary*)dictionaryWithEvents;
-
--(NSInteger) startWeek;
--(NSInteger) endWeek;
-
+-(NSInteger)startWeek;
+-(NSInteger)endWeek;
+-(void) addCourseEvent:(CourseEvent*) newEvent;
+-(void)sortCourseEvents;
+-(NSDictionary*)asDictionary;
+-(NSDictionary*)updateCourseAsDictionary;
+-(void)updateCourse;
 -(NSArray*)getEventsAsDictionarys;
 -(NSArray*)getStudentsIds;
--(NSDictionary*) asDictionary;
--(NSDictionary*) updateCourseAsDictionary;
-// create dictionary with course
-
--(void) addStudentToCourse:(User*) user;
-
+-(void)addStudentToCourse:(User*) user;
 -(NSArray*) allEvents;
 -(NSArray*) allStudents;
 -(NSString*)simpleDescription;
+
 
 @end

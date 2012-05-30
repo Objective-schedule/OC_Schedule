@@ -37,9 +37,6 @@ Message *tempMessages;
 -(void) studentMenu
 
 {
-   // UserServices *userService = [[UserServices alloc]init];
-    //activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]]; // refactor userFromDictionaryWithCourses to cover messages as well
-    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
@@ -116,7 +113,6 @@ Message *tempMessages;
             
             NSMutableArray *temp = [NSMutableArray arrayWithArray:allUsers];
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"db_id == %@", studentId];
-            NSLog(@"predicate: %@", [predicate description]);
             NSArray *toBeReclaimed = [temp filteredArrayUsingPredicate:predicate];
            
             if([toBeReclaimed count] > 0) {
