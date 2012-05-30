@@ -31,9 +31,9 @@ extern NSString *const ATUserStatusInactive;
 
 // create user with role (done)
 // override init (done)
-+(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status userMessages:(NSMutableArray*)userMessages;
++(id)userWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastName role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
 
--(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status userMessages:(NSMutableArray*)userMessages;
+-(id)initWithUserEmail:(NSString*)userEmail username:(NSString*)userName lastName:(NSString*)lastname role:(NSString*)role db_id:(NSString*)db_id db_rev:(NSString*)db_rev status:(NSString*)status;
 // override description
 
 // create dictionary with user
@@ -60,4 +60,5 @@ extern NSString *const ATUserStatusInactive;
 
 +(id) userFromDictionary:(NSDictionary*) dictionary;
 -(NSString*)simpleDescription;
+-(NSArray*) allCourses;
 @end

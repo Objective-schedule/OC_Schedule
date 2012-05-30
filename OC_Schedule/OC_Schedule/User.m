@@ -166,6 +166,11 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     return courseIdList;
     
 }
+-(NSArray*) allCourses
+{
+    NSArray *courses = [NSArray arrayWithArray:userCourses];
+    return courses;
+}
 -(void) addMessageToUser:(Message*) message
 {
     NSMutableArray* newArray = [NSMutableArray arrayWithArray:userMessages];

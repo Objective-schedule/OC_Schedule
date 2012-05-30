@@ -1,10 +1,3 @@
-//
-//  MainApp.m
-//  OC_Schedule
-//
-//  Created by Student vid Yrkeshögskola C3L on 5/14/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import "MainApp.h"
 #import "User.h"
@@ -16,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 NSArray *allUsers, *allCourses;
 Services *service;
 User *activeUser;
@@ -25,6 +19,7 @@ Course *tempCourses;
 Message *tempMessages;
 
 @implementation MainApp
+
 #define MAX_NAME_SZ 256
 
 @synthesize activeUser = _activeUser, tempUser = _tempUser, tempCourses = _tempCourses;
@@ -37,16 +32,14 @@ Message *tempMessages;
     NSLog(@"Logga in med din e-postadress!!");
     scanf("%s", &inputUserId);
     [self checkLogin:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
-    
 }
 
 -(void) studentMenu:(NSString*) userid
 
 {
     UserServices *userService = [[UserServices alloc]init];
-    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
+    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]]; // refactor userFromDictionaryWithCourses to cover messages as well
     
-    //activeUser  = [User userFromDictionaryWithMessages:[userService dictionaryFromMessageDbJson:[activeUser.db_id];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
@@ -56,8 +49,6 @@ Message *tempMessages;
     do {
         if (inputUserMenue != 9)
         {
-           // NSLog(@"inputUserMenue: %i",inputUserMenue);
-
             switch (inputUserMenue) {
                 case 1:
                    NSLog(@"%@",[activeUser dailySchema:[NSDate date]]);
@@ -89,6 +80,7 @@ Message *tempMessages;
         NSLog(@"Visa mina meddelande: 5\n");
         NSLog(@"Logga ut: 6\n\n");
         scanf("%d", &inputUserMenue);
+        
     } while (inputUserMenue != 9);
 }
 -(void)studentMessages {
@@ -98,59 +90,48 @@ Message *tempMessages;
 {
     
     NSDictionary* adminAllStudents = [NSDictionary dictionaryWithDictionary:[service getAllStudents]];
-    
-    NSMutableArray* tempAllStudentsArr = [[NSMutableArray alloc]init];
-    
-    for (id myDict in [adminAllStudents valueForKey:@"rows"]){
+    NSDictionary* adminAllCourses = [NSDictionary dictionaryWithDictionary:[service getAllCourses]];
+
+    NSMutableArray* tempAllStudentsArray = [[NSMutableArray alloc]init];
+    NSMutableArray* tempAllCoursesArray = [[NSMutableArray alloc]init];
+
+    for (id allStudentsDictionary in [adminAllStudents valueForKey:@"rows"]){
         
         // calling the dictionary within the db object
-        tempUser = [User userFromDictionary:[myDict valueForKey:@"key"]];
+        tempUser = [User userFromDictionary:[allStudentsDictionary valueForKey:@"key"]];
         
         //add ready object to temporary array
-        [tempAllStudentsArr addObject:tempUser];// resultatet ifrån saveUserAsDictionary komm in hit ];
+        [tempAllStudentsArray addObject:tempUser];// resultatet ifrån saveUserAsDictionary komm in hit ];
     }
     
-    allUsers = tempAllStudentsArr;
+    allUsers = tempAllStudentsArray;
     
-    NSDictionary* adminAllCourses = [NSDictionary dictionaryWithDictionary:[service getAllCourses]];
-    NSMutableArray* tempAllCoursesArr = [[NSMutableArray alloc]init];
-    //NSMutableArray* tempAllMessagesArr = [[NSMutableArray alloc]init];
-
-    for (id myDict in [adminAllCourses valueForKey:@"rows"]){
+    for (id allCoursesDictionary in [adminAllCourses valueForKey:@"rows"]){
         
         // calling the dictionary within the db object
-        tempCourses = [Course courseFromDictionaryWithEvents:[myDict valueForKey:@"key"]];
-        //tempMessages = [Message messageFromDictionary:[myDict valueForKey:@"key"]];
-        
-        //NSLog(@"mydict: %@", [[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]);
-       // NSLog(@"mydict with studentMessages: %@", [[myDict valueForKey:@"key"] valueForKey:@"studentMessages"]);
+        tempCourses = [Course courseFromDictionaryWithEvents:[allCoursesDictionary valueForKey:@"key"]];
 
-        NSArray *courseStudents = [NSArray arrayWithArray:[[myDict valueForKey:@"key"] valueForKey:@"courseStudents"]];
-       // NSLog(@"courseStudents: %@", courseStudents);
-        for(NSString *stuid in courseStudents){
-            //NSLog(@"stuid: %@",stuid);
+        NSArray *courseStudents = [NSArray arrayWithArray:[[allCoursesDictionary valueForKey:@"key"] valueForKey:@"courseStudents"]];
+        for(NSString *studentId in courseStudents){
+            
             NSMutableArray *temp = [NSMutableArray arrayWithArray:allUsers];
-            // NSLog(@"temp: %@", temp);
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"db_id == %@", stuid];
-            //NSLog(@"predicate: %@", [predicate description]);
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"db_id == %@", studentId];
+            NSLog(@"predicate: %@", [predicate description]);
             NSArray *toBeReclaimed = [temp filteredArrayUsingPredicate:predicate];
            
             if([toBeReclaimed count] > 0) {
                 [tempCourses addStudentToCourse:[toBeReclaimed objectAtIndex:0]];
                 [[toBeReclaimed objectAtIndex:0]addCourseToUser:tempCourses];
             }
-            //Course *activeCourse = [toBeReclaimed objectAtIndex:0];
-            //NSLog(@"toBeReclaimed: %@", toBeReclaimed);
         }
 
         //add ready object to temporary array
-        [tempAllCoursesArr addObject:tempCourses];// resultatet ifrån saveUserAsDictionary komm in hit ];
+        [tempAllCoursesArray addObject:tempCourses];
     }
     
-    allCourses = tempAllCoursesArr;
-    //NSLog(@"allcourses: %@", allCourses);
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
+    allCourses = tempAllCoursesArray;
+    //NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    //NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
     NSArray *simpleCourseList;
     NSArray *simpleStudentList;
@@ -171,7 +152,6 @@ Message *tempMessages;
                     for(User *simpleUser in simpleStudentList){
                         NSLog(@"%@", [simpleUser simpleDescription]);
                     }
-                    //[self listAllStudentsSortedByName];
                     break;
                 case 3:
                     [self newCourse];
@@ -193,12 +173,12 @@ Message *tempMessages;
             }
         }
         
-        //NSLog(@"Visa:\n");
+        NSLog(@"\n\n");
         NSLog(@"Lista alla kurser: 1\n");
         NSLog(@"Lista alla studenter: 2\n");
         NSLog(@"Skapa ny kurs: 3\n");
         NSLog(@"Skapa ny student: 4\n");
-        NSLog(@"Administrera kurs: 5\n"); //skapar ny meny med ny alternativ
+        NSLog(@"Administrera kurs: 5\n");
         NSLog(@"Skapa meddelande: 6\n");
         NSLog(@"Logga ut: 7\n\n");
         scanf("%d", &inputUserMenue);
@@ -207,8 +187,8 @@ Message *tempMessages;
 
 -(void) adminCourseMenu
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
+   // NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+   // NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     char cid[50];
     NSLog(@"\nAnge kurs id:");
      scanf("%s", &cid);
@@ -247,6 +227,7 @@ Message *tempMessages;
             NSLog(@"Lägg till student till kursen: 3\n"); 
             NSLog(@"Tillbaka till huvudmeny: 4\n");        
             scanf("%d", &inputUserMenue);
+            
         } while (inputUserMenue != 9);
     }else {
         NSLog(@"Det finns ingen kurs med den id\n");
@@ -266,6 +247,7 @@ Message *tempMessages;
     //check if role is admin or student
     NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
     NSString *student = [[NSString alloc] initWithFormat:@"Student"];
+    
     // ideal solution but needs more work
     /*if([activeUser.userRole isEqualToString:ATRoleAdmin]){
         NSLog(@"activeUser.userRole: %@", activeUser.userRole);
@@ -288,20 +270,19 @@ Message *tempMessages;
 }
 
 
--(void)loadUserData:(NSString*) userid
-{   
-    UserServices *userService = [[UserServices alloc]init];
-    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
-          
-    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
-}
+//-(void)loadUserData:(NSString*) userid
+//{   
+//    UserServices *userService = [[UserServices alloc]init];
+//    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
+//          
+//    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
+//}
 -(void)newStudent {
     
     char e[40];
     char n[40];
     char l[40];
     
-   
     NSLog(@"E-Post");
     scanf("%s", &e);
     NSLog(@"Namn");
@@ -310,24 +291,24 @@ Message *tempMessages;
     scanf("%s", &l);
     
     NSString *email = [NSString stringWithCString:e encoding:NSUTF8StringEncoding];
+    email = [email stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    
     NSString *name = [NSString stringWithCString:n encoding:NSUTF8StringEncoding];
+    name = [name stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    
     NSString *lastName = [NSString stringWithCString:l encoding:NSUTF8StringEncoding];
-
-    User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive userMessages:nil];
+    lastName = [lastName stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    
+    User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[student saveUserAsDictionary]]];
     
     // get back the id and rev to update the newly created user
     student.db_id = [resultDictionary valueForKey:@"id"];
     student.db_rev = [resultDictionary valueForKey:@"rev"];
-    //NSLog(@"student: %@", student);
 }
 -(void)newMessage {
     char t[255]; // title
-    //char sd[40]; // sent date
     char co[255]; // content
-    NSString *title;
-    NSString *content;
-
 
     NSLog(@"Titel: ");
     scanf("%s", &t);
@@ -335,9 +316,12 @@ Message *tempMessages;
     NSLog(@"Innehåll");
     scanf("%s", &co);
     
-    title = [NSString stringWithCString:t encoding:NSUTF8StringEncoding];
-    content = [NSString stringWithCString:co encoding:NSUTF8StringEncoding];
- 
+    NSString *title = [NSString stringWithCString:t encoding:NSUTF8StringEncoding];
+    title = [title stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    
+    NSString *content = [NSString stringWithCString:co encoding:NSUTF8StringEncoding];
+    content = [content stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    
     Message *message = [Message messageWithTitle:title sentDate:[NSDate date] content:content createdBy:[NSString stringWithFormat:@"%@ %@",activeUser.userName,activeUser.lastName] db_id:@"" db_rev:@""];
     
     char answerForSendingMessage[10];
@@ -355,17 +339,16 @@ Message *tempMessages;
         NSMutableDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service  saveToDb:[message saveMessageAsDictionary]]];
         message.db_id = [resultDictionary valueForKey:@"id"];
         message.db_rev = [resultDictionary valueForKey:@"rev"];
-        //NSLog(@"message.db_id from callback: %@", message.db_id);
+        
         // save message id in student object
         for (User *student in allUsers) {
             [student addMessageToUser:message];
-            //[student updateUser];
         }
         NSLog(@"Meddelande har skickats till alla studenter!");
     } else{
         // get list of student and display so that i can choose index
         int studentindex = 1000;
-        //NSLog(@"students here: %@",[activeCourse allStudents]);
+        
         NSLog(@"List med alla studenter: %@", [self listAllStudentsSortedByName]);
         NSLog(@"Valj en student index... Starta at index 0");
         scanf("%d", &studentindex);
@@ -377,20 +360,18 @@ Message *tempMessages;
         message.db_id = [resultDictionary valueForKey:@"id"];
         message.db_rev = [resultDictionary valueForKey:@"rev"];
     }
-        //NSLog(@"message: %@", message);
 }
 -(void)newCourse {
         
-    char ci[40];//courseid
-    char cn[40];//coursename
-    char cd[40];//course description
+    char ci[100];//courseid
+    char cn[100];//coursename
+    char cd[256];//course description
     char cp[40];//course points
-    char ct[40];//course teacher
+    char ct[100];//course teacher
     int numberOfBooks;//course litterature
-    char book[40];
+    char book[100];
     
     NSMutableArray *litterature = [NSMutableArray array];
-    // ask how scanf or something similar can take spaces
     
     NSLog(@"Ange kursId: ");
     scanf("%s", &ci);
@@ -408,14 +389,20 @@ Message *tempMessages;
     for (int j = 0; j < numberOfBooks; j++) {
         NSLog(@"Ange titel bokningsnummer %d:", j);
         scanf("%s", &book);
-        [litterature addObject:[NSString stringWithCString:book encoding:NSUTF8StringEncoding]];
+        NSString *bookName = [NSString stringWithCString:book encoding:NSUTF8StringEncoding];
+        bookName = [bookName stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+        [litterature addObject:bookName];
     }
-
+    
     NSString *courseid = [NSString stringWithCString:ci encoding:NSUTF8StringEncoding];
+    courseid = [courseid stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     NSString *coursename = [NSString stringWithCString:cn encoding:NSUTF8StringEncoding];
-    NSString *coursedescription = [NSString stringWithCString:cn encoding:NSUTF8StringEncoding];
+    coursename = [coursename stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+    NSString *coursedescription = [NSString stringWithCString:cd encoding:NSUTF8StringEncoding];
+    coursedescription = [coursedescription stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     NSString *coursepoints = [NSString stringWithCString:cp encoding:NSUTF8StringEncoding];
     NSString *courseteacher = [NSString stringWithCString:ct encoding:NSUTF8StringEncoding];
+    courseteacher = [courseteacher stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     
     Course *course = [Course courseWithCourseId:courseid coursename:coursename coursedescription:coursedescription coursepoints:coursepoints courseteacher:courseteacher courseLitterature:litterature db_courseId:@"" db_courseRev:@""];
     
@@ -424,8 +411,7 @@ Message *tempMessages;
     // get back the id and rev to update the newly created user
     course.db_courseId = [resultDictionary valueForKey:@"id"];
     course.db_courseRev = [resultDictionary valueForKey:@"rev"];
-    //NSLog(@"course: %@", course);
-     char answer[10];
+    char answer[10];
         
     NSLog(@"Vill du skapa evenemang för denna kurs: y / n ");
     scanf("%s", &answer);
@@ -433,12 +419,10 @@ Message *tempMessages;
     
     if([answ isEqualToString:@"y"])
     {
-        // NSLog(@"are we there yet!!!!");
         do {
             [self newCourseEvent:course];
             NSLog(@"Vill du skapa evenemang för denna kurs: y / n ");
             scanf("%s", &answer);
-            // if more than one event is created "document update conflict" from db and no error
             answ = [NSString stringWithCString:answer encoding:NSUTF8StringEncoding];
         } while ([answ isEqualToString:@"y"]);
     }
@@ -446,11 +430,8 @@ Message *tempMessages;
 
 -(void)newCourseEvent:(Course*)activeCourse{
 
-    //NSLog(@"activecourse: %@", activeCourse);
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
-//    char startdateforevent[40];
-//    char starttimeofevent[40];
-//    char endtimeforevent[40];
+
     char classroom[40];
     char altteacher[256];
     char eventreadinginst[256];
@@ -464,44 +445,38 @@ Message *tempMessages;
     NSDate *endDate;
     NSLog(@"Ange slutdatum:");
     endDate = [self requestEventDate];
-    NSLog(@"Klassrummet antal:");
+    NSLog(@"Ange Klassrummet:");
     scanf("%s", &classroom);
     NSLog(@"Alternativt läraren ");
     scanf("%s", &altteacher);
     NSLog(@"In läsanvisning: ");
     scanf("%s", &eventreadinginst);
-    //NSLog(@"event reading instructions ");
-    //scanf("%s", &eventreadinginst);
     
     NSLog(@"Händelsebeskrivningen ");
     scanf("%s", &eventdesc);
-    
-//    NSString *startdateforeventstart = [NSString stringWithCString:startdateforevent encoding:NSUTF8StringEncoding];
-//    startdateforeventstart = [startdateforeventstart stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
-//    NSString *starttimeofeventstart = [NSString stringWithCString:starttimeofevent encoding:NSUTF8StringEncoding];
-//    starttimeofeventstart = [starttimeofeventstart stringByReplacingOccurrencesOfString:@"_" withString:@":"];
-//    NSString *endtimeforeventend = [NSString stringWithCString:endtimeforevent encoding:NSUTF8StringEncoding];
-//    endtimeforeventend = [endtimeforeventend stringByReplacingOccurrencesOfString:@"_" withString:@":"];
+
     NSString *classroomev = [NSString stringWithCString:classroom encoding:NSUTF8StringEncoding];
     NSString *altteachereve = [NSString stringWithCString:altteacher encoding:NSUTF8StringEncoding];
+    altteachereve = [altteachereve stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     NSString *eventreadinginsteve = [NSString stringWithCString:eventreadinginst encoding:NSUTF8StringEncoding];
+    eventreadinginsteve = [eventreadinginsteve stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     NSString *eventdesceve = [NSString stringWithCString:eventdesc encoding:NSUTF8StringEncoding];
-    
+    eventdesceve = [eventdesceve stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+
     CourseEvent *event = [CourseEvent courseEventWithStartDate:startDate  eventEndDate:endDate classRoom:classroomev alternetiveTeacher:altteachereve eventReadingInstructions:eventreadinginsteve eventDescription:eventdesceve];
-    [activeCourse addCourseEvent:event];
-    //NSLog(@"course from new event: %@", activeCourse);
-    [resultDictionary setDictionary:[service saveToDb:[activeCourse updateCourseAsDictionary]]];
     
+    [activeCourse addCourseEvent:event];
+    [resultDictionary setDictionary:[service saveToDb:[activeCourse updateCourseAsDictionary]]];
     [activeCourse setDb_courseRev:[resultDictionary valueForKey:@"rev"]];
     
 }
 -(void)addStudentToCourse:(Course*)activeCourse {
-    //NSLog(@"activeCourse: %@", activeCourse);
+
     int studentindex = 1000;
-    //NSLog(@"students here: %@",[activeCourse allStudents]);
+
     NSArray *simpleStudentList;
-    //NSLog(@"Listan med alla studenter: %@", [self listAllStudentsSortedByName]);
     simpleStudentList = [self listAllStudentsSortedByName];
+    
     for(User *simpleUser in simpleStudentList){
         NSLog(@"%@", [simpleUser simpleDescription]);
     }
@@ -510,24 +485,37 @@ Message *tempMessages;
  
     int tempInt = [[self listAllStudentsSortedByName]count];
     
-    NSLog(@"tempint:%d", tempInt);
     if(studentindex < tempInt){
         
         User *tempUser = [[self listAllStudentsSortedByName] objectAtIndex:studentindex];
-        //[tempUser simpleDescription];
-        [activeCourse addStudentToCourse:tempUser];
-        [activeCourse updateCourse];    
-        // add course to student
-        [tempUser addCourseToUser:activeCourse];
-        [tempUser updateUser];
-        //NSLog(@"tempuser from addStudentToCourse: %@",tempUser);
+        
+        if(![[activeCourse allStudents] containsObject:tempUser]){
+            
+            [activeCourse addStudentToCourse:tempUser];
+            [activeCourse updateCourse];
+            NSLog(@"something is up here!!");
+
+        } else {
+            NSLog(@"that students is already register for that course");
+        }
+        if(![[tempUser allCourses] containsObject:activeCourse]){
+            
+            [tempUser addCourseToUser:activeCourse];
+            [tempUser updateUser];
+            NSLog(@"something is up here!!");
+
+        } else {
+            NSLog(@"that course is already register for that student");
+
+        }
+        
     } else {
         NSLog(@"Det finns inget student med den index\n");
     }
-
 }
 
--(void)editCourseEvent:(Course*)activeCourse{
+-(void)editCourseEvent:(Course*)activeCourse {
+    
     NSInteger i = 0;
     int indexOfEvent = 10;
     
@@ -541,7 +529,6 @@ Message *tempMessages;
    
     NSLog(@"Ditt val: %@",[[activeCourse allEvents]objectAtIndex:indexOfEvent]);
     CourseEvent *tempEvent = [[activeCourse allEvents]objectAtIndex:indexOfEvent];
-    //NSLog(@"Room number: %@", [tempEvent classRoom]);
     
     char roomN[40];
     char readInst[256];
@@ -579,21 +566,21 @@ Message *tempMessages;
                     NSLog(@"In läsanvisning: ");
                     scanf("%s", &readInst);
                     readingInst = [NSString stringWithCString:readInst encoding:NSUTF8StringEncoding];
+                    readingInst = [readingInst stringByReplacingOccurrencesOfString:@"_" withString:@" "];
                     [tempEvent setEventReadingInstructions:readingInst];
                     break;
                 case 5:
                     NSLog(@"Ange händelsebeskrivningen: ");
                     scanf("%s", &evDesc);
-                      //NSLog(@"enter event description: ");
-                      //scanf("%s", &evDesc);
-                      eventdescr = [NSString stringWithCString:evDesc encoding:NSUTF8StringEncoding];
- //                   eventdescr = [self requestUserInputText:@"enter event description: "];
-//                    [tempEvent setEventDescription:eventdescr];
+                    eventdescr = [NSString stringWithCString:evDesc encoding:NSUTF8StringEncoding];
+                    eventdescr = [eventdescr stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+                    [tempEvent setEventDescription:eventdescr];
                     break;
                 case 6:
                     NSLog(@"Alternativt läraren: ");
                     scanf("%s", &altteach);
                     alterTeacher = [NSString stringWithCString:altteach encoding:NSUTF8StringEncoding];
+                    alterTeacher = [alterTeacher stringByReplacingOccurrencesOfString:@"_" withString:@" "];
                     [tempEvent setAlternativeTeacher:alterTeacher];
                     break;
                 default:
@@ -616,17 +603,7 @@ Message *tempMessages;
     [activeCourse updateCourse];
                                           
 }
-//-(void)loadCourseData:(NSString*) courseid
-//{
-//   // CourseServices *courseService = [[CourseServices alloc]init];
-//   // activeCourse = [Course courseFromDictionary:[courseService dictionaryFromDbJson:courseid]];//@"pedronygren@gmail.com"]];
-//  //  NSLog(@"dict2: %@", [courseService dictionaryFromDbJson:courseid]);
-//}
 
-//-(void)loadAllData
-//{
-//    
-//}
 -(NSDate*)requestEventDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -639,48 +616,16 @@ Message *tempMessages;
     scanf("%s", &y);
     NSLog(@"Klockslag (hh:mm):");
     scanf("%s", &t);
-    //        NSLog(@"Last Name");
-    //        scanf("%s", &l);
+    
     NSString *date = [NSString stringWithCString:y encoding:NSUTF8StringEncoding];
     NSString *time = [NSString stringWithCString:t encoding:NSUTF8StringEncoding];
-    // NSLog(@"time:%@", time);
     NSString *datetime = [NSString stringWithFormat:@"%@ %@:00 +0000",date, time];
-    //NSString *datetime = [NSString stringWithFormat:@"%@ %@:00 +0000",@"2010-05-22", time];
     
     NSDate *theDate = [NSDate dateWithString:datetime];
     
-    //NSDate *theDate = [dateFormatter dateFromString:datetime];
-    //NSLog(@"date object:%@", courseDate);
     return  theDate;
 }
-//-(NSString*) requestUserInputText:(NSString*) textToUser
-//{
-//    char *inputStr = malloc (MAX_NAME_SZ);
-//    const char *displayText = [textToUser UTF8String];
-//    //displayText = [textToUser 
-//    
-//    if (inputStr == NULL) {
-//        printf ("No memory\n");
-//        return @"No memory";
-//    }
-//    
-//    /* Ask user for name. */
-//    
-//    printf(displayText);
-//    printf("\n");
-//    /* Get the name, with size limit. */
-//    fgets (inputStr, MAX_NAME_SZ, stdin);
-//    
-//    /* Remove trailing newline, if there. */
-//    if (inputStr[strlen (inputStr) - 1] == '\n')
-//        inputStr[strlen (inputStr) - 1] = '\0';
-//    
-//    /* Say hello. */
-//    NSString *text = [NSString stringWithCString:inputStr encoding:NSUTF8StringEncoding];
-//    /* Free memory and exit. */
-//    free (inputStr);
-//    return text;
-//}
+
 -(User*) thisActiveUser
 {
   return activeUser;
@@ -691,10 +636,8 @@ Message *tempMessages;
     //Sort array  
     NSSortDescriptor *sortAll = [NSSortDescriptor sortDescriptorWithKey:@"courseName" ascending:TRUE];
     NSArray *sortDecArray = [NSArray arrayWithObject:sortAll];
-   // NSLog(@"listAllCoursesSortedByName: %@", [tempAllSortedCourses sortedArrayUsingDescriptors:sortDecArray]);
 
-    return [tempAllSortedCourses sortedArrayUsingDescriptors:sortDecArray];
-    
+    return [tempAllSortedCourses sortedArrayUsingDescriptors:sortDecArray];    
 }
 
 -(NSArray*)listAllStudentsSortedByName {
@@ -705,7 +648,7 @@ Message *tempMessages;
     NSSortDescriptor *sortAllByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:TRUE];
 
     NSArray *sortDecArray = [NSArray arrayWithObjects:sortAllByLastName, sortAllByName, nil];
-    //NSLog(@"listAllStudentsSortedByName: %@", [tempAllSortedStudents sortedArrayUsingDescriptors:sortDecArray]);
+
     return [tempAllSortedStudents sortedArrayUsingDescriptors:sortDecArray];
     
 }

@@ -197,6 +197,7 @@
     
 }
 
+
 -(void) addStudentToCourse:(User*) user
 {
     //Init userCourses array when needed, instead of in init function?
