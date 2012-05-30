@@ -336,9 +336,13 @@ Message *tempMessages;
     } else{
         // get list of student and display so that i can choose index
         int studentindex = 1000;
-        
-        NSLog(@"List med alla studenter: %@", [self listAllStudentsSortedByName]);
-        NSLog(@"Valj en student index... Starta at index 0");
+        //NSArray *simpleStudentList = [NSArray arrayWithArray:[self listAllStudentsSortedByName]];
+        NSArray *simpleStudentList = [self listAllStudentsSortedByName];
+        for(User *simpleUser in simpleStudentList){
+            NSLog(@"List med alla studenter: %@", [simpleUser simpleDescription]);
+        }
+        //NSLog(@"List med alla studenter: %@", [self listAllStudentsSortedByName]);
+        NSLog(@"\nValj en student index... Starta at index 0");
         scanf("%d", &studentindex);
         
         User *tempUser = [[self listAllStudentsSortedByName] objectAtIndex:studentindex];

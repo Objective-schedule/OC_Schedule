@@ -237,7 +237,8 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     }
     else
     {
-        NSLog(@"%@\n", [[events objectAtIndex:0] eventReadingInstructions]);
+        //NSLog(@"%@\n", [[events objectAtIndex:0] eventReadingInstructions]);
+        NSLog(@"There is nothing save on db");
     }
     NSLog(@"\n");
     
