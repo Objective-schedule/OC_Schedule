@@ -34,11 +34,11 @@ Message *tempMessages;
     [self checkLogin:[NSString stringWithCString:inputUserId encoding:NSUTF8StringEncoding]];
 }
 
--(void) studentMenu:(NSString*) userid
+-(void) studentMenu
 
 {
-    UserServices *userService = [[UserServices alloc]init];
-    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]]; // refactor userFromDictionaryWithCourses to cover messages as well
+   // UserServices *userService = [[UserServices alloc]init];
+    //activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]]; // refactor userFromDictionaryWithCourses to cover messages as well
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
@@ -130,8 +130,7 @@ Message *tempMessages;
     }
     
     allCourses = tempAllCoursesArray;
-    //NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    //NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
+    
     NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
     NSArray *simpleCourseList;
     NSArray *simpleStudentList;
@@ -182,13 +181,12 @@ Message *tempMessages;
         NSLog(@"Skapa meddelande: 6\n");
         NSLog(@"Logga ut: 7\n\n");
         scanf("%d", &inputUserMenue);
+        
     } while (inputUserMenue != 9);
 }
 
 -(void) adminCourseMenu
 {
-   // NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-   // NSInteger thisWeekNum = [[calendar components: NSWeekCalendarUnit fromDate:[NSDate date]] week];
     char cid[50];
     NSLog(@"\nAnge kurs id:");
      scanf("%s", &cid);
@@ -236,47 +234,40 @@ Message *tempMessages;
 
 -(void)checkLogin:(NSString* ) userid
 {   
-    // create UserService
     UserServices *userService = [[UserServices alloc]init];
+
+    NSDictionary *loginUserDict;
     
-    //get userDictionary from Db
-//    NSLog(@"%@",[userService dictionaryFromDbJson:userid]);
-    activeUser = [User userFromDictionary:[userService dictionaryFromDbJson:userid]];
-    NSDictionary *loginUserDict = [userService dictionaryFromDbJson:userid];
-    //NSLog(@"");
-    //check if role is admin or student
-    NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
-    NSString *student = [[NSString alloc] initWithFormat:@"Student"];
-    
-    // ideal solution but needs more work
-    /*if([activeUser.userRole isEqualToString:ATRoleAdmin]){
-        NSLog(@"activeUser.userRole: %@", activeUser.userRole);
-        [self adminMenu];
+    loginUserDict = [userService dictionaryFromDbJson:userid];
+    if([[loginUserDict valueForKey:@"rows"]count] > 0){
         
-    } else{
-        NSLog(@"you are stud");
-        [self studentMenu];
-    }*/
-    
-    if([[loginUserDict valueForKey:@"role"] isEqualToString:student]) {
-       // NSLog(@"you are student");
+        NSArray *arr = [loginUserDict  valueForKey:@"rows"];
+        loginUserDict = [[arr objectAtIndex:0] objectForKey:@"value"];
         
-        [self studentMenu: userid];
         
-    }else if([[loginUserDict valueForKey:@"role"] isEqualToString:admin]){
-       // NSLog(@"you are Admin");
-        [self adminMenu];
+        
+        NSString *admin = [[NSString alloc] initWithFormat:@"Admin"];
+        NSString *student = [[NSString alloc] initWithFormat:@"Student"];
+        
+        if([[loginUserDict valueForKey:@"role"] isEqualToString:student]) {
+            
+            activeUser = [User userFromDictionaryWithCourses:loginUserDict];
+            [self studentMenu];
+            
+        }else if([[loginUserDict valueForKey:@"role"] isEqualToString:admin]){
+            
+            activeUser = [User userFromDictionary: loginUserDict];
+            [self adminMenu];
+        }
+
+    } else {
+        NSLog(@"invalid email address! you stupid");
+        
+        [self initApp];
     }
+    // ask aboutthe stack and how to restart initApp from scratch
 }
 
-
-//-(void)loadUserData:(NSString*) userid
-//{   
-//    UserServices *userService = [[UserServices alloc]init];
-//    activeUser = [User userFromDictionaryWithCourses:[userService dictionaryFromDbJson:userid]];
-//          
-//    NSLog(@"\nVälkommen %@ %@", [activeUser userName], [activeUser lastName]);
-//}
 -(void)newStudent {
     
     char e[40];
@@ -302,9 +293,10 @@ Message *tempMessages;
     User *student = [User userWithUserEmail:email username:name lastName:lastName role:ATRoleStudent db_id:@"" db_rev:@"" status:ATUserStatusActive];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:[service saveToDb:[student saveUserAsDictionary]]];
     
-    // get back the id and rev to update the newly created user
+    // get back the id and rev from callback to update the newly created user
     student.db_id = [resultDictionary valueForKey:@"id"];
     student.db_rev = [resultDictionary valueForKey:@"rev"];
+    [self addStudentToAllStudents:student];
 }
 -(void)newMessage {
     char t[255]; // title
@@ -368,7 +360,7 @@ Message *tempMessages;
     char cd[256];//course description
     char cp[40];//course points
     char ct[100];//course teacher
-    int numberOfBooks;//course litterature
+    int numberOfBooks;
     char book[100];
     
     NSMutableArray *litterature = [NSMutableArray array];
@@ -408,9 +400,10 @@ Message *tempMessages;
     
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithDictionary:[service saveToDb:[course asDictionary]]];
     
-    // get back the id and rev to update the newly created user
+    // get back the id from callback and rev to update the newly created user
     course.db_courseId = [resultDictionary valueForKey:@"id"];
     course.db_courseRev = [resultDictionary valueForKey:@"rev"];
+    [self addCourseToAllCourses:course];
     char answer[10];
         
     NSLog(@"Vill du skapa evenemang för denna kurs: y / n ");
@@ -428,7 +421,7 @@ Message *tempMessages;
     }
 }
 
--(void)newCourseEvent:(Course*)activeCourse{
+-(void)newCourseEvent:(Course*)activeCourse {
 
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
 
@@ -541,7 +534,6 @@ Message *tempMessages;
     NSString *eventdescr;
     NSString *alterTeacher;
     
-    // menu to update event
     int inputUserMenue = 10;
     
     do {
@@ -633,7 +625,6 @@ Message *tempMessages;
 -(NSArray*)listAllCoursesSortedByName {
     
     NSMutableArray *tempAllSortedCourses = [NSMutableArray arrayWithArray:allCourses]; 
-    //Sort array  
     NSSortDescriptor *sortAll = [NSSortDescriptor sortDescriptorWithKey:@"courseName" ascending:TRUE];
     NSArray *sortDecArray = [NSArray arrayWithObject:sortAll];
 
@@ -643,13 +634,32 @@ Message *tempMessages;
 -(NSArray*)listAllStudentsSortedByName {
     
     NSMutableArray *tempAllSortedStudents = [NSMutableArray arrayWithArray:allUsers]; 
-    //Sort array  
     NSSortDescriptor *sortAllByLastName = [NSSortDescriptor sortDescriptorWithKey:@"lastName" ascending:TRUE];
     NSSortDescriptor *sortAllByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:TRUE];
 
     NSArray *sortDecArray = [NSArray arrayWithObjects:sortAllByLastName, sortAllByName, nil];
 
     return [tempAllSortedStudents sortedArrayUsingDescriptors:sortDecArray];
+    
+}
+-(void) addCourseToAllCourses:(Course*) course
+{
+    //Init userCourses array when needed, instead of in init function?
+    NSMutableArray* newArray = [NSMutableArray arrayWithArray:allCourses];
+    
+    [newArray addObject:course];
+    
+    allCourses = newArray;
+    
+}
+-(void) addStudentToAllStudents:(User*) student
+{
+    //Init userCourses array when needed, instead of in init function?
+    NSMutableArray* newArray = [NSMutableArray arrayWithArray:allUsers];
+    
+    [newArray addObject:student];
+    
+    allUsers = newArray;
     
 }
 @end

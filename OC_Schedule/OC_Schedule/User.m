@@ -178,7 +178,7 @@ extern NSString *const ATUserStatusInactive = @"Inactive";
     [newArray addObject:message];
     
     userMessages = newArray;
-    //NSLog(@"userMessages from addMessageToUser : %@", userMessages);
+    NSLog(@"userMessages from addMessageToUser : %@", userMessages);
 
 }
 //-(void)addMessage:(NSString*)messageId {

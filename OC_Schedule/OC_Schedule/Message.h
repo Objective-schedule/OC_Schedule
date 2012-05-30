@@ -1,10 +1,3 @@
-//
-//  Message.h
-//  OC_Schedule
-//
-//  Created by Student vid Yrkeshögskola C3L on 5/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import "User.h"
@@ -24,5 +17,6 @@
 -(void)addStudent:(NSString*)student;
 
 -(NSDictionary*)saveMessageAsDictionary;
+
 +(id) messageFromDictionary:(NSDictionary*) dictionary;
 @end

@@ -53,14 +53,9 @@
         userDictionary = [NSJSONSerialization JSONObjectWithData:data 
                                                 options:NSJSONReadingMutableContainers 
                                                                         error:NULL];
-        
-        NSArray *arr = [userDictionary  valueForKey:@"rows"];
-       userDictionary = [[arr objectAtIndex:0] objectForKey:@"value"];
-        //NSLog(@"dictionary:%@", userDictionary);
        
         
     }
-    //NSLog(@"dictionary: %@", userDictionary);
      return userDictionary;
     
 }

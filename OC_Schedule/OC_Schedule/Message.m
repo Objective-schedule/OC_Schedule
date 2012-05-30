@@ -1,10 +1,3 @@
-//
-//  Message.m
-//  OC_Schedule
-//
-//  Created by Student vid Yrkeshögskola C3L on 5/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import "Message.h"
 #import "User.h"
@@ -36,7 +29,7 @@
     return self;
 }
 -(NSString*) description {
-    //[self getCoursesIds];
+    
     return [NSString stringWithFormat:@"Title:%@, SentDate: %@, Content; %@, SentBy: %@", self.title, self.sentDate, self.content, self.createdBy];
 }
 
@@ -78,12 +71,5 @@
     
 }
 
-//-(NSDictionary*) updateMessageAsDictionary
-//{
-//    NSMutableDictionary *messageDictionary = [NSMutableDictionary dictionaryWithDictionary:[self saveMessageAsDictionary]];
-//    [messageDictionary setValue:[self db_id] forKey:@"_id"];
-//    [messageDictionary setValue:[self db_rev] forKey:@"_rev"];
-//    return messageDictionary;
-//}
 
 @end

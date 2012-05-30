@@ -11,34 +11,28 @@
 
 @interface MainApp : NSObject
 
-//*NSArray *allStudents
 @property User *activeUser;
 @property User *tempUser;
 @property Course *tempCourses;
 
 
 -(void) initApp;
-//-(void) initMenu;
-
--(void)loadUserData:(NSString*) userid;
--(void)loadCourseData:(NSString*) courseid;
--(void)loadAllData;
--(void)checkLogin:(NSString* ) userid;
+-(void) studentMenu;
+-(void)studentMessages;
 -(void) adminMenu;
 -(void) adminCourseMenu;
--(void) studentMenu;
-
--(User*) thisActiveUser;
+-(void)checkLogin:(NSString* ) userid;
 -(void)newStudent;
 -(void)newMessage;
 -(void)newCourse;
--(NSDate*) requestEventDate;
--(NSString*) requestUserInputText:(NSString*) textToUser;
 -(void)newCourseEvent:(Course*)activeCourse;
 -(void)addStudentToCourse:(Course*)activeCourse;
-//-(void)addCourseToStudent:(User*)student;
+-(void)editCourseEvent:(Course*)activeCourse;
+-(NSDate*)requestEventDate;
+-(User*) thisActiveUser;
 -(NSArray*)listAllCoursesSortedByName;
 -(NSArray*)listAllStudentsSortedByName;
--(void)studentMessages;
+-(void) addCourseToAllCourses:(Course*) course;
+-(void) addStudentToAllStudents:(User*) student;
 
 @end
